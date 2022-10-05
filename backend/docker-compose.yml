@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  dev-db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: iste432
+      POSTGRES_PASSWORD: 3480af1375d59ad1a3a0c51540cb5d9697f7f9309cfe6025a4f6dbe09f29ef5e
+      POSTGRES_DB: iste432
+    networks:
+      - bridge
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
