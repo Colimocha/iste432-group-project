@@ -1,4 +1,5 @@
-version: '3.8'
+version: '3.9'
+
 services:
   dev-db:
     image: postgres:latest
@@ -9,9 +10,8 @@ services:
       POSTGRES_PASSWORD: 3480af1375d59ad1a3a0c51540cb5d9697f7f9309cfe6025a4f6dbe09f29ef5e
       POSTGRES_DB: iste432
     networks:
-      - bridge
+      - backend
+
 networks:
-  default:
+  backend:
     driver: bridge
-    ipam:
-      driver: default

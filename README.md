@@ -1,6 +1,19 @@
-# iste432-group-project
+# ISTE 432 Group Project
 
-# Tree File Structor
+# Backend environment
+
+## Docker Commands
+```sh
+docker compose up
+```
+
+## Prisma Commands
+```sh
+npx prisma generate
+npx prisma migrate dev && init
+```
+
+# Tree File Structure
 
 ```
 .
