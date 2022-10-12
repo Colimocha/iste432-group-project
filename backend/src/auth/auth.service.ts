@@ -4,6 +4,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EmployeeAuthDto, SCAuthDto, VoterAuthDto } from './dto';
 import * as argon from 'argon2';
+import { Role } from './role';
 
 @Injectable()
 export class AuthService {
@@ -21,8 +22,8 @@ export class AuthService {
    * @returns - access token
    */
   async generateToken(id: number, role: string) {
-    const secret = this.config.get('JWT_SECRET');
-    const payload = { sub: id, role: role };
+    const secret = this.config.get(Role[role]);
+    const payload = { sub: id };
     const options = { expiresIn: '1h', secret: secret };
     const token = await this.jwt.signAsync(payload, options);
     return { access_token: token };
