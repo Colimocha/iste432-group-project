@@ -22,7 +22,6 @@ export class AuthService {
    * @returns - access token
    */
   async generateToken(id: number, role: Role) {
-    console.log(role);
     const secret = this.config.get(role);
     const payload = { sub: id };
     const options = { expiresIn: '1h', secret: secret };

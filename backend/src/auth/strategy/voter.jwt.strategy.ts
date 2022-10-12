@@ -21,6 +21,7 @@ export class VoterJwtStrategy extends PassportStrategy(Strategy, 'voter') {
    * @returns The voter object.
    */
   async validate(payload: { id: number }) {
+    console.log(payload);
     const { id } = payload;
     const voter = await this.prisma.voter.findUnique({ where: { id: id } });
     delete voter.credential_1;

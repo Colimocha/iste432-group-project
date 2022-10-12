@@ -23,10 +23,10 @@ export class SocietyContactJwtStrategy extends PassportStrategy(
    * @param payload The payload of the JWT token.
    * @returns The society contact object.
    */
-  async validate(payload: { id: number }) {
-    const { id } = payload;
+  async validate(payload: { sub: number }) {
+    const { sub } = payload;
     const data = await this.prisma.societyContact.findUnique({
-      where: { id: id },
+      where: { id: sub },
     });
     delete data.password;
     return data;
