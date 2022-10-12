@@ -21,12 +21,13 @@ export class AuthService {
    * @param role - user role
    * @returns - access token
    */
-  async generateToken(id: number, role: string) {
-    const secret = this.config.get(Role[role]);
+  async generateToken(id: number, role: Role) {
+    console.log(role);
+    const secret = this.config.get(role);
     const payload = { sub: id };
     const options = { expiresIn: '1h', secret: secret };
     const token = await this.jwt.signAsync(payload, options);
-    return { access_token: token };
+    return { success: true, access_token: token };
   }
 
   /**
@@ -42,7 +43,7 @@ export class AuthService {
     });
     if (!voter) throw new ForbiddenException('Invalid credentials');
 
-    return this.generateToken(voter.id, 'voter');
+    return this.generateToken(voter.id, Role.Voter);
   }
 
   /**
@@ -65,7 +66,7 @@ export class AuthService {
     if (!isMatchPwd) throw new ForbiddenException('Invalid credentials');
 
     // return token
-    return this.generateToken(societyContact.id, 'societyContact');
+    return this.generateToken(societyContact.id, Role.SocietyContact);
   }
 
   /**
@@ -88,6 +89,15 @@ export class AuthService {
     if (!isMatchPwd) throw new ForbiddenException('Invalid credentials');
 
     // return token
-    return this.generateToken(employee.id, 'employee');
+    return this.generateToken(employee.id, Role.Employee);
+  }
+
+  async register(username: string, password: string) {
+    const hashedPassword = await argon.hash(password);
+    const created = await this.prisma.employee.create({
+      data: { username, password: hashedPassword },
+    });
+    delete created.password;
+    return created;
   }
 }
