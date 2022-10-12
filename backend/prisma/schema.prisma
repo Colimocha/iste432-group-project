@@ -27,6 +27,9 @@ model Voter {
   dateofbirth  DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+
+  society   Society? @relation(fields: [societyId], references: [id])
+  societyId Int
 }
 
 model SocietyContact {
@@ -35,6 +38,9 @@ model SocietyContact {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  society   Society @relation(fields: [societyId], references: [id])
+  societyId Int     @unique
 }
 
 model Society {
@@ -42,6 +48,10 @@ model Society {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  SocietyContact SocietyContact?
+  Voter          Voter[]
+  Ballot         Ballot[]
 }
 
 model Ballot {
@@ -50,6 +60,12 @@ model Ballot {
   allowWriteIn Boolean
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  society   Society     @relation(fields: [societyId], references: [id])
+  societyId Int
+  Vote      Vote[]
+  Office    Office[]
+  Candidate Candidate[]
 }
 
 model Office {
@@ -57,6 +73,10 @@ model Office {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  ballot    Ballot      @relation(fields: [ballotId], references: [id])
+  ballotId  Int
+  Candidate Candidate[]
 }
 
 model Candidate {
@@ -67,6 +87,12 @@ model Candidate {
   image     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  office   Office @relation(fields: [officeId], references: [id])
+  officeId Int
+
+  ballot   Ballot @relation(fields: [ballotId], references: [id])
+  ballotId Int
 }
 
 model Vote {
@@ -77,4 +103,7 @@ model Vote {
   isWriteIn   Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  ballot   Ballot @relation(fields: [ballotId], references: [id])
+  ballotId Int
 }
