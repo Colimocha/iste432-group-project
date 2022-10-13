@@ -15,7 +15,7 @@ export class VotersService {
       dateOfBirth,
       societyId,
     } = createVoterDto;
-    const voter = this.prisma.voter.create({
+    const created = this.prisma.voter.create({
       data: {
         firstname: firstName,
         lastname: lastName,
@@ -25,23 +25,21 @@ export class VotersService {
         societyId: societyId,
       },
     });
-    if (!voter) throw new BadRequestException('Voter not created');
+    if (!created) throw new BadRequestException('Voter not created');
 
-    return voter;
+    return created;
   }
 
   findAll() {
-    const voters = this.prisma.voter.findMany();
-    if (!voters) throw new BadRequestException('No voters found');
-    return voters;
+    return this.prisma.voter.findMany();
   }
 
   findOne(id: number) {
     if (!id) throw new BadRequestException('No id provided');
 
-    const voter = this.prisma.voter.findUnique({ where: { id: id } });
-    if (!voter) throw new BadRequestException('Voter not found');
-    return voter;
+    const found = this.prisma.voter.findUnique({ where: { id: id } });
+    if (!found) throw new BadRequestException('Voter not found');
+    return found;
   }
 
   update(id: number, updateVoterDto: UpdateVoterDto) {
@@ -56,7 +54,7 @@ export class VotersService {
       societyId,
     } = updateVoterDto;
 
-    const voter = this.prisma.voter.update({
+    const updated = this.prisma.voter.update({
       where: { id: id },
       data: {
         firstname: firstName,
@@ -67,15 +65,15 @@ export class VotersService {
         societyId: societyId,
       },
     });
-    if (!voter) throw new BadRequestException('Voter not updated');
-    return voter;
+    if (!updated) throw new BadRequestException('Voter not updated');
+    return updated;
   }
 
   remove(id: number) {
     if (!id) throw new BadRequestException('No id provided');
 
-    const voter = this.prisma.voter.delete({ where: { id: id } });
-    if (!voter) throw new BadRequestException('Voter not deleted');
-    return voter;
+    const removed = this.prisma.voter.delete({ where: { id: id } });
+    if (!removed) throw new BadRequestException('Voter not deleted');
+    return removed;
   }
 }
