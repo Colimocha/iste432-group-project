@@ -12,7 +12,7 @@ import { VotersService } from './voters.service';
 import { CreateVoterDto, UpdateVoterDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
 
-@Controller('voters')
+@Controller('voter')
 @UseGuards(JwtGuard)
 export class VotersController {
   constructor(private readonly votersService: VotersService) {}
