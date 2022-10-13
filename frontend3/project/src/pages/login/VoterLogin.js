@@ -1,3 +1,4 @@
+import theme from "../../global.js";
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -25,21 +26,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-const theme = createTheme({
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          backgroundColor: "#0077B6",
-          backgroundImage: `linear-gradient(120deg, #00359B 0%, #25BBB2 55%, #03D7FF 100%)`,
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-        },
-      },
-    },
-  }
-})
 
 export default function SignIn() {
   const navigate = useNavigate();
