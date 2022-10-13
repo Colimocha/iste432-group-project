@@ -1,8 +1,8 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 
-const theme = createTheme({
+export const theme = createTheme({
     components: {
       MuiCssBaseline: {
         styleOverrides: {
@@ -16,5 +16,22 @@ const theme = createTheme({
       },
     }
 })
-  
-export default theme;
+
+export function Copyright(props) {
+    return (
+        <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            sx={{ mt: 8, mb: 4, color: "#FFFFFF" }}
+            {...props}>
+        {'Copyright © '}
+        All Right Reserved. & About Information&nbsp;
+        {new Date().getFullYear()}
+        {'.'}
+        
+      </Typography>
+    );
+  }
+
+export default { theme, Copyright };
