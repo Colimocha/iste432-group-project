@@ -7,6 +7,7 @@ import { SocietyModule } from './society/society.module';
 import { EmployeeModule } from './employee/employee.module';
 import { SocietyContactModule } from './society-contact/society-contact.module';
 import { BallotModule } from './ballot/ballot.module';
+import { OfficeModule } from './office/office.module';
 import { CandidateModule } from './candidate/candidate.module';
 
 @Module({
@@ -19,6 +20,7 @@ import { CandidateModule } from './candidate/candidate.module';
     EmployeeModule,
     SocietyContactModule,
     BallotModule,
+    OfficeModule,
     CandidateModule,
   ],
 })
