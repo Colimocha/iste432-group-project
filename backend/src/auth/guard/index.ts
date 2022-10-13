@@ -1,1 +1,1 @@
-export * from './voter.jwt.guard';
+export * from './jwt.guard';
