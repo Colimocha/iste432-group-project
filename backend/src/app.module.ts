@@ -7,6 +7,7 @@ import { SocietyModule } from './society/society.module';
 import { EmployeeModule } from './employee/employee.module';
 import { SocietyContactModule } from './society-contact/society-contact.module';
 import { BallotModule } from './ballot/ballot.module';
+import { CandidateModule } from './candidate/candidate.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BallotModule } from './ballot/ballot.module';
     EmployeeModule,
     SocietyContactModule,
     BallotModule,
+    CandidateModule,
   ],
 })
 export class AppModule {}
