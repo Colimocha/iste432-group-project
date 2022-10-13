@@ -9,7 +9,7 @@ export class EmployeeService {
   async create(createEmployeeDto: CreateEmployeeDto) {
     const { username, password } = createEmployeeDto;
     if (!username || !password)
-      throw new BadRequestException('The username or password not provided');
+      throw new BadRequestException('The username and password are required');
 
     const hashedPassword = await argon.hash(password);
     const created = await this.prisma.employee.create({
@@ -22,7 +22,7 @@ export class EmployeeService {
 
   async findAll() {
     const found = await this.prisma.employee.findMany();
-    found.forEach((e) => delete e.password);
+    if (found.length) found.forEach((e) => delete e.password);
     return found;
   }
 
@@ -37,7 +37,8 @@ export class EmployeeService {
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
     if (!id) throw new BadRequestException('The id not provided');
     const { username, password } = updateEmployeeDto;
-    const hashedPassword = await argon.hash(password);
+    let hashedPassword = undefined;
+    if (password) hashedPassword = await argon.hash(password);
     const updated = await this.prisma.employee.update({
       where: { id },
       data: { username, password: hashedPassword },
