@@ -37,12 +37,16 @@ export class VotersService {
   }
 
   findOne(id: number) {
+    if (!id) throw new BadRequestException('No id provided');
+
     const voter = this.prisma.voter.findUnique({ where: { id: id } });
     if (!voter) throw new BadRequestException('Voter not found');
     return voter;
   }
 
   update(id: number, updateVoterDto: UpdateVoterDto) {
+    if (!id) throw new BadRequestException('No id provided');
+
     const {
       firstName,
       lastName,
@@ -68,6 +72,8 @@ export class VotersService {
   }
 
   remove(id: number) {
+    if (!id) throw new BadRequestException('No id provided');
+
     const voter = this.prisma.voter.delete({ where: { id: id } });
     if (!voter) throw new BadRequestException('Voter not deleted');
     return voter;

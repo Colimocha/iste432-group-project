@@ -21,9 +21,9 @@ export class AuthService {
    * @param role - user role
    * @returns - access token
    */
-  async generateToken(id: number, role: Role) {
-    const secret = this.config.get(role);
-    const payload = { sub: id };
+  async generateToken(sub: number, role: Role) {
+    const secret = this.config.get('JWT_SECRET');
+    const payload = { sub, role };
     const options = { expiresIn: '1h', secret: secret };
     const token = await this.jwt.signAsync(payload, options);
     return { success: true, access_token: token };

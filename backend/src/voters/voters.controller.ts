@@ -6,11 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { VotersService } from './voters.service';
 import { CreateVoterDto, UpdateVoterDto } from './dto';
+import { JwtGuard } from 'src/auth/guard';
 
 @Controller('voters')
+@UseGuards(JwtGuard)
 export class VotersController {
   constructor(private readonly votersService: VotersService) {}
 
