@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 
 import Navbar from "./Navbar.js";
 
-export default function Dashboard() {
+export default function Society() {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -24,7 +24,7 @@ export default function Dashboard() {
             padding: 4,
           }}
         >
-          <h1> Dashboard </h1>
+          <h1> Society </h1>
         </Box>
       </Container>
     </ThemeProvider>
