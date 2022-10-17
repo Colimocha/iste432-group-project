@@ -1,27 +1,53 @@
-import { theme, Copyright } from "../../global.js";
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { theme, Copyright, url } from "../../global.js";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {useNavigate} from 'react-router-dom';
+
+
+const apiUrl = "/auth/employee";
 
 export default function SignIn() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     console.log({
-      username: data.get('username'),
-      password: data.get('password'),
+      username: data.get("username"),
+      password: data.get("password"),
     });
+
+    const requestOptions = {
+      method: "post",
+      // mode: 'no-cors',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: data.get("username"),
+        password: data.get("password"),
+      }),
+    };
+
+    fetch(url + apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then(data => {
+        console.log(data);
+        //need to type if/else here to check the token
+        navigate('/Dashboard');
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -31,20 +57,25 @@ export default function SignIn() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            backgroundColor: '#FFFFFF',
-            padding: 4
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: "#FFFFFF",
+            padding: 4,
           }}
         >
           {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
-            {/* <LockOutlinedIcon /> */}
+          {/* <LockOutlinedIcon /> */}
           {/* </Avatar> */}
           <Typography component="h1" variant="h5">
             Sign in as a SC or Admin
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -86,7 +117,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright/>
+        <Copyright />
       </Container>
     </ThemeProvider>
   );

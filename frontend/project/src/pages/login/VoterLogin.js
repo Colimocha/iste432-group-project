@@ -1,15 +1,17 @@
-import { theme, Copyright } from "../../global.js";
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { ThemeProvider } from '@mui/material/styles';
-import {useNavigate} from 'react-router-dom';
+import { theme, Copyright, url } from "../../global.js";
+import * as React from "react";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+
+const apiUrl = "/auth/voter";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -17,11 +19,24 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      lastname: data.get('lastname'),
-      dob: data.get('dob'),
-    });
-    navigate('/Dashboard');
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        cred_1: data.get("lastname"),
+        cred_2: data.get("dob"),
+      }),
+    };
+
+    fetch(url + apiUrl, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        //need to type if/else here to check the token
+        navigate("/Dashboard");
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -31,20 +46,25 @@ export default function SignIn() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            backgroundColor: '#FFFFFF',
-            padding: 4
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: "#FFFFFF",
+            padding: 4,
           }}
         >
           {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
-            {/* <LockOutlinedIcon /> */}
+          {/* <LockOutlinedIcon /> */}
           {/* </Avatar> */}
           <Typography component="h1" variant="h5">
             Sign in as a Voter
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -86,7 +106,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright/>
+        <Copyright />
       </Container>
     </ThemeProvider>
   );
