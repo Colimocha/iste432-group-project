@@ -25,14 +25,8 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
-
     const requestOptions = {
       method: "post",
-      // mode: 'no-cors',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username: data.get("username"),
