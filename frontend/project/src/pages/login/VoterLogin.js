@@ -32,9 +32,13 @@ export default function SignIn() {
     fetch(url + apiUrl, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        //need to type if/else here to check the token
-        navigate("/Dashboard");
+        if (data.success) {
+          sessionStorage.setItem("token", data.access_token);
+          navigate('/Dashboard');
+        } else {
+          //need to display a dialog here
+          console.log("invalid login info");
+        }
       })
       .catch((err) => console.error(err));
   };
