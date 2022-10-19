@@ -19,14 +19,14 @@ model Employee {
 }
 
 model Voter {
-  id           Int       @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   firstname    String?
   lastname     String?
   credential_1 String?
   credential_2 String?
-  dateofbirth  DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  dateofbirth  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   society   Society? @relation(fields: [societyId], references: [id])
   societyId Int

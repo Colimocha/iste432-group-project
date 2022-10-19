@@ -17,7 +17,7 @@ export class AuthService {
   /**
    * Author: Xiangyu Shi
    * Description: Generate JWT token
-   * @param id - user id
+   * @param sub - user id
    * @param role - user role
    * @returns - access token
    */
@@ -42,7 +42,7 @@ export class AuthService {
     });
     if (!voter) throw new ForbiddenException('Invalid credentials');
 
-    return this.generateToken(voter.id, Role.Voter);
+    return await this.generateToken(voter.id, Role.Voter);
   }
 
   /**
@@ -65,7 +65,7 @@ export class AuthService {
     if (!isMatchPwd) throw new ForbiddenException('Invalid credentials');
 
     // return token
-    return this.generateToken(societyContact.id, Role.SocietyContact);
+    return await this.generateToken(societyContact.id, Role.SocietyContact);
   }
 
   /**
@@ -84,11 +84,11 @@ export class AuthService {
     if (!employee) throw new ForbiddenException('Invalid credentials');
 
     // validate password
-    const isMatchPwd = argon.verify(employee.password, password);
+    const isMatchPwd = await argon.verify(employee.password, password);
     if (!isMatchPwd) throw new ForbiddenException('Invalid credentials');
 
     // return token
-    return this.generateToken(employee.id, Role.Employee);
+    return await this.generateToken(employee.id, Role.Employee);
   }
 
   async register(username: string, password: string) {

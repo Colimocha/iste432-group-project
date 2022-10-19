@@ -2,7 +2,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { VotersModule } from './voters/voters.module';
+import { VotersModule } from './voter/voter.module';
 import { SocietyModule } from './society/society.module';
 import { EmployeeModule } from './employee/employee.module';
 import { SocietyContactModule } from './society-contact/society-contact.module';
