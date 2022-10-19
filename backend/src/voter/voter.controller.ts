@@ -8,7 +8,7 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { VotersService } from './voters.service';
+import { VotersService } from './voter.service';
 import { CreateVoterDto, UpdateVoterDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
 

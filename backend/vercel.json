@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "buildCommand": "nest build",
+  "builds": [
+    {
+      "src": "./dist/main",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
+}

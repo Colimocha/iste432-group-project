@@ -1,6 +1,8 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { CreateVoterDto } from './create-voter.dto';
 
-export class CreateVoterDto {
+export class UpdateVoterDto extends PartialType(CreateVoterDto) {
   @IsString()
   firstName?: string;
 
@@ -14,7 +16,7 @@ export class CreateVoterDto {
   credential_2?: string;
 
   @IsDate()
-  dateOfBirth?: Date;
+  dateOfBirth?: string;
 
   @IsNumber()
   @IsNotEmpty()

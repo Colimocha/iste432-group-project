@@ -1,12 +1,13 @@
-import { PrismaService } from './../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateVoterDto, UpdateVoterDto } from './dto';
+import * as argon from 'argon2';
 
 @Injectable()
 export class VotersService {
   constructor(private prisma: PrismaService) {}
 
-  create(createVoterDto: CreateVoterDto) {
+  async create(createVoterDto: CreateVoterDto) {
     const {
       firstName,
       lastName,
@@ -15,12 +16,16 @@ export class VotersService {
       dateOfBirth,
       societyId,
     } = createVoterDto;
-    const created = this.prisma.voter.create({
+
+    const hash_credential_1 = await argon.hash(credential_1);
+    const hash_credential_2 = await argon.hash(credential_2);
+
+    const created = await this.prisma.voter.create({
       data: {
         firstname: firstName,
         lastname: lastName,
-        credential_1: credential_1,
-        credential_2: credential_2,
+        credential_1: hash_credential_1,
+        credential_2: hash_credential_2,
         dateofbirth: dateOfBirth,
         societyId: societyId,
       },
@@ -30,20 +35,22 @@ export class VotersService {
     return created;
   }
 
-  findAll() {
-    return this.prisma.voter.findMany();
+  async findAll() {
+    return await this.prisma.voter.findMany();
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     if (!id) throw new BadRequestException('No id provided');
-
-    const found = this.prisma.voter.findUnique({ where: { id: id } });
+    const found = await this.prisma.voter.findUnique({ where: { id: id } });
     if (!found) throw new BadRequestException('Voter not found');
     return found;
   }
 
-  update(id: number, updateVoterDto: UpdateVoterDto) {
+  async update(id: number, updateVoterDto: UpdateVoterDto) {
     if (!id) throw new BadRequestException('No id provided');
+
+    const found = await this.prisma.voter.findUnique({ where: { id: id } });
+    if (!found) throw new BadRequestException('Voter not found');
 
     const {
       firstName,
@@ -54,13 +61,16 @@ export class VotersService {
       societyId,
     } = updateVoterDto;
 
-    const updated = this.prisma.voter.update({
+    const hash_credential_1 = await argon.hash(credential_1);
+    const hash_credential_2 = await argon.hash(credential_2);
+
+    const updated = await this.prisma.voter.update({
       where: { id: id },
       data: {
         firstname: firstName,
         lastname: lastName,
-        credential_1: credential_1,
-        credential_2: credential_2,
+        credential_1: hash_credential_1,
+        credential_2: hash_credential_2,
         dateofbirth: dateOfBirth,
         societyId: societyId,
       },
@@ -69,11 +79,11 @@ export class VotersService {
     return updated;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     if (!id) throw new BadRequestException('No id provided');
-
-    const removed = this.prisma.voter.delete({ where: { id: id } });
-    if (!removed) throw new BadRequestException('Voter not deleted');
+    const found = await this.prisma.voter.findUnique({ where: { id: id } });
+    if (!found) throw new BadRequestException('Voter not found');
+    const removed = await this.prisma.voter.delete({ where: { id: id } });
     return removed;
   }
 }

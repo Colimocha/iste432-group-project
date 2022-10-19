@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { VotersService } from './voters.service';
-import { VotersController } from './voters.controller';
+import { VotersService } from './voter.service';
+import { VotersController } from './voter.controller';
 
 @Module({
   controllers: [VotersController],
