@@ -13,8 +13,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {useNavigate} from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = "/auth/employee";
 
@@ -29,7 +28,6 @@ export default function SignIn() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // credentials: "include"
       },
       body: JSON.stringify({
         username: data.get("username"),
@@ -38,15 +36,15 @@ export default function SignIn() {
     };
 
     fetch(url + apiUrl, requestOptions)
-      .then((response) => { 
+      .then((response) => {
         // console.log(response);
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         // console.log(data);
         if (data.success) {
           sessionStorage.setItem("token", data.access_token);
-          navigate('/Dashboard');
+          navigate("/Dashboard");
         } else {
           //need to display a dialog here
           console.log("invalid login info");
