@@ -10,6 +10,8 @@ import { BallotModule } from './ballot/ballot.module';
 import { OfficeModule } from './office/office.module';
 import { CandidateModule } from './candidate/candidate.module';
 import { VoteModule } from './vote/vote.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -25,5 +27,7 @@ import { VoteModule } from './vote/vote.module';
     CandidateModule,
     VoteModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import { JwtGuard } from 'src/auth/guard';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import {
   Controller,
   Get,

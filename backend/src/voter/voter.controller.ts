@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { VotersService } from './voter.service';
 import { CreateVoterDto, UpdateVoterDto } from './dto';
-import { JwtGuard } from 'src/auth/guard';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
 
 @Controller('voter')
 @UseGuards(JwtGuard)

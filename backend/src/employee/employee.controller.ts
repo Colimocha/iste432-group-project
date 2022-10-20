@@ -11,7 +11,7 @@ import {
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { JwtGuard } from 'src/auth/guard';
+import { JwtGuard } from './../auth/guard/jwt.guard';
 
 @Controller('employee')
 @UseGuards(JwtGuard)
