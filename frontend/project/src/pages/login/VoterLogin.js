@@ -34,7 +34,7 @@ export default function SignIn() {
       .then((data) => {
         if (data.success) {
           sessionStorage.setItem("token", data.access_token);
-          navigate('/Dashboard');
+          navigate("/Dashboard");
         } else {
           //need to display a dialog here
           console.log("invalid login info");

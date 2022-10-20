@@ -26,8 +26,11 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
 
     const requestOptions = {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // credentials: "include"
+      },
       body: JSON.stringify({
         username: data.get("username"),
         password: data.get("password"),
@@ -35,8 +38,12 @@ export default function SignIn() {
     };
 
     fetch(url + apiUrl, requestOptions)
-      .then((response) => response.json())
+      .then((response) => { 
+        // console.log(response);
+        return response.json();
+      })
       .then(data => {
+        // console.log(data);
         if (data.success) {
           sessionStorage.setItem("token", data.access_token);
           navigate('/Dashboard');

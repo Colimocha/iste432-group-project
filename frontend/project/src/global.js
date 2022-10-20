@@ -34,5 +34,5 @@ export function Copyright(props) {
     );
   }
 
-export const url = "http://9706-2620-8d-8000-1044-f0b2-8f8d-9d17-60e6.ngrok.io";
+export const url = "https://backend-psi-ten.vercel.app";
 export default { theme, Copyright, url };
