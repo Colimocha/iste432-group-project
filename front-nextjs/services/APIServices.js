@@ -3,7 +3,6 @@ const url = 'https://backend-psi-ten.vercel.app'
 class APIServices {
   static async authVoter(obj) {
     try {
-      console.log(obj)
       const response = await fetch(url + '/auth/voter', {
         method: 'POST',
         headers: {
@@ -28,7 +27,6 @@ class APIServices {
   static async authDashboard(obj) {
     try {
       const role = obj.role
-      console.log(obj)
       const response = await fetch(
         url +
           (role === 'societyContact'

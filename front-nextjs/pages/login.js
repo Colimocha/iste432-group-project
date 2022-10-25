@@ -31,16 +31,6 @@ export default function Login() {
     setRole(true)
   }
 
-  const handleVoterLogin = (event) => {
-    console.log('Voter Login')
-    GlobalServices.setVoterRole()
-
-    // refresh page
-    setTimeout(() => {
-      window.location.reload()
-    }, 500)
-  }
-
   const handleSubmit = async (event) => {
     // Stop the form from submitting and refreshing the page.
     event.preventDefault()
@@ -51,8 +41,8 @@ export default function Login() {
     const data = role
       ? // Voter Login
         {
-          credential1: formData.get('credential1'),
-          credential2: formData.get('credential2'),
+          cred_1: formData.get('credential1'),
+          cred_2: formData.get('credential2'),
         }
       : // Dashboard Login
         {
@@ -61,19 +51,16 @@ export default function Login() {
           role: formData.get('role'),
         }
 
-    // Send the data to the server in JSON format.
-    const JSONdata = JSON.stringify(data)
-    alert(JSONdata)
-
     // Send the data to the server.
     const response = role
-      ? APIServices.authVoter(data)
-      : APIServices.authDashboard(data)
+      ? await APIServices.authVoter(data)
+      : await APIServices.authDashboard(data)
 
     // Check if the response is successful then redirect to page, otherwise display error.
+    console.log(response)
     if (response) {
       setOpenSuccess(true)
-      // window.location.reload()
+      window.location.reload()
     } else {
       setOpenError(true)
     }
@@ -160,12 +147,20 @@ export default function Login() {
           </Grid>
         </Box>
       </Box>
-      <Snackbar open={openSuccess} autoHideDuration={5000}>
+      <Snackbar
+        open={openSuccess}
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
         <Alert severity="success" sx={{ width: '100%' }}>
           Login Successfully
         </Alert>
       </Snackbar>
-      <Snackbar open={openError} autoHideDuration={5000}>
+      <Snackbar
+        open={openError}
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
         <Alert severity="error" sx={{ width: '100%' }}>
           Login Failed
         </Alert>
