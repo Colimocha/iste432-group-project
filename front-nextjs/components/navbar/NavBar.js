@@ -1,5 +1,4 @@
 import { Avatar, Icon } from '@mui/material'
-import Link from 'next/link'
 import NavBarItem from './NavBarItem'
 
 export default function NavBar() {

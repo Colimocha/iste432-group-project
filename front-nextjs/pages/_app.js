@@ -5,11 +5,11 @@ import Login from './Login'
 
 function MyApp({ Component, pageProps }) {
   const [role, setRole] = useState('')
-  const [hasToken, SetToken] = useState(false)
+  const [hasToken, setToken] = useState(false)
 
   useEffect(() => {
     setRole(sessionStorage.getItem('role') ?? '')
-    SetToken(sessionStorage.getItem('token') ?? '')
+    setToken(sessionStorage.getItem('token') ?? '')
   }, [])
 
   return (

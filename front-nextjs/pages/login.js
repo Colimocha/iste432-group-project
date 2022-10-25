@@ -1,5 +1,5 @@
 import {
-  Autocomplete,
+  Alert,
   Box,
   Button,
   Container,
@@ -10,16 +10,18 @@ import {
   Link,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
   Typography,
 } from '@mui/material'
 import { useState } from 'react'
+import APIServices from '../services/APIServices'
 import GlobalServices from '../services/GlobalServices'
 
 export default function Login() {
   const [role, setRole] = useState(true)
-  const [selectRole, setSelectRole] = useState('')
-  const globalServices = new GlobalServices()
+  const [openSuccess, setOpenSuccess] = useState(false)
+  const [openError, setOpenError] = useState(false)
 
   const handleSwitchAdminLogin = () => {
     setRole(false)
@@ -29,9 +31,9 @@ export default function Login() {
     setRole(true)
   }
 
-  const handleVoterLogin = () => {
+  const handleVoterLogin = (event) => {
     console.log('Voter Login')
-    globalServices.setVoterRole()
+    GlobalServices.setVoterRole()
 
     // refresh page
     setTimeout(() => {
@@ -39,21 +41,42 @@ export default function Login() {
     }, 500)
   }
 
-  const handleDashboardLogin = () => {
-    console.log('Dashboard Login')
-    if (selectRole === 'societyContact') {
-      globalServices.setSocietyContactRole()
-    } else if (selectRole === 'employee') {
-      globalServices.setEmployeeRole()
+  const handleSubmit = async (event) => {
+    // Stop the form from submitting and refreshing the page.
+    event.preventDefault()
+
+    // Get data from the form.
+    const formData = new FormData(event.currentTarget)
+
+    const data = role
+      ? // Voter Login
+        {
+          credential1: formData.get('credential1'),
+          credential2: formData.get('credential2'),
+        }
+      : // Dashboard Login
+        {
+          username: formData.get('username'),
+          password: formData.get('password'),
+          role: formData.get('role'),
+        }
+
+    // Send the data to the server in JSON format.
+    const JSONdata = JSON.stringify(data)
+    alert(JSONdata)
+
+    // Send the data to the server.
+    const response = role
+      ? APIServices.authVoter(data)
+      : APIServices.authDashboard(data)
+
+    // Check if the response is successful then redirect to page, otherwise display error.
+    if (response) {
+      setOpenSuccess(true)
+      // window.location.reload()
+    } else {
+      setOpenError(true)
     }
-
-    setTimeout(() => {
-      window.location.reload()
-    }, 500)
-  }
-
-  const handleRoleChange = (event) => {
-    setSelectRole(event.target.value)
   }
 
   return (
@@ -78,7 +101,7 @@ export default function Login() {
           Sign in {role ? 'as a Voter' : 'Dashboard'}
         </Typography>
 
-        <Box component="form" noValidate sx={{ mt: 4 }}>
+        <Box component="form" noValidate sx={{ mt: 4 }} onSubmit={handleSubmit}>
           <TextField
             margin="normal"
             required
@@ -104,9 +127,8 @@ export default function Login() {
               <Select
                 labelId="select-role"
                 id="selectRole"
-                value={selectRole}
                 label="Role"
-                onChange={handleRoleChange}
+                name="role"
               >
                 <MenuItem value={'societyContact'}>Society Contact</MenuItem>
                 <MenuItem value={'employee'}>Employee</MenuItem>
@@ -116,12 +138,12 @@ export default function Login() {
           )}
 
           <Button
-            type="button"
+            type="submit"
             fullWidth
             variant="contained"
             className="bg-blue-500 hover:bg-blue-700"
             sx={{ mt: 2, mb: 2, padding: 1.5 }}
-            onClick={role ? handleVoterLogin : handleDashboardLogin}
+            // onClick={role ? handleVoterLogin : handleDashboardLogin}
           >
             Sign In
           </Button>
@@ -138,6 +160,16 @@ export default function Login() {
           </Grid>
         </Box>
       </Box>
+      <Snackbar open={openSuccess} autoHideDuration={5000}>
+        <Alert severity="success" sx={{ width: '100%' }}>
+          Login Successfully
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openError} autoHideDuration={5000}>
+        <Alert severity="error" sx={{ width: '100%' }}>
+          Login Failed
+        </Alert>
+      </Snackbar>
     </Container>
   )
 }

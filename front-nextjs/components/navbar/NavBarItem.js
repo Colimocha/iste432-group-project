@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import GlobalServices from '../../services/GlobalServices'
 
 export default function NavBarItem() {
   const [role, setRole] = useState('')
 
   useEffect(() => {
-    setRole(new GlobalServices().getRole())
+    setRole(GlobalServices.getRole)
   }, [])
 
   const societyContactNavItems = (

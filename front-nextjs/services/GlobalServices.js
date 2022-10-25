@@ -1,48 +1,55 @@
 class GlobalServices {
   constructor() {}
   // User Token
-  getUserToken() {
+  static getUserToken() {
     if (typeof window !== 'undefined')
       return window.sessionStorage.getItem('userToken')
   }
-  setUserToken(userToken) {
+  static setUserToken(userToken) {
     if (typeof window !== 'undefined')
       window.sessionStorage.setItem('userToken', userToken)
   }
 
   // Voter Role
-  getVoterRole() {
+  static getVoterRole() {
     if (typeof window !== 'undefined')
       return window.sessionStorage.getItem('role') === 'voter'
   }
-  setVoterRole() {
+  static setVoterRole() {
     if (typeof window !== 'undefined')
       window.sessionStorage.setItem('role', 'voter')
   }
   // Society Contact Role
-  getSocietyContactRole() {
+  static getSocietyContactRole() {
     if (typeof window !== 'undefined')
       return window.sessionStorage.getItem('role') === 'societyContact'
   }
-  setSocietyContactRole() {
+  static setSocietyContactRole() {
     if (typeof window !== 'undefined')
       window.sessionStorage.setItem('role', 'societyContact')
   }
 
   // Employee Role
-  getEmployeeRole() {
+  static getEmployeeRole() {
     if (typeof window !== 'undefined')
       return window.sessionStorage.getItem('role') === 'employee'
   }
-  setEmployeeRole() {
+  static setEmployeeRole() {
     if (typeof window !== 'undefined')
       window.sessionStorage.setItem('role', 'employee')
   }
 
-  getRole() {
+  static getRole() {
     if (typeof window !== 'undefined')
       return window.sessionStorage.getItem('role')
   }
+
+  static getAuthorizationHeader() {
+    if (typeof window !== 'undefined')
+      return {
+        Authorization: `Bearer ${this.getUserToken()}`,
+      }
+  }
 }
 
-module.exports = GlobalServices
+export default GlobalServices
