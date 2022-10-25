@@ -37,11 +37,18 @@ export class AuthService {
    */
   async voterLogin(dto: VoterAuthDto) {
     const { cred_1, cred_2 } = dto;
-    const voter = await this.prisma.voter.findFirst({
-      where: { credential_1: cred_1, credential_2: cred_2 },
+
+    // find voter by cred_1
+    const voter = await this.prisma.voter.findUnique({
+      where: { credential_1: cred_1 },
     });
     if (!voter) throw new ForbiddenException('Invalid credentials');
 
+    // validate credential 2
+    const isMatchCred2 = await argon.verify(voter.credential_2, cred_2);
+    if (!isMatchCred2) throw new ForbiddenException('Invalid credentials');
+
+    // return token
     return await this.generateToken(voter.id, Role.Voter);
   }
 

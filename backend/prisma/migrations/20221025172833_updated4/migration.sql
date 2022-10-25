@@ -16,7 +16,7 @@ CREATE TABLE "Voter" (
     "lastname" TEXT,
     "credential_1" TEXT,
     "credential_2" TEXT,
-    "dateofbirth" TIMESTAMP(3),
+    "dateofbirth" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "societyId" INTEGER NOT NULL,
@@ -100,6 +100,9 @@ CREATE TABLE "Vote" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Employee_username_key" ON "Employee"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Voter_credential_1_key" ON "Voter"("credential_1");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "SocietyContact_username_key" ON "SocietyContact"("username");

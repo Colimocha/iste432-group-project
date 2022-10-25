@@ -17,14 +17,13 @@ export class VotersService {
       societyId,
     } = createVoterDto;
 
-    const hash_credential_1 = await argon.hash(credential_1);
     const hash_credential_2 = await argon.hash(credential_2);
 
     const created = await this.prisma.voter.create({
       data: {
         firstname: firstName,
         lastname: lastName,
-        credential_1: hash_credential_1,
+        credential_1: credential_1,
         credential_2: hash_credential_2,
         dateofbirth: dateOfBirth,
         societyId: societyId,
@@ -61,7 +60,6 @@ export class VotersService {
       societyId,
     } = updateVoterDto;
 
-    const hash_credential_1 = await argon.hash(credential_1);
     const hash_credential_2 = await argon.hash(credential_2);
 
     const updated = await this.prisma.voter.update({
@@ -69,7 +67,7 @@ export class VotersService {
       data: {
         firstname: firstName,
         lastname: lastName,
-        credential_1: hash_credential_1,
+        credential_1: credential_1,
         credential_2: hash_credential_2,
         dateofbirth: dateOfBirth,
         societyId: societyId,

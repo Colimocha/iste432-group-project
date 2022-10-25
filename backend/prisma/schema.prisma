@@ -22,7 +22,7 @@ model Voter {
   id           Int      @id @default(autoincrement())
   firstname    String?
   lastname     String?
-  credential_1 String?
+  credential_1 String?  @unique
   credential_2 String?
   dateofbirth  String?
   createdAt    DateTime @default(now())
@@ -49,7 +49,7 @@ model Society {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  SocietyContact SocietyContact?
+  SocietyContact SocietyContact[]
   Voter          Voter[]
   Ballot         Ballot[]
 }
