@@ -1,24 +1,30 @@
-import { useEffect, useState } from 'react'
-import DashboardLayout from '../components/layout/DashboardLayout'
 import '../styles/globals.css'
-import Login from './Login'
+import { useEffect, useState } from 'react'
+import DashboardLayout from '../components/layout/dashboardLayout'
+import VoteLayout from '../components/layout/voteLayout'
+import GlobalServices from '../services/globalServices'
+import Login from './login'
 
 function MyApp({ Component, pageProps }) {
   const [role, setRole] = useState('')
   const [hasToken, setToken] = useState(false)
 
   useEffect(() => {
-    setRole(sessionStorage.getItem('role') ?? '')
-    setToken(sessionStorage.getItem('token') ?? '')
+    setRole(GlobalServices.getRole() ?? '')
+    setToken(GlobalServices.getUserToken() ? true : false)
   }, [])
 
   return (
     <>
       {role === '' && <Login />}
 
-      {role === 'voter' && <Component {...pageProps} />}
+      {role === 'voter' && hasToken && (
+        <VoteLayout>
+          <Component {...pageProps} />
+        </VoteLayout>
+      )}
 
-      {['societyContact', 'employee'].includes(role) && (
+      {['societyContact', 'employee'].includes(role) && hasToken && (
         <DashboardLayout>
           <Component {...pageProps} />
         </DashboardLayout>

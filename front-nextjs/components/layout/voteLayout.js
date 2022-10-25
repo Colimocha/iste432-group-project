@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import NavBar from '../navbar/NavBar'
 
-export default function DashboardLayout({ children }) {
+export default function VoteLayout({ children }) {
   return (
     <>
       <Head>
-        <title>Dashboard</title>
+        <title>Vote</title>
       </Head>
       <NavBar />
       <main>{children}</main>

@@ -1,6 +1,8 @@
-import GlobalServices from './GlobalServices'
+import GlobalServices from './globalServices'
+
 const url = 'https://backend-psi-ten.vercel.app'
-class APIServices {
+
+class AuthServices {
   static async authVoter(obj) {
     try {
       const response = await fetch(url + '/auth/voter', {
@@ -57,4 +59,4 @@ class APIServices {
   }
 }
 
-export default APIServices
+export default AuthServices

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import GlobalServices from '../../services/GlobalServices'
+import GlobalServices from '../../services/globalServices'
 
 export default function NavBarItem() {
   const [role, setRole] = useState('')

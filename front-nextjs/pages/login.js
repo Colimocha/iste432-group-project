@@ -15,8 +15,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useState } from 'react'
-import APIServices from '../services/APIServices'
-import GlobalServices from '../services/GlobalServices'
+import AuthServices from '../services/authServices'
 
 export default function Login() {
   const [role, setRole] = useState(true)
@@ -53,8 +52,8 @@ export default function Login() {
 
     // Send the data to the server.
     const response = role
-      ? await APIServices.authVoter(data)
-      : await APIServices.authDashboard(data)
+      ? await AuthServices.authVoter(data)
+      : await AuthServices.authDashboard(data)
 
     // Check if the response is successful then redirect to page, otherwise display error.
     console.log(response)
