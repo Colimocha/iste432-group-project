@@ -4,6 +4,8 @@ import DashboardLayout from '../components/layout/dashboardLayout'
 import VoteLayout from '../components/layout/voteLayout'
 import GlobalServices from '../services/globalServices'
 import Login from './login'
+import { theme } from '../components/theme/Theme'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 
 function MyApp({ Component, pageProps }) {
   const [role, setRole] = useState('')
@@ -19,15 +21,21 @@ function MyApp({ Component, pageProps }) {
       {role === '' && <Login />}
 
       {role === 'voter' && hasToken && (
-        <VoteLayout>
-          <Component {...pageProps} />
-        </VoteLayout>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <VoteLayout>
+            <Component {...pageProps} />
+          </VoteLayout>
+        </ThemeProvider>
       )}
 
       {['societyContact', 'employee'].includes(role) && hasToken && (
-        <DashboardLayout>
-          <Component {...pageProps} />
-        </DashboardLayout>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <DashboardLayout>
+            <Component {...pageProps} />
+          </DashboardLayout>
+        </ThemeProvider>
       )}
     </>
   )
