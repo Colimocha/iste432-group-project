@@ -1,5 +1,5 @@
 import { Button } from '@mui/material'
-import GlobalServices from '../services/globalServices'
+import GlobalServices from '../lib/global'
 
 export default function Home() {
   return (

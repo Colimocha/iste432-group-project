@@ -1,1 +1,0 @@
-Services for fetch data or global function
