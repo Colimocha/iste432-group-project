@@ -2,8 +2,8 @@ import '../styles/globals.css'
 import { useEffect, useState } from 'react'
 import DashboardLayout from '../components/layout/dashboardLayout'
 import VoteLayout from '../components/layout/voteLayout'
-import GlobalServices from '../services/globalServices'
 import Login from './login'
+import GlobalServices from '../lib/global'
 
 function MyApp({ Component, pageProps }) {
   const [role, setRole] = useState('')

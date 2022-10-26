@@ -1,4 +1,4 @@
-import GlobalServices from './globalServices'
+import GlobalServices from '../../lib/global'
 
 const url = 'https://backend-psi-ten.vercel.app'
 
