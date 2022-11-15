@@ -11,10 +11,6 @@ export class UpdateVoteDto extends PartialType(CreateVoteDto) {
   @IsNotEmpty()
   result: string;
 
-  @IsString()
-  @IsNotEmpty()
-  submit_guid: string;
-
   @IsBoolean()
   @IsNotEmpty()
   isWriteIn: boolean;

@@ -10,7 +10,6 @@ export class CreateVoteDto {
   result: string;
 
   @IsString()
-  @IsNotEmpty()
   submit_guid: string;
 
   @IsBoolean()

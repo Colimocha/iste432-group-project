@@ -1,15 +1,20 @@
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateVoteDto, UpdateVoteDto } from './dto';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class VoteService {
   constructor(private prisma: PrismaService) {}
 
   async create(createVoteDto: CreateVoteDto) {
-    const { voted, result, submit_guid, isWriteIn, ballotId } = createVoteDto;
-    if (!voted || !result || !submit_guid || !isWriteIn || !ballotId)
-      throw new BadRequestException('Missing required fields');
+    const ballotIdExists = await this.prisma.ballot.findUnique({
+      where: { id: createVoteDto.ballotId },
+    });
+    if (!ballotIdExists) throw new BadRequestException('Ballot not found');
+
+    createVoteDto.submit_guid = nanoid(7);
+
     const created = await this.prisma.vote.create({ data: createVoteDto });
     if (!created) throw new BadRequestException('Vote not created');
     return created;
@@ -28,6 +33,12 @@ export class VoteService {
 
   async update(id: number, updateVoteDto: UpdateVoteDto) {
     if (!id) throw new BadRequestException('Missing required fields');
+
+    const ballotIdExists = await this.prisma.ballot.findUnique({
+      where: { id: updateVoteDto.ballotId },
+    });
+    if (!ballotIdExists) throw new BadRequestException('Ballot not found');
+
     const updated = await this.prisma.vote.update({
       where: { id },
       data: updateVoteDto,

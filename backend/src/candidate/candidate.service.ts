@@ -7,11 +7,21 @@ export class CandidateService {
   constructor(private prisma: PrismaService) {}
 
   async create(createCandidateDto: CreateCandidateDto) {
-    const { firstname, lastname, title, image, officeId, ballotId } =
+    const { firstName, lastName, title, image, officeId, ballotId } =
       createCandidateDto;
 
-    if (!firstname || !lastname || !title || !image || !officeId || !ballotId)
+    if (!firstName || !lastName || !title || !image || !officeId || !ballotId)
       throw new BadRequestException('Missing required fields');
+
+    const officeIdExists = await this.prisma.office.findUnique({
+      where: { id: officeId },
+    });
+    if (!officeIdExists) throw new BadRequestException('Office not found');
+
+    const ballotIdExists = await this.prisma.ballot.findUnique({
+      where: { id: ballotId },
+    });
+    if (!ballotIdExists) throw new BadRequestException('Ballot not found');
 
     const created = await this.prisma.candidate.create({
       data: createCandidateDto,
@@ -33,6 +43,17 @@ export class CandidateService {
 
   async update(id: number, updateCandidateDto: UpdateCandidateDto) {
     if (!id) throw new BadRequestException('Missing required fields');
+
+    const officeIdExists = await this.prisma.office.findUnique({
+      where: { id: updateCandidateDto.officeId },
+    });
+    if (!officeIdExists) throw new BadRequestException('Office not found');
+
+    const ballotIdExists = await this.prisma.ballot.findUnique({
+      where: { id: updateCandidateDto.ballotId },
+    });
+    if (!ballotIdExists) throw new BadRequestException('Ballot not found');
+
     const updated = await this.prisma.candidate.update({
       where: { id },
       data: updateCandidateDto,

@@ -3,11 +3,11 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class CreateCandidateDto {
   @IsString()
   @IsNotEmpty()
-  firstname: string;
+  firstName: string;
 
   @IsString()
   @IsNotEmpty()
-  lastname: string;
+  lastName: string;
 
   @IsString()
   @IsNotEmpty()
