@@ -17,36 +17,55 @@ export class VotersService {
       societyId,
     } = createVoterDto;
 
+    const society_found = await this.prisma.society.findUnique({
+      where: { id: createVoterDto.societyId },
+    });
+    if (!society_found)
+      throw new BadRequestException(
+        `The society ${createVoterDto.societyId} not found`,
+      );
+
     const hash_credential_2 = await argon.hash(credential_2);
 
     const created = await this.prisma.voter.create({
       data: {
-        firstname: firstName,
-        lastname: lastName,
-        credential_1: credential_1,
+        firstName,
+        lastName,
+        credential_1,
         credential_2: hash_credential_2,
-        dateofbirth: dateOfBirth,
-        societyId: societyId,
+        dateOfBirth,
+        societyId,
       },
     });
     if (!created) throw new BadRequestException('Voter not created');
-
+    delete created.credential_2;
     return created;
   }
 
   async findAll() {
-    return await this.prisma.voter.findMany();
+    const found = await this.prisma.voter.findMany();
+    if (found.length) found.forEach((voter) => delete voter.credential_2);
+    return found;
   }
 
   async findOne(id: number) {
     if (!id) throw new BadRequestException('No id provided');
     const found = await this.prisma.voter.findUnique({ where: { id: id } });
     if (!found) throw new BadRequestException('Voter not found');
+    delete found.credential_2;
     return found;
   }
 
   async update(id: number, updateVoterDto: UpdateVoterDto) {
     if (!id) throw new BadRequestException('No id provided');
+
+    const society_found = await this.prisma.society.findUnique({
+      where: { id: updateVoterDto.societyId },
+    });
+    if (!society_found)
+      throw new BadRequestException(
+        `The society ${updateVoterDto.societyId} not found`,
+      );
 
     const found = await this.prisma.voter.findUnique({ where: { id: id } });
     if (!found) throw new BadRequestException('Voter not found');
@@ -65,15 +84,16 @@ export class VotersService {
     const updated = await this.prisma.voter.update({
       where: { id: id },
       data: {
-        firstname: firstName,
-        lastname: lastName,
-        credential_1: credential_1,
+        firstName,
+        lastName,
+        credential_1,
         credential_2: hash_credential_2,
-        dateofbirth: dateOfBirth,
-        societyId: societyId,
+        dateOfBirth,
+        societyId,
       },
     });
     if (!updated) throw new BadRequestException('Voter not updated');
+    delete updated.credential_2;
     return updated;
   }
 
@@ -82,6 +102,7 @@ export class VotersService {
     const found = await this.prisma.voter.findUnique({ where: { id: id } });
     if (!found) throw new BadRequestException('Voter not found');
     const removed = await this.prisma.voter.delete({ where: { id: id } });
+    delete removed.credential_2;
     return removed;
   }
 }
