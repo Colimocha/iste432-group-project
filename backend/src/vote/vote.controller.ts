@@ -8,6 +8,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpStatus,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { VoteService } from './vote.service';
 import { CreateVoteDto, UpdateVoteDto } from './dto';
@@ -28,17 +30,36 @@ export class VoteController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
     return this.voteService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVoteDto: UpdateVoteDto) {
+  update(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+    @Body() updateVoteDto: UpdateVoteDto,
+  ) {
     return this.voteService.update(+id, updateVoteDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
     return this.voteService.remove(+id);
   }
 }

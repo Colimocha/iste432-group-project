@@ -1,27 +1,27 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateCandidateDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   firstName: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   lastName: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   title: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   image: string;
 
-  @IsNumber()
   @IsNotEmpty()
+  @IsNumber()
   officeId: number;
 
-  @IsNumber()
   @IsNotEmpty()
+  @IsNumber()
   ballotId: number;
 }

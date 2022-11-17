@@ -5,40 +5,27 @@ import { CreateSocietyDto, UpdateSocietyDto } from './dto';
 @Injectable()
 export class SocietyService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createSocietyDto: CreateSocietyDto) {
-    const { name } = createSocietyDto;
-    if (!name) throw new BadRequestException('The name not provided');
-    const created = this.prisma.society.create({ data: { name } });
-    if (!created) throw new BadRequestException('The Society already exists');
-    return created;
+  async create(createSocietyDto: CreateSocietyDto) {
+    return this.prisma.society.create({ data: createSocietyDto });
   }
 
-  findAll() {
+  async findAll() {
     return this.prisma.society.findMany();
   }
 
-  findOne(id: number) {
-    if (!id) throw new BadRequestException('The id not provided');
-    const found = this.prisma.society.findUnique({ where: { id } });
-    if (!found) throw new BadRequestException('The Society not found');
-    return found;
+  async findOne(id: number) {
+    return this.prisma.society.findUnique({ where: { id } });
   }
 
-  update(id: number, updateSocietyDto: UpdateSocietyDto) {
-    if (!id) throw new BadRequestException('The id not provided');
-    const { name } = updateSocietyDto;
-    const updated = this.prisma.society.update({
+  async update(id: number, updateSocietyDto: UpdateSocietyDto) {
+    return this.prisma.society.update({
       where: { id },
-      data: { name },
+      data: updateSocietyDto,
     });
-    if (!updated) throw new BadRequestException('The Society not updated');
-    return updated;
   }
 
-  remove(id: number) {
-    if (!id) throw new BadRequestException('The id not provided');
-    const removed = this.prisma.society.delete({ where: { id } });
-    if (!removed) throw new BadRequestException('The Society not deleted');
-    return removed;
+  async remove(id: number) {
+    if (this.findOne(id)) throw new BadRequestException('Society not found');
+    return this.prisma.society.delete({ where: { id } });
   }
 }

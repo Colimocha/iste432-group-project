@@ -7,13 +7,8 @@ export class OfficeService {
   constructor(private prisma: PrismaService) {}
 
   async create(createOfficeDto: CreateOfficeDto) {
-    const { name, ballotId } = createOfficeDto;
-    if (!name || !ballotId)
-      throw new BadRequestException('Missing required fields');
-
-    const created = await this.prisma.office.create({ data: createOfficeDto });
-    if (!created) throw new BadRequestException('Failed to create office');
-    return created;
+    await this.ballotExists(createOfficeDto.ballotId);
+    return await this.prisma.office.create({ data: createOfficeDto });
   }
 
   async findAll() {
@@ -21,27 +16,24 @@ export class OfficeService {
   }
 
   async findOne(id: number) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const found = await this.prisma.office.findUnique({ where: { id } });
-    if (!found) throw new BadRequestException('Office not found');
-    return found;
+    await this.prisma.office.findUnique({ where: { id } });
   }
 
   async update(id: number, updateOfficeDto: UpdateOfficeDto) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const updated = await this.prisma.office.update({
+    await this.prisma.office.findUnique({ where: { id } });
+    return await this.prisma.office.update({
       where: { id },
       data: updateOfficeDto,
     });
-    if (!updated) throw new BadRequestException('Office not updated');
-    return updated;
   }
 
   async remove(id: number) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const found = await this.prisma.office.findUnique({ where: { id } });
-    if (!found) throw new BadRequestException('Office not found');
-    const removed = await this.prisma.office.delete({ where: { id } });
-    return removed;
+    if (this.findOne(id)) throw new BadRequestException('Office not found');
+    return await this.prisma.office.delete({ where: { id } });
+  }
+
+  private async ballotExists(id: number) {
+    const ballot = await this.prisma.ballot.findUnique({ where: { id } });
+    if (!ballot) throw new BadRequestException('Ballot not found');
   }
 }

@@ -7,64 +7,64 @@ import * as argon from 'argon2';
 export class SocietyContactService {
   constructor(private prisma: PrismaService) {}
   async create(createSocietyContactDto: CreateSocietyContactDto) {
-    const { username, password, societyId } = createSocietyContactDto;
-    if (!username || !password)
-      throw new BadRequestException('Username and password are required');
-
+    await this.societyExists(createSocietyContactDto.societyId);
+    const { password, ...societyContact } = createSocietyContactDto;
     const hashedPassword = await argon.hash(password);
-    const created = await this.prisma.societyContact.create({
-      data: { username, password: hashedPassword, societyId },
-    });
-    if (!created)
-      throw new BadRequestException('Society Contact has existed already');
-
-    delete created.password;
-    return created;
+    return await this.prisma.societyContact
+      .create({
+        data: { ...societyContact, password: hashedPassword },
+      })
+      .then((societyContact) => {
+        delete societyContact.password;
+        return societyContact;
+      });
   }
 
   async findAll() {
-    const found = await this.prisma.societyContact.findMany();
-    if (found.length)
-      found.forEach((societyContact) => delete societyContact.password);
-    return found;
+    return await this.prisma.societyContact
+      .findMany()
+      .then((societyContacts) => {
+        if (societyContacts.length) {
+          societyContacts.forEach((societyContact) => {
+            delete societyContact.password;
+          });
+        }
+        return societyContacts;
+      });
   }
 
   async findOne(id: number) {
-    if (!id) throw new BadRequestException('The parameter id is required');
-
-    const found = await this.prisma.societyContact.findUnique({
-      where: { id },
-    });
-    if (!found) throw new BadRequestException('Society Contact not found');
-
-    delete found.password;
-    return found;
+    return await this.prisma.societyContact
+      .findUnique({ where: { id } })
+      .then((societyContact) => {
+        if (societyContact) delete societyContact.password;
+        return societyContact;
+      });
   }
 
   async update(id: number, updateSocietyContactDto: UpdateSocietyContactDto) {
-    if (!id) throw new BadRequestException('The parameter id is required');
-
-    const { username, password, societyId } = updateSocietyContactDto;
-    let hashedPassword = undefined;
-    if (password) hashedPassword = await argon.hash(password);
-    const updated = await this.prisma.societyContact.update({
-      where: { id },
-      data: { username, password: hashedPassword, societyId },
-    });
-    if (!updated) throw new BadRequestException('Society Contact not updated');
-
-    delete updated.password;
-    return updated;
+    await this.societyExists(updateSocietyContactDto.societyId);
+    const { password, ...societyContact } = updateSocietyContactDto;
+    const hashedPassword = await argon.hash(password);
+    return await this.prisma.societyContact
+      .update({
+        where: { id },
+        data: { ...societyContact, password: hashedPassword },
+      })
+      .then((societyContact) => {
+        delete societyContact.password;
+        return societyContact;
+      });
   }
 
   async remove(id: number) {
-    if (!id) throw new BadRequestException('The parameter id is required');
-    const deleted = await this.prisma.societyContact.delete({
-      where: { id },
-    });
-    if (!deleted) throw new BadRequestException('Society Contact not deleted');
+    if (this.findOne(id))
+      throw new BadRequestException('Society contact not found');
+    return await this.prisma.societyContact.delete({ where: { id } });
+  }
 
-    delete deleted.password;
-    return deleted;
+  private async societyExists(id: number) {
+    const society = await this.prisma.society.findUnique({ where: { id } });
+    if (!society) throw new BadRequestException('Society not found');
   }
 }

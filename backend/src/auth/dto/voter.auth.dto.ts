@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class VoterAuthDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   cred_1: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   cred_2: string;
 }

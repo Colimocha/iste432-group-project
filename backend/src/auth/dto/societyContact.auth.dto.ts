@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class SCAuthDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   username: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   password: string;
 }
