@@ -1,5 +1,6 @@
 import {
   IsDate,
+  IsDateString,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -24,7 +25,7 @@ export class CreateVoterDto {
   credential_2?: string;
 
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   dateOfBirth?: string;
 
   @IsNumber()
