@@ -13,10 +13,14 @@ import {
   Snackbar,
   TextField,
   Typography,
+  ThemeProvider,
+  CssBaseline,
 } from '@mui/material'
+
 import Head from 'next/head'
 import { useState } from 'react'
 import AuthServices from './api/auth'
+import { theme } from '../components/theme/Theme'
 
 export default function Login() {
   const [role, setRole] = useState(true)
@@ -70,117 +74,124 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
-      <Container
-        fixed
-        component="main"
-        className="w-full h-screen flex justify-center items-center"
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            backgroundColor: '#FFFFFF',
-            padding: 8,
-            borderRadius: 2,
-            width: '25em',
-          }}
-          className="shadow-2xl"
+      <ThemeProvider theme={theme}>
+        <Container
+          fixed
+          component="main"
+          className="w-full h-screen flex justify-center items-center"
+          maxWidth="xs"
         >
-          <Typography component="h1" variant="h5">
-            Sign in {role ? 'as a Voter' : 'Dashboard'}
-          </Typography>
-
+          <CssBaseline />
           <Box
-            component="form"
-            noValidate
-            sx={{ mt: 4 }}
-            onSubmit={handleSubmit}
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
+              padding: 8,
+              borderRadius: 2,
+              width: '25em',
+            }}
+            className="shadow-2xl"
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id={role ? 'credential1' : 'username'}
-              label={role ? 'Credential #1' : 'Username'}
-              name={role ? 'credential1' : 'username'}
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id={role ? 'credential2' : 'password'}
-              label={role ? 'Credential #2' : 'Password'}
-              name={role ? 'credential2' : 'password'}
-              type={role ? 'text' : 'password'}
-            />
+            <Typography component="h1" variant="h5">
+              Sign in {role ? 'as a Voter' : 'Dashboard'}
+            </Typography>
 
-            {!role && (
-              <FormControl sx={{ mt: 2, minWidth: 120 }} fullWidth>
-                <InputLabel id="select-role">Role</InputLabel>
-                <Select
-                  labelId="select-role"
-                  id="selectRole"
-                  label="Role"
-                  name="role"
-                  value={''}
-                  required
-                >
-                  <MenuItem value={''} disabled>
-                    Select the Role
-                  </MenuItem>
-                  <MenuItem value={'societyContact'}>Society Contact</MenuItem>
-                  <MenuItem value={'employee'}>Employee</MenuItem>
-                </Select>
-                <FormHelperText>Select the role</FormHelperText>
-              </FormControl>
-            )}
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              className="bg-blue-500 hover:bg-blue-700"
-              sx={{ mt: 2, mb: 2, padding: 1.5 }}
-              // onClick={role ? handleVoterLogin : handleDashboardLogin}
+            <Box
+              component="form"
+              noValidate
+              sx={{ mt: 4 }}
+              onSubmit={handleSubmit}
             >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link
-                  onClick={
-                    role ? handleSwitchAdminLogin : handleSwitchVoterLogin
-                  }
-                  className="cursor-pointer"
-                  variant="body2"
-                >
-                  Switch {role ? 'Dashboard' : 'Voter'}
-                </Link>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id={role ? 'credential1' : 'username'}
+                label={role ? 'Credential #1' : 'Username'}
+                name={role ? 'credential1' : 'username'}
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id={role ? 'credential2' : 'password'}
+                label={role ? 'Credential #2' : 'Password'}
+                name={role ? 'credential2' : 'password'}
+                type={role ? 'text' : 'password'}
+              />
+
+              {!role && (
+                <FormControl sx={{ mt: 2, minWidth: 120 }} fullWidth>
+                  <InputLabel id="select-role">Role</InputLabel>
+                  <Select
+                    labelId="select-role"
+                    id="selectRole"
+                    label="Role"
+                    name="role"
+                    value={''}
+                    required
+                  >
+                    <MenuItem value={''} disabled>
+                      Select the Role
+                    </MenuItem>
+                    <MenuItem value={'societyContact'}>
+                      Society Contact
+                    </MenuItem>
+                    <MenuItem value={'employee'}>Employee</MenuItem>
+                  </Select>
+                  <FormHelperText>Select the role</FormHelperText>
+                </FormControl>
+              )}
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                className="bg-blue-500 hover:bg-blue-700"
+                sx={{ mt: 2, mb: 2, padding: 1.5 }}
+                // onClick={role ? handleVoterLogin : handleDashboardLogin}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link
+                    onClick={
+                      role ? handleSwitchAdminLogin : handleSwitchVoterLogin
+                    }
+                    className="cursor-pointer"
+                    variant="body2"
+                  >
+                    Switch {role ? 'Dashboard' : 'Voter'}
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-        <Snackbar
-          open={openSuccess}
-          autoHideDuration={5000}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        >
-          <Alert severity="success" sx={{ width: '100%' }}>
-            Login Successfully
-          </Alert>
-        </Snackbar>
-        <Snackbar
-          open={openError}
-          autoHideDuration={5000}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        >
-          <Alert severity="error" sx={{ width: '100%' }}>
-            Login Failed
-          </Alert>
-        </Snackbar>
-      </Container>
+          <Snackbar
+            open={openSuccess}
+            autoHideDuration={2000}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          >
+            <Alert severity="success" sx={{ width: '100%' }}>
+              Login Successfully
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={openError}
+            autoHideDuration={2000}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          >
+            <Alert severity="error" sx={{ width: '100%' }}>
+              Login Failed
+            </Alert>
+          </Snackbar>
+        </Container>
+      </ThemeProvider>
     </>
   )
 }
