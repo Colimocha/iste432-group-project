@@ -8,6 +8,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { CandidateService } from './candidate.service';
 import { CreateCandidateDto, UpdateCandidateDto } from './dto';
@@ -28,20 +30,36 @@ export class CandidateController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
     return this.candidateService.findOne(+id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
     @Body() updateCandidateDto: UpdateCandidateDto,
   ) {
     return this.candidateService.update(+id, updateCandidateDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
     return this.candidateService.remove(+id);
   }
 }

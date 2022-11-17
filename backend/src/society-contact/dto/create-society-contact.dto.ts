@@ -1,15 +1,15 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateSocietyContactDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   username: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   password: string;
 
-  @IsNumber()
   @IsNotEmpty()
+  @IsNumber()
   societyId: number;
 }

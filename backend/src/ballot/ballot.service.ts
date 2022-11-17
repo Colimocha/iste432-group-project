@@ -7,18 +7,8 @@ export class BallotService {
   constructor(private prisma: PrismaService) {}
 
   async create(createBallotDto: CreateBallotDto) {
-    const { name, allowWriteIn, societyId } = createBallotDto;
-
-    if (!name || !allowWriteIn || !societyId)
-      throw new BadRequestException('Missing required fields');
-
-    const created = await this.prisma.ballot.create({
-      data: { name, allowWriteIn, societyId },
-    });
-
-    if (!created) throw new BadRequestException('Ballot not created');
-
-    return created;
+    await this.societyExists(createBallotDto.societyId);
+    return await this.prisma.ballot.create({ data: createBallotDto });
   }
 
   async findAll() {
@@ -26,27 +16,25 @@ export class BallotService {
   }
 
   async findOne(id: number) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const found = await this.prisma.ballot.findUnique({ where: { id } });
-    if (!found) throw new BadRequestException('Ballot not found');
-    return found;
+    return await this.prisma.ballot.findUnique({ where: { id } });
   }
 
   async update(id: number, updateBallotDto: UpdateBallotDto) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const { name, allowWriteIn, societyId } = updateBallotDto;
-    const updated = await this.prisma.ballot.update({
+    await this.societyExists(updateBallotDto.societyId);
+    return await this.prisma.ballot.update({
       where: { id },
-      data: { name, allowWriteIn, societyId },
+      data: updateBallotDto,
     });
-    if (!updated) throw new BadRequestException('Ballot not updated');
-    return updated;
   }
 
   async remove(id: number) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const removed = await this.prisma.ballot.delete({ where: { id } });
-    if (!removed) throw new BadRequestException('Ballot not removed');
-    return removed;
+    if (this.findOne(id))
+      throw new BadRequestException('Ballot does not exist');
+    return await this.prisma.ballot.delete({ where: { id } });
+  }
+
+  private async societyExists(id: number) {
+    const found = await this.prisma.society.findUnique({ where: { id } });
+    if (!found) throw new BadRequestException('Society does not exist');
   }
 }

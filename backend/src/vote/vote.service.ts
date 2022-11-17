@@ -1,18 +1,21 @@
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateVoteDto, UpdateVoteDto } from './dto';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class VoteService {
   constructor(private prisma: PrismaService) {}
 
   async create(createVoteDto: CreateVoteDto) {
-    const { voted, result, submit_guid, isWriteIn, ballotId } = createVoteDto;
-    if (!voted || !result || !submit_guid || !isWriteIn || !ballotId)
-      throw new BadRequestException('Missing required fields');
-    const created = await this.prisma.vote.create({ data: createVoteDto });
-    if (!created) throw new BadRequestException('Vote not created');
-    return created;
+    await this.ballotExists(createVoteDto.ballotId);
+    const vote = await this.prisma.vote.create({
+      data: {
+        ...createVoteDto,
+        submit_guid: nanoid(7),
+      },
+    });
+    return vote;
   }
 
   async findAll() {
@@ -20,27 +23,24 @@ export class VoteService {
   }
 
   async findOne(id: number) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const found = await this.prisma.vote.findUnique({ where: { id } });
-    if (!found) throw new BadRequestException('Vote not found');
-    return found;
+    return await this.prisma.vote.findUnique({ where: { id } });
   }
 
   async update(id: number, updateVoteDto: UpdateVoteDto) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const updated = await this.prisma.vote.update({
+    await this.prisma.vote.findUnique({ where: { id } });
+    return await this.prisma.vote.update({
       where: { id },
       data: updateVoteDto,
     });
-    if (!updated) throw new BadRequestException('Vote not updated');
-    return updated;
   }
 
   async remove(id: number) {
-    if (!id) throw new BadRequestException('Missing required fields');
-    const found = await this.prisma.vote.findUnique({ where: { id } });
-    if (!found) throw new BadRequestException('Vote not found');
-    const deleted = await this.prisma.vote.delete({ where: { id } });
-    return deleted;
+    if (this.findOne(id)) throw new BadRequestException('Vote not found');
+    return await this.prisma.vote.delete({ where: { id } });
+  }
+
+  private async ballotExists(id: number) {
+    const ballot = await this.prisma.ballot.findUnique({ where: { id } });
+    if (!ballot) throw new BadRequestException('Ballot not found');
   }
 }

@@ -20,11 +20,11 @@ model Employee {
 
 model Voter {
   id           Int      @id @default(autoincrement())
-  firstname    String?
-  lastname     String?
+  firstName    String?
+  lastName     String?
   credential_1 String?  @unique
   credential_2 String?
-  dateofbirth  String?
+  dateOfBirth  String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -40,7 +40,7 @@ model SocietyContact {
   updatedAt DateTime @updatedAt
 
   society   Society @relation(fields: [societyId], references: [id])
-  societyId Int     @unique
+  societyId Int
 }
 
 model Society {
@@ -81,8 +81,8 @@ model Office {
 
 model Candidate {
   id        Int      @id @default(autoincrement())
-  firstname String
-  lastname  String
+  firstName String
+  lastName  String
   title     String
   image     String
   createdAt DateTime @default(now())
