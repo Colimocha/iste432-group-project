@@ -1,22 +1,21 @@
 import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateVoteDto {
-  @IsBoolean()
   @IsNotEmpty()
+  @IsBoolean()
   voted: boolean;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   result: string;
 
-  @IsString()
   submit_guid: string;
 
-  @IsBoolean()
   @IsNotEmpty()
+  @IsBoolean()
   isWriteIn: boolean;
 
-  @IsNumber()
   @IsNotEmpty()
+  @IsNumber()
   ballotId: number;
 }

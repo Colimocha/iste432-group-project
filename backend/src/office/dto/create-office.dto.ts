@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateOfficeDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   name: string;
 
-  @IsNumber()
   @IsNotEmpty()
+  @IsNumber()
   ballotId: number;
 }

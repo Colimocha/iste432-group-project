@@ -8,6 +8,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpStatus,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { SocietyService } from './society.service';
 import { CreateSocietyDto } from './dto/create-society.dto';
@@ -29,17 +31,36 @@ export class SocietyController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
     return this.societyService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSocietyDto: UpdateSocietyDto) {
+  update(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+    @Body() updateSocietyDto: UpdateSocietyDto,
+  ) {
     return this.societyService.update(+id, updateSocietyDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
     return this.societyService.remove(+id);
   }
 }

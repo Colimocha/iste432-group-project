@@ -1,15 +1,15 @@
 import { IsString, IsNotEmpty, IsNumber, IsBoolean } from 'class-validator';
 
 export class CreateBallotDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   name: string;
 
-  @IsBoolean()
   @IsNotEmpty()
+  @IsBoolean()
   allowWriteIn: boolean;
 
-  @IsNumber()
   @IsNotEmpty()
+  @IsNumber()
   societyId: number;
 }

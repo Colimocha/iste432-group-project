@@ -7,52 +7,50 @@ import * as argon from 'argon2';
 export class EmployeeService {
   constructor(private prisma: PrismaService) {}
   async create(createEmployeeDto: CreateEmployeeDto) {
-    const { username, password } = createEmployeeDto;
-    if (!username || !password)
-      throw new BadRequestException('The username and password are required');
-
+    const { password, ...employee } = createEmployeeDto;
     const hashedPassword = await argon.hash(password);
-    const created = await this.prisma.employee.create({
-      data: { username, password: hashedPassword },
-    });
-    if (!created) throw new BadRequestException('The Employee already exists');
-    delete created.password;
-    return created;
+    return await this.prisma.employee
+      .create({ data: { ...employee, password: hashedPassword } })
+      .then((employee) => {
+        delete employee.password;
+        return employee;
+      });
   }
 
   async findAll() {
-    const found = await this.prisma.employee.findMany();
-    if (found.length) found.forEach((e) => delete e.password);
-    return found;
+    return await this.prisma.employee.findMany().then((employees) => {
+      if (employees.length)
+        employees.forEach((employee) => delete employee.password);
+      return employees;
+    });
   }
 
   async findOne(id: number) {
-    if (!id) throw new BadRequestException('The id not provided');
-    const found = await this.prisma.employee.findUnique({ where: { id } });
-    if (!found) throw new BadRequestException('The Employee not found');
-    delete found.password;
-    return found;
+    return await this.prisma.employee
+      .findUnique({ where: { id } })
+      .then((employee) => {
+        if (employee) delete employee.password;
+        return employee;
+      });
   }
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    if (!id) throw new BadRequestException('The id not provided');
-    const { username, password } = updateEmployeeDto;
-    let hashedPassword = undefined;
-    if (password) hashedPassword = await argon.hash(password);
-    const updated = await this.prisma.employee.update({
-      where: { id },
-      data: { username, password: hashedPassword },
-    });
-    if (!updated) throw new BadRequestException('The Employee not updated');
-    delete updated.password;
-    return updated;
+    const { password, ...employee } = updateEmployeeDto;
+    const hashedPassword = await argon.hash(password);
+    return await this.prisma.employee
+      .update({
+        where: { id },
+        data: { ...employee, password: hashedPassword },
+      })
+      .then((employee) => {
+        delete employee.password;
+        return employee;
+      });
   }
 
   async remove(id: number) {
-    if (!id) throw new BadRequestException('The id not provided');
-    const deleted = await this.prisma.employee.delete({ where: { id } });
-    if (!deleted) throw new BadRequestException('The Employee not deleted');
-    delete deleted.password;
-    return deleted;
+    if (this.findOne(id))
+      throw new BadRequestException('Employee does not exist');
+    return await this.prisma.employee.delete({ where: { id } });
   }
 }
