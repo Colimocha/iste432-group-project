@@ -1,12 +1,8 @@
 import DashboardNav from '#/components/DashboardNav';
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <body className="overflow-y-scroll bg-gray-1100 bg-[url('/grid.svg')]">
+    <div>
       <DashboardNav />
       <div className="lg:pl-80">
         <div className="mx-auto max-w-full space-y-8 px-4 pt-20 lg:py-4 lg:px-8">
@@ -20,7 +16,7 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 }
 

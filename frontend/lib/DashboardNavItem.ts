@@ -8,15 +8,15 @@ export type DashboardNavItem = {
 export const dashboardNavItems: DashboardNavItem[] = [
   {
     name: 'User',
-    slug: 'employee',
+    slug: 'user',
   },
   {
     name: 'Ballot',
-    slug: 'societyContact',
+    slug: 'ballot',
   },
   {
     name: 'Office',
-    slug: '.',
+    slug: 'office',
   },
   {
     name: 'TBD...',

@@ -1,5 +1,4 @@
 import '#/styles/globals.css';
-import DashboardLayout from '../layouts/dashboard/layout';
 
 export default function RootLayout({
   children,
@@ -9,7 +8,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <DashboardLayout>{children}</DashboardLayout>
+      <body className="overflow-y-scroll bg-gray-1100 bg-[url('/grid.svg')]">
+        {children}
+      </body>
     </html>
   );
 }
