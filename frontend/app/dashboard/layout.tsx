@@ -1,4 +1,5 @@
-import DashboardNav from '#/components/DashboardNav';
+import { AddressBar } from '#/components/AddressBar';
+import DashboardNav from '#/components/dashboard/DashboardNav';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -6,6 +7,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <DashboardNav />
       <div className="lg:pl-80">
         <div className="mx-auto max-w-full space-y-8 px-4 pt-20 lg:py-4 lg:px-8">
+          <div className="rounded-lg bg-vc-border-gradient p-px shadow-lg shadow-black/20">
+            <div className="rounded-lg bg-white">
+              <AddressBar />
+            </div>
+          </div>
           <div className="rounded-lg bg-vc-border-gradient p-px shadow-lg shadow-black/20">
             <div className="rounded-lg bg-white p-3.5 lg:p-6">{children}</div>
           </div>
