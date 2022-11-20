@@ -7,7 +7,7 @@ export default function Page() {
       <div className="mb-4">
         <TabGroup path="/dashboard/user" items={userTabItems} />
       </div>
-      Voter Page
+      Society Contact Page
     </>
   );
 }
