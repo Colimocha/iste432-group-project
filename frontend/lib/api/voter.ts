@@ -1,4 +1,4 @@
-const API_URL = process.env.API_URL;
+const API_URL = 'https://iste432-backend.vercel.app';
 
 async function createVoter(
   token: string,

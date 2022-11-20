@@ -1,4 +1,4 @@
-const API_URL = process.env.API_URL;
+const API_URL = 'https://iste432-backend.vercel.app';
 
 async function createBallot(
   token: string,
@@ -112,4 +112,4 @@ async function getBallots(token: string) {
   }
 }
 
-export {};
+export { createBallot, editBallot, deleteBallot, getBallot, getBallots };
