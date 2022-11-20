@@ -73,5 +73,8 @@ module.exports = {
       }),
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  daisyui: {
+    themes: ['winter'],
+  },
+  plugins: [require('@tailwindcss/forms'), require('daisyui')],
 };

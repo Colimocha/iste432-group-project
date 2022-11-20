@@ -25,8 +25,10 @@
     "singleQuote": true
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.4",
     "@tailwindcss/forms": "0.5.3",
     "clsx": "1.2.1",
+    "daisyui": "^2.41.0",
     "date-fns": "2.29.3",
     "next": "13.0.4",
     "react": "18.2.0",
@@ -37,7 +39,7 @@
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "autoprefixer": "^10.4.13",
-    "eslint": "8.27.0",
+    "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
     "lint-staged": "13.0.3",
     "postcss": "^8.4.19",
