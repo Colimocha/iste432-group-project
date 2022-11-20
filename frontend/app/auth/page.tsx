@@ -1,13 +1,17 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 export default function AuthPage() {
+  const [isLoading, setLoading] = useState(false);
   const [isVoter, setIsVoter] = useState(false);
   const roleRef = useRef<HTMLSelectElement | null>(null);
   const input_1_Ref = useRef<HTMLInputElement | null>(null);
   const input_2_Ref = useRef<HTMLInputElement | null>(null);
   const rememberMeRef = useRef<HTMLInputElement | null>(null);
+
+  const router = useRouter();
 
   const handleSelectRoleChange = () =>
     setIsVoter(roleRef.current?.value === 'v');
@@ -31,9 +35,34 @@ export default function AuthPage() {
     //* Debug
     console.log(bodyForm);
 
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyForm)
+    }
     // TODO: Send bodyForm to server
-
-    // TODO: Redirect to home page for specific role
+    const url = 'https://iste432-backend.vercel.app/auth/employee'
+    setLoading(true)
+    fetch(url, requestOptions)
+    .then((response) => {
+      return response.json();
+    })
+      .then((data) => {
+      setLoading(false)
+      if (data.success) {
+        sessionStorage.setItem("token", data.access_token);
+        sessionStorage.setItem("role", roleRef.current?.value ? roleRef.current?.value : "error");
+        router.push('/dashboard');
+      } else {
+        alert("invalid login info");
+      }
+    })
+      .catch((err) => { 
+        setLoading(false)
+        console.error(err);
+      })
   };
 
   return (
