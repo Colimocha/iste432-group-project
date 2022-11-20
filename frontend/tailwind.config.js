@@ -33,19 +33,19 @@ module.exports = {
       keyframes: ({ theme }) => ({
         rerender: {
           '0%': {
-            ['border-color']: theme('colors.vercel.pink'),
+            ['border-color']: theme('colors.vercel.blue'),
           },
           '40%': {
-            ['border-color']: theme('colors.vercel.pink'),
+            ['border-color']: theme('colors.vercel.blue'),
           },
         },
         highlight: {
           '0%': {
-            background: theme('colors.vercel.pink'),
+            background: theme('colors.vercel.blue'),
             color: theme('colors.white'),
           },
           '40%': {
-            background: theme('colors.vercel.pink'),
+            background: theme('colors.vercel.blue'),
             color: theme('colors.white'),
           },
         },

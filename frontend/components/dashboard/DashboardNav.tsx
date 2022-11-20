@@ -15,10 +15,10 @@ export default function DashboardNav() {
 
   return (
     <div className="fixed top-0 z-10 flex w-full flex-col bg-white shadow-lg lg:bottom-0 lg:z-auto lg:m-4 lg:w-72 lg:rounded-lg lg:p-2">
-      <div className="flex h-14 items-center py-4 px-4 lg:h-auto">
+      <div className="flex h-14 items-center py-4 px-2 lg:h-auto">
         <Link
           href="/dashboard"
-          className="flex w-full items-center space-x-2.5 transition-all lg:h-16 lg:justify-center lg:rounded-lg lg:bg-blue-600 lg:shadow-lg lg:hover:bg-blue-500"
+          className="flex w-full items-center space-x-2.5 transition-all lg:h-16 lg:justify-center lg:rounded-lg lg:bg-blue-500 lg:shadow-lg lg:hover:bg-blue-400"
           onClick={close}
         >
           <h2 className="font-medium tracking-wide text-blue-600 lg:text-white">
@@ -94,13 +94,10 @@ function DashboardNavItem({
     <Link
       onClick={close}
       href={href}
-      className={clsx(
-        'block rounded-md px-3 py-2 text-sm font-medium hover:text-gray-300',
-        {
-          'text-gray-500 hover:bg-gray-800': !isActive,
-          'text-gray-200': isActive,
-        },
-      )}
+      className={clsx('block rounded-md px-3 py-2 text-sm font-medium ', {
+        'hover:bg-blue-200 hover:text-black': !isActive,
+        'text-white bg-blue-500': isActive,
+      })}
     >
       {name}
     </Link>
