@@ -1,6 +1,11 @@
 const API_URL = 'https://iste432-backend.vercel.app';
 
-async function authEmployee(bodyForm: { username: string; password: string }) {
+export type AuthAdmin = {
+  username: string;
+  password: string;
+};
+
+async function authEmployee(bodyForm: AuthAdmin) {
   try {
     const res = await fetch(`${API_URL}/auth/employee`, {
       method: 'POST',
@@ -19,10 +24,7 @@ async function authEmployee(bodyForm: { username: string; password: string }) {
   }
 }
 
-async function authSocietyContact(bodyForm: {
-  username: string;
-  password: string;
-}) {
+async function authSocietyContact(bodyForm: AuthAdmin) {
   try {
     const res = await fetch(`${API_URL}/auth/societyContact`, {
       method: 'POST',
@@ -41,7 +43,12 @@ async function authSocietyContact(bodyForm: {
   }
 }
 
-async function authVoter(bodyForm: { cred_1: string; cred_2: string }) {
+export type AuthVoter = {
+  cred_1: string;
+  cred_2: string;
+};
+
+async function authVoter(bodyForm: AuthVoter) {
   try {
     const res = await fetch(`${API_URL}/auth/voter`, {
       method: 'POST',

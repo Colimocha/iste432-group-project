@@ -1,10 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { authEmployee, authSocietyContact, authVoter } from '#/lib/api/auth';
+import { notFound, useRouter } from 'next/navigation';
+import { FormEvent, useRef, useState } from 'react';
 
 export default function AuthPage() {
   const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [isVoter, setIsVoter] = useState(false);
   const roleRef = useRef<HTMLSelectElement | null>(null);
   const input_1_Ref = useRef<HTMLInputElement | null>(null);
@@ -18,51 +20,64 @@ export default function AuthPage() {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
     const role = roleRef.current?.value;
-    const bodyForm =
-      role === 'v'
-        ? {
-            credential_1: input_1_Ref.current?.value,
-            credential_2: input_2_Ref.current?.value,
-            remember_me: rememberMeRef.current?.checked,
-          }
-        : {
-            username: input_1_Ref.current?.value,
-            password: input_2_Ref.current?.value,
-            remember_me: rememberMeRef.current?.checked,
-          };
 
-    //* Debug
-    console.log(bodyForm);
-
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bodyForm)
-    }
-    // TODO: Send bodyForm to server
-    const url = 'https://iste432-backend.vercel.app/auth/employee'
-    setLoading(true)
-    fetch(url, requestOptions)
-    .then((response) => {
-      return response.json();
-    })
-      .then((data) => {
-      setLoading(false)
-      if (data.success) {
-        sessionStorage.setItem("token", data.access_token);
-        sessionStorage.setItem("role", roleRef.current?.value ? roleRef.current?.value : "error");
-        router.push('/dashboard');
-      } else {
-        alert("invalid login info");
-      }
-    })
-      .catch((err) => { 
-        setLoading(false)
-        console.error(err);
+    if (role === 'v') {
+      setLoading(true);
+      authVoter({
+        cred_1: input_1_Ref.current?.value!,
+        cred_2: input_2_Ref.current?.value!,
       })
+        .then((res) => {
+          sessionStorage.setItem('token', res.access_token);
+          sessionStorage.setItem('role', 'voter');
+          router.push('/vote');
+        })
+        .catch((err) => {
+          setLoading(false);
+          setError(true);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else if (role === 'sc') {
+      setLoading(true);
+      authSocietyContact({
+        username: input_1_Ref.current?.value!,
+        password: input_2_Ref.current?.value!,
+      })
+        .then((res) => {
+          sessionStorage.setItem('token', res.access_token);
+          sessionStorage.setItem('role', 'society_contact');
+          router.push('/dashboard');
+        })
+        .catch((err) => {
+          setLoading(false);
+          setError(true);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(true);
+      authEmployee({
+        username: input_1_Ref.current?.value!,
+        password: input_2_Ref.current?.value!,
+      })
+        .then((res) => {
+          sessionStorage.setItem('token', res.access_token);
+          sessionStorage.setItem('role', 'employee');
+          router.push('/dashboard');
+        })
+        .catch((err) => {
+          setLoading(false);
+          setError(true);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
 
   return (
