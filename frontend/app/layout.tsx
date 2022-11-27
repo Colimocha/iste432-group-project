@@ -8,9 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="winter">
       <head />
-      <body className="overflow-y-scroll bg-gray-800 bg-[url('/grid.svg')]">
-        {children}
-      </body>
+      <body className="bg-gray-800 bg-[url('/grid.svg')]">{children}</body>
     </html>
   );
 }
