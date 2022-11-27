@@ -10,13 +10,13 @@ interface Params {
 
 export default function Page({ params }: { params: Params }) {
   const { voterId } = params;
-  const [voter, setVoter] = useState<Voter | null>(null);
+  const [voter, setData] = useState<Voter | null>(null);
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
     getVoter(token, parseInt(voterId))
-      .then((res) => setVoter(res))
+      .then((res) => setData(res))
       .catch((err) => console.log(err));
   }, [voterId]);
 

@@ -10,13 +10,13 @@ interface Params {
 
 export default function Page({ params }: { params: Params }) {
   const { employeeId } = params;
-  const [employee, setEmployee] = useState<Employee | null>(null);
+  const [data, setData] = useState<Employee | null>(null);
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
     getEmployee(token, parseInt(employeeId))
-      .then((res) => setEmployee(res))
+      .then((res) => setData(res))
       .catch((err) => console.log(err));
   }, [employeeId]);
 
@@ -45,13 +45,13 @@ export default function Page({ params }: { params: Params }) {
           <div className="grid grid-cols-2 gap-4">
             <div className="form-control ring-2 p-2 rounded-md">
               <label className="label">
-                <span className="label_text">First Name</span>
+                <span className="label_text">Username</span>
               </label>
               <input
                 type="text"
-                placeholder="First Name"
+                placeholder="Username"
                 className="input input-bordered w-full"
-                value={employee?.username}
+                value={data?.username}
                 disabled={!edit}
               />
             </div>

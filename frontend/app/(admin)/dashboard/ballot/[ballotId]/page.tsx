@@ -1,24 +1,24 @@
 'use client';
 
+import { getBallot } from '#/lib/api/ballot';
+import { Ballot } from '#/lib/model/Ballot';
 import { useEffect, useState } from 'react';
-import { SocietyContact } from '#/lib/model/SocietyContact';
-import { getSocietyContact } from '#/lib/api/societyContact';
 
 interface Params {
-  scId: string;
+  ballotId: string;
 }
 
 export default function Page({ params }: { params: Params }) {
-  const { scId } = params;
+  const { ballotId } = params;
+  const [data, setData] = useState<Ballot | null>(null);
   const [edit, setEdit] = useState(false);
-  const [data, setData] = useState<SocietyContact | null>(null);
 
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
-    getSocietyContact(token, parseInt(scId))
+    getBallot(token, parseInt(ballotId))
       .then((res) => setData(res))
       .catch((err) => console.log(err));
-  }, [scId]);
+  }, [ballotId]);
 
   return (
     <>
@@ -45,13 +45,13 @@ export default function Page({ params }: { params: Params }) {
           <div className="grid grid-cols-2 gap-4">
             <div className="form-control ring-2 p-2 rounded-md">
               <label className="label">
-                <span className="label_text">Username</span>
+                <span className="label_text">Ballot Name</span>
               </label>
               <input
                 type="text"
-                placeholder="Username"
+                placeholder="Ballot Name"
                 className="input input-bordered w-full"
-                value={data?.username}
+                value={data?.name}
                 disabled={!edit}
               />
             </div>
