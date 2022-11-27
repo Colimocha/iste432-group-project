@@ -1,4 +1,4 @@
-import BallotList from './BallotList';
+import BallotList from '../../../../components/dashboard/BallotList';
 
 export default function Page() {
   return (
