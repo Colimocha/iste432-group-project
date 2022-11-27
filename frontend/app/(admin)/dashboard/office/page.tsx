@@ -1,3 +1,11 @@
+import OfficeList from './OfficeList';
+
 export default function Page() {
-  return <>Office Page</>;
+  return (
+    <>
+      <div className="w-full">
+        <OfficeList />
+      </div>
+    </>
+  );
 }
