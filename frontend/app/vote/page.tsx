@@ -1,14 +1,28 @@
+"use client"
+import { getVoters } from '#/lib/api/voter';
+import { Voter } from '#/lib/model/Voter';
+import { useEffect, useState } from 'react';
+
 export default function Page() {
+
+    const [voters, setVoters] = useState([]);
+
+    useEffect(() => {
+        const token = sessionStorage.getItem('token') || '';
+        getVoters(token)
+            .then((res) => setVoters(res))
+            .catch((err) => console.log(err));
+
+            console.log(voters)
+    }, []);
+
     return (
         <div className="container mx-auto">
 
             <div className="flex flex-row-reverse ... p-2 bg-[#fafaf9]">
-                {/* <button className="btn btn-outline m-1">Log out</button>
-                <button className="btn btn-outline btn-primary m-1">Button</button>
-                <button className="btn btn-outline btn-secondary m-1">Button</button> */}
                 <button className="btn btn-outline btn-accent m-1">Log out</button>
-
             </div>
+
             <div className="content flex items-center justify-center h-screen">
                 <div className="whiteBackground w-1/2 bg-[#fafaf9] p-4">
                     <div className="columns-3">
@@ -19,7 +33,7 @@ export default function Page() {
                                 <h2 className="card-title">Life hack</h2>
                                 <p>How to park your car at your garage?</p>
                                 <div className="card-actions justify-end">
-                                    <input type="checkbox" checked className="checkbox checkbox-secondary" />
+                                    <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
                                 </div>
                             </div>
                         </div>
@@ -30,7 +44,7 @@ export default function Page() {
                                 <h2 className="card-title">Life hack</h2>
                                 <p>How to park your car at your garage?</p>
                                 <div className="card-actions justify-end">
-                                    <input type="checkbox" checked className="checkbox checkbox-secondary" />
+                                    <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
                                 </div>
                             </div>
                         </div>
@@ -41,7 +55,7 @@ export default function Page() {
                                 <h2 className="card-title">Life hack</h2>
                                 <p>How to park your car at your garage?</p>
                                 <div className="card-actions justify-end">
-                                    <input type="checkbox" checked className="checkbox checkbox-secondary" />
+                                    <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
                                 </div>
                             </div>
                         </div>
@@ -55,7 +69,7 @@ export default function Page() {
                                 <h2 className="card-title">Life hack</h2>
                                 <p>How to park your car at your garage?</p>
                                 <div className="card-actions justify-end">
-                                    <input type="checkbox" checked className="checkbox checkbox-secondary" />
+                                    <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
                                 </div>
                             </div>
                         </div>
@@ -66,7 +80,7 @@ export default function Page() {
                                 <h2 className="card-title">Life hack</h2>
                                 <p>How to park your car at your garage?</p>
                                 <div className="card-actions justify-end">
-                                    <input type="checkbox" checked className="checkbox checkbox-secondary" />
+                                    <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
                                 </div>
                             </div>
                         </div>
@@ -77,10 +91,11 @@ export default function Page() {
                                 <h2 className="card-title">Life hack</h2>
                                 <p>How to park your car at your garage?</p>
                                 <div className="card-actions justify-end">
-                                    <input type="checkbox" checked className="checkbox checkbox-secondary" />
+                                    <input type="checkbox" defaultChecked className="checkbox checkbox-secondary" />
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
