@@ -27,13 +27,13 @@ export default function EmployeeList() {
       </thead>
       <tbody>
         {employee.length &&
-          employee.map((voter: Employee, index) => (
+          employee.map((data: Employee, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{voter.username}</td>
+              <td>{data.username}</td>
               <td className="space-x-2">
                 <Link
-                  href={path + '/' + voter.id}
+                  href={path + '/' + data.id}
                   className="btn btn-sm btn-primary"
                 >
                   View/Edit
