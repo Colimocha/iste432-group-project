@@ -1,24 +1,24 @@
 'use client';
 
-import { getEmployee } from '#/lib/api/employee';
-import { Employee } from '#/lib/model/Employee';
 import { useEffect, useState } from 'react';
+import { SocietyContact } from '#/lib/model/SocietyContact';
+import { getSocietyContact } from '#/lib/api/societyContact';
 
 interface Params {
-  employeeId: string;
+  scId: string;
 }
 
 export default function Page({ params }: { params: Params }) {
-  const { employeeId } = params;
-  const [employee, setEmployee] = useState<Employee | null>(null);
+  const { scId } = params;
   const [edit, setEdit] = useState(false);
+  const [data, setData] = useState<SocietyContact | null>(null);
 
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
-    getEmployee(token, parseInt(employeeId))
-      .then((res) => setEmployee(res))
+    getSocietyContact(token, parseInt(scId))
+      .then((res) => setData(res))
       .catch((err) => console.log(err));
-  }, [employeeId]);
+  }, [scId]);
 
   return (
     <>
@@ -51,25 +51,26 @@ export default function Page({ params }: { params: Params }) {
                 type="text"
                 placeholder="First Name"
                 className="input input-bordered w-full"
-                value={employee?.username}
+                value={data?.username}
+                disabled={!edit}
+              />
+            </div>
+
+            <div className="form-control ring-2 p-2 rounded-md">
+              <label className="label">
+                <span className="label_text">Last Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="First Name"
+                className="input input-bordered w-full"
+                value={data?.societyId}
                 disabled={!edit}
               />
             </div>
 
             {edit === true && (
-              <>
-                <div className="form-control ring-2 p-2 rounded-md">
-                  <label className="label">
-                    <span className="label_text">Password</span>
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                <button className="btn btn-primary col-start-2">Save</button>
-              </>
+              <button className="btn btn-primary col-start-2">Save</button>
             )}
           </div>
         </div>
