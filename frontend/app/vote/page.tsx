@@ -42,9 +42,11 @@ export default function Page() {
     return (
         <div className="container">
 
+            {/* top bar */}
             <div className="flex flex-row-reverse ... p-2">
                 <button className="btn btn-outline btn-accent m-1" onClick={handleLogout}>Log out</button>
             </div>
+            {/* end of top bar */}
 
             {/* ballot name */}
             <div className="content flex items-center justify-center">
@@ -52,7 +54,6 @@ export default function Page() {
                     Ballot Name
                 </div>
             </div>
-
             {/* end of ballot name */}
 
             <div className="content flex items-center justify-center">
