@@ -1,6 +1,7 @@
 'use client';
 
 import { getEmployees } from '#/lib/api/employee';
+import { Employee } from '#/lib/model/Employee';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
