@@ -1,8 +1,9 @@
 'use client';
 
 import { authEmployee, authSocietyContact, authVoter } from '#/lib/api/auth';
-import { notFound, useRouter } from 'next/navigation';
-import { FormEvent, useRef, useState } from 'react';
+import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
 
 export default function AuthPage() {
   const [isLoading, setLoading] = useState(false);
@@ -32,6 +33,7 @@ export default function AuthPage() {
         .then((res) => {
           sessionStorage.setItem('token', res.access_token);
           sessionStorage.setItem('role', 'voter');
+          sessionStorage.setItem('voterId', res.id);
           router.push('/vote');
         })
         .catch((err) => {
@@ -170,7 +172,12 @@ export default function AuthPage() {
             </div>
           </div>
           <div>
-            <button className="btn-primary btn w-full" onClick={handleSubmit}>
+            <button
+              className={clsx('btn-primary btn w-full', {
+                'btn-loading': isLoading,
+              })}
+              onClick={handleSubmit}
+            >
               Sign in
             </button>
           </div>
