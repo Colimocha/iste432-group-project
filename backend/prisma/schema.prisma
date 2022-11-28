@@ -60,6 +60,8 @@ model Ballot {
   allowWriteIn Boolean
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  start_date   String?
+  end_date     String?
 
   society   Society     @relation(fields: [societyId], references: [id])
   societyId Int

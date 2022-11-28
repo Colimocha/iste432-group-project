@@ -40,6 +40,17 @@ export class BallotController {
     return this.ballotService.findOne(+id);
   }
 
+  @Get('society/:societyId')
+  findManyBySocietyId(
+    @Param(
+      'societyId',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    societyId: string,
+  ) {
+    return this.ballotService.findManyBySocietyId(+societyId);
+  }
+
   @Patch(':id')
   update(
     @Param(

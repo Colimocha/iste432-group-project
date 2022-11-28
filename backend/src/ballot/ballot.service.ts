@@ -19,6 +19,16 @@ export class BallotService {
     return await this.prisma.ballot.findUnique({ where: { id } });
   }
 
+  async findManyBySocietyId(societyId: number) {
+    return (await this.prisma.ballot.findMany({ where: { societyId } })).filter(
+      (ballot) => {
+        if (ballot.end_date !== null)
+          return new Date(ballot.end_date) > new Date();
+        return true;
+      },
+    );
+  }
+
   async update(id: number, updateBallotDto: UpdateBallotDto) {
     await this.societyExists(updateBallotDto.societyId);
     return await this.prisma.ballot.update({
