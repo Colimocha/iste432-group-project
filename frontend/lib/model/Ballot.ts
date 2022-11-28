@@ -1,7 +1,7 @@
 export interface Ballot {
-  id: string;
+  id: number;
   name: string;
   allowWriteIn: boolean;
-  societyId: string;
+  societyId: number;
   createdAt: string;
 }

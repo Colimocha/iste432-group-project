@@ -4,4 +4,5 @@ export interface Voter {
   lastName: string;
   credential_1: string;
   dateOfBirth: string;
+  societyId: number;
 }
