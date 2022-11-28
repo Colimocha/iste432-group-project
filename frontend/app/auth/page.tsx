@@ -34,7 +34,7 @@ export default function AuthPage() {
           sessionStorage.setItem('token', res.access_token);
           sessionStorage.setItem('role', 'voter');
           sessionStorage.setItem('voterId', res.id);
-          router.push('/vote');
+          router.push('/voter');
         })
         .catch((err) => {
           setLoading(false);

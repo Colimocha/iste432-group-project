@@ -1,23 +1,51 @@
 "use client"
 import { getVoters } from '#/lib/api/voter';
+import { getSocieties } from '#/lib/api/society';
+import { getBallots } from '#/lib/api/ballot';
 import { Voter } from '#/lib/model/Voter';
+import { Society } from '#/lib/model/Society';
+import { Ballot } from '#/lib/model/Ballot';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-
 export default function Page() {
 
-    const [voters, setVoters] = useState([]);
+    const [voters, setVoters] = useState<Voter[]>([]);
+    const [societies, setSocieties] = useState<Society[]>([]);
+    const [ballots, setBallots] = useState<Ballot[]>([]);
 
     const router = useRouter();
 
+    // fetch data
     useEffect(() => {
         const token = sessionStorage.getItem('token') || '';
         getVoters(token)
             .then((res) => setVoters(res))
             .catch((err) => console.log(err));
+            
+        getSocieties(token)
+            .then((res) => setSocieties(res))
+            .catch((err) => console.log(err));
 
-        console.log(voters)
+        getBallots(token)
+            .then((res) => setBallots(res))
+            .catch((err) => console.log(err));
     }, []);
+
+    const voterId = parseInt(sessionStorage.getItem('voterId')!);
+
+    // get specific voter entity based on voterId
+    const voter = voters.find(obj => {
+        return obj.id === voterId;
+    });
+
+    // get specific ballots based on voter-society id
+    const certainBallots = ballots.filter(obj => {
+        return obj.societyId === voter!.societyId;
+    });
+
+    console.log(certainBallots)
+
+
 
     // handle for Logout button
     const handleLogout = (e: { preventDefault: () => void }) => {
@@ -30,11 +58,20 @@ export default function Page() {
     // handle for Clear button
     const handleClear = (e: { preventDefault: () => void }) => {
         e.preventDefault();
+
+        // to do - clear all checkboxes
     }
 
     // handle for Review button
     const handleReview = (e: { preventDefault: () => void }) => {
         e.preventDefault();
+
+        // to do - wrap into vote entity
+
+        // to do - verify add the vote entity to database
+
+        // to do - generate confirmation code and store it database with
+        // the vote entity
 
         router.push('/vote/review');
     }
