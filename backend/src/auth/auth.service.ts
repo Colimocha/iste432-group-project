@@ -26,7 +26,7 @@ export class AuthService {
     const payload = { sub, role };
     const options = { expiresIn: '1h', secret: secret };
     const token = await this.jwt.signAsync(payload, options);
-    return { success: true, access_token: token };
+    return { success: true, id: sub, access_token: token };
   }
 
   /**

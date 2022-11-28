@@ -16,7 +16,7 @@ export class OfficeService {
   }
 
   async findOne(id: number) {
-    await this.prisma.office.findUnique({ where: { id } });
+    return await this.prisma.office.findUnique({ where: { id } });
   }
 
   async update(id: number, updateOfficeDto: UpdateOfficeDto) {
