@@ -112,4 +112,30 @@ async function getBallots(token: string) {
   }
 }
 
-export { createBallot, editBallot, deleteBallot, getBallot, getBallots };
+async function getBallotsBySocietyID(token: string, societyId: number) {
+  try {
+    const res = await fetch(`${API_URL}/ballot/society/${societyId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await res.json();
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error(error);
+    } else {
+      throw new Error('Something went wrong');
+    }
+  }
+}
+
+export {
+  createBallot,
+  editBallot,
+  deleteBallot,
+  getBallot,
+  getBallots,
+  getBallotsBySocietyID,
+};
