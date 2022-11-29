@@ -1,7 +1,9 @@
 'use client';
 
-import { getVoter } from '#/lib/api/voter';
-import { Voter } from '#/lib/model/Voter';
+import { editVoter, getVoter } from '#/lib/api/voter';
+import { delay } from '#/lib/delay';
+import { EditVoter } from '#/lib/model/Voter';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
 interface Params {
@@ -10,15 +12,40 @@ interface Params {
 
 export default function Page({ params }: { params: Params }) {
   const { voterId } = params;
-  const [voter, setData] = useState<Voter | null>(null);
+  const [data, setData] = useState<EditVoter>({
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    credential_1: '',
+    societyId: 0,
+  });
   const [edit, setEdit] = useState(false);
+  const [token, setToken] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const token = sessionStorage.getItem('token') || '';
+    setToken(sessionStorage.getItem('token')!);
     getVoter(token, parseInt(voterId))
       .then((res) => setData(res))
       .catch((err) => console.log(err));
-  }, [voterId]);
+  }, [voterId, token]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setData({ ...data, [name]: value });
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    editVoter(token, Number(voterId), data)
+      .then((res) => {
+        delay();
+        setLoading(false);
+        setEdit(false);
+      })
+      .catch((err) => {});
+  };
 
   return (
     <>
@@ -49,9 +76,11 @@ export default function Page({ params }: { params: Params }) {
               </label>
               <input
                 type="text"
+                name="firstName"
                 placeholder="First Name"
                 className="input input-bordered w-full"
-                value={voter?.firstName}
+                value={data?.firstName}
+                onChange={handleInputChange}
                 disabled={!edit}
               />
             </div>
@@ -62,9 +91,11 @@ export default function Page({ params }: { params: Params }) {
               </label>
               <input
                 type="text"
+                name="lastName"
                 placeholder="First Name"
                 className="input input-bordered w-full"
-                value={voter?.lastName}
+                value={data?.lastName}
+                onChange={handleInputChange}
                 disabled={!edit}
               />
             </div>
@@ -75,9 +106,11 @@ export default function Page({ params }: { params: Params }) {
               </label>
               <input
                 type="text"
+                name="dateOfBirth"
                 placeholder="First Name"
                 className="input input-bordered w-full"
-                value={voter?.dateOfBirth}
+                value={data?.dateOfBirth}
+                onChange={handleInputChange}
                 disabled={!edit}
               />
             </div>
@@ -88,15 +121,24 @@ export default function Page({ params }: { params: Params }) {
               </label>
               <input
                 type="text"
+                name="credential_1"
                 placeholder="First Name"
                 className="input input-bordered w-full"
-                value={voter?.credential_1}
+                value={data?.credential_1}
+                onChange={handleInputChange}
                 disabled={!edit}
               />
             </div>
 
             {edit === true && (
-              <button className="btn btn-primary col-start-2">Save</button>
+              <button
+                className={clsx('btn btn-primary col-start-2', {
+                  loading: loading,
+                })}
+                onClick={handleSubmit}
+              >
+                Save
+              </button>
             )}
           </div>
         </div>

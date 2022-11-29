@@ -37,7 +37,6 @@ async function editVoter(
     firstName: string;
     lastName: string;
     credential_1: string;
-    credential_2: string;
     dateOfBirth: string;
     societyId: number;
   },
