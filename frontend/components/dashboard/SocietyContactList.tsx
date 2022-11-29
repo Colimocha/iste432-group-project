@@ -7,6 +7,7 @@ import { Society } from '#/lib/model/Society';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import RemoveModal from '../RemoveModal';
 
 export default function VoterList() {
   const [societyContacts, setSocietyContacts] = useState([]);
@@ -25,13 +26,13 @@ export default function VoterList() {
   }, []);
 
   return (
-    <table className="table table-zebra w-full">
+    <table className="table-zebra table w-full">
       <thead>
         <tr>
           <th>#</th>
           <th>Username</th>
           <th>Society</th>
-          <th></th>
+          <th className="flex justify-end">Controls</th>
         </tr>
       </thead>
       <tbody>
@@ -44,13 +45,14 @@ export default function VoterList() {
                 if (society.id == data.id) return society.name;
               })}
             </td>
-            <td className="space-x-2">
+            <td className="flex justify-end space-x-2">
               <Link
                 href={path + '/' + data.id}
-                className="btn btn-sm btn-primary"
+                className="btn-primary btn-sm btn"
               >
                 View/Edit
               </Link>
+              <RemoveModal id={data.id} table={'societyContact'} />
             </td>
           </tr>
         ))}

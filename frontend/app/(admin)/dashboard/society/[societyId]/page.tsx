@@ -1,19 +1,19 @@
 'use client';
 
-import { editEmployee, getEmployee } from '#/lib/api/employee';
-import { EditEmployee, Employee } from '#/lib/model/Employee';
+import { editSociety, getSociety } from '#/lib/api/society';
+import { Ballot } from '#/lib/model/Ballot';
+import { EditSociety, Society } from '#/lib/model/Society';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
 interface Params {
-  employeeId: string;
+  societyId: string;
 }
 
 export default function Page({ params }: { params: Params }) {
-  const { employeeId } = params;
-  const [data, setData] = useState<EditEmployee>({
-    username: '',
-    password: '',
+  const { societyId } = params;
+  const [data, setData] = useState<EditSociety>({
+    name: '',
   });
   const [edit, setEdit] = useState(false);
   const [token, setToken] = useState('');
@@ -21,26 +21,28 @@ export default function Page({ params }: { params: Params }) {
 
   useEffect(() => {
     setToken(sessionStorage.getItem('token') || '');
-    getEmployee(token, parseInt(employeeId))
+    getSociety(token, parseInt(societyId))
       .then((res) => setData(res))
       .catch((err) => console.log(err));
-  }, [employeeId, token]);
+  }, [societyId, token]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setData({ ...data, [name]: value });
+    const { name, value, type } = event.target;
+    setData({ ...data, [name]: type === 'number' ? parseInt(value) : value });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setLoading(true);
-    editEmployee(token, Number(employeeId), data)
+    editSociety(token, Number(societyId), data)
       .then((res) => {
         setLoading(false);
         setEdit(false);
-        setData({ ...data, password: '' });
+        setData(data);
       })
       .catch((err) => {});
   };
+
   return (
     <>
       <div className="flex justify-between">
@@ -66,43 +68,28 @@ export default function Page({ params }: { params: Params }) {
           <div className="grid grid-cols-2 gap-4">
             <div className="form-control rounded-md p-2 ring-2">
               <label className="label">
-                <span className="label_text">Username</span>
+                <span className="label_text">Ballot Name</span>
               </label>
               <input
                 type="text"
-                name="username"
-                placeholder="Username"
+                name="name"
+                placeholder="Ballot Name"
                 className="input-bordered input w-full"
-                value={data?.username}
+                value={data?.name}
                 onChange={handleInputChange}
                 disabled={!edit}
               />
             </div>
 
             {edit === true && (
-              <>
-                <div className="form-control rounded-md p-2 ring-2">
-                  <label className="label">
-                    <span className="label_text">Password</span>
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    className="input-bordered input w-full"
-                    value={data?.password}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <button
-                  className={clsx('btn-primary btn col-start-2', {
-                    loading: loading,
-                  })}
-                  onClick={handleSubmit}
-                >
-                  Save
-                </button>
-              </>
+              <button
+                className={clsx('btn-primary btn col-start-2', {
+                  loading: loading,
+                })}
+                onClick={handleSubmit}
+              >
+                Save
+              </button>
             )}
           </div>
         </div>

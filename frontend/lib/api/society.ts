@@ -1,4 +1,4 @@
-const API_URL = 'https://iste432-backend.vercel.app';
+import { Config } from '#/config';
 
 async function createSociety(
   token: string,
@@ -7,7 +7,7 @@ async function createSociety(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/society`, {
+    const res = await fetch(`${Config.API_URL}/society`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ async function editSociety(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/society/${societyId}`, {
+    const res = await fetch(`${Config.API_URL}/society/${societyId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ async function editSociety(
 
 async function deleteSociety(token: string, societyId: number) {
   try {
-    const res = await fetch(`${API_URL}/society/${societyId}`, {
+    const res = await fetch(`${Config.API_URL}/society/${societyId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ async function deleteSociety(token: string, societyId: number) {
 
 async function getSociety(token: string, societyId: number) {
   try {
-    const res = await fetch(`${API_URL}/society/${societyId}`, {
+    const res = await fetch(`${Config.API_URL}/society/${societyId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ async function getSociety(token: string, societyId: number) {
 
 async function getSocieties(token: string) {
   try {
-    const res = await fetch(`${API_URL}/society`, {
+    const res = await fetch(`${Config.API_URL}/society`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

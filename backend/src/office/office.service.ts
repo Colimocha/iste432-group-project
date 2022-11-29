@@ -28,7 +28,7 @@ export class OfficeService {
   }
 
   async remove(id: number) {
-    if (this.findOne(id)) throw new BadRequestException('Office not found');
+    if (!this.findOne(id)) throw new BadRequestException('Office not found');
     return await this.prisma.office.delete({ where: { id } });
   }
 

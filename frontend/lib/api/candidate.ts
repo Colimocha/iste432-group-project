@@ -1,4 +1,4 @@
-const API_URL = 'https://iste432-backend.vercel.app';
+import { Config } from '#/config';
 
 async function createCandidate(
   token: string,
@@ -12,7 +12,7 @@ async function createCandidate(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/candidate`, {
+    const res = await fetch(`${Config.API_URL}/candidate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ async function editCandidate(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/candidate/${candidateId}`, {
+    const res = await fetch(`${Config.API_URL}/candidate/${candidateId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ async function editCandidate(
 
 async function deleteCandidate(token: string, candidateId: number) {
   try {
-    const res = await fetch(`${API_URL}/candidate/${candidateId}`, {
+    const res = await fetch(`${Config.API_URL}/candidate/${candidateId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ async function deleteCandidate(token: string, candidateId: number) {
 
 async function getCandidate(token: string, candidateId: number) {
   try {
-    const res = await fetch(`${API_URL}/candidate/${candidateId}`, {
+    const res = await fetch(`${Config.API_URL}/candidate/${candidateId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ async function getCandidate(token: string, candidateId: number) {
 
 async function getCandidates(token: string) {
   try {
-    const res = await fetch(`${API_URL}/candidate`, {
+    const res = await fetch(`${Config.API_URL}/candidate`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

@@ -30,7 +30,7 @@ export class CandidateService {
   }
 
   async remove(id: number) {
-    if (this.findOne(id))
+    if (!this.findOne(id))
       throw new BadRequestException('Candidate does not exist');
     return await this.prisma.candidate.delete({ where: { id } });
   }

@@ -21,6 +21,7 @@ export class EmployeeService {
     return await this.prisma.employee.findMany().then((employees) => {
       if (employees.length)
         employees.forEach((employee) => delete employee.password);
+      employees.sort((a, b) => a.id - b.id);
       return employees;
     });
   }
@@ -36,11 +37,14 @@ export class EmployeeService {
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
     const { password, ...employee } = updateEmployeeDto;
-    const hashedPassword = await argon.hash(password);
+    let hashedPassword = '';
+    if (password) hashedPassword = await argon.hash(password);
     return await this.prisma.employee
       .update({
         where: { id },
-        data: { ...employee, password: hashedPassword },
+        data: password
+          ? { ...employee, password: hashedPassword }
+          : { ...employee },
       })
       .then((employee) => {
         delete employee.password;
@@ -49,7 +53,7 @@ export class EmployeeService {
   }
 
   async remove(id: number) {
-    if (this.findOne(id))
+    if (!this.findOne(id))
       throw new BadRequestException('Employee does not exist');
     return await this.prisma.employee.delete({ where: { id } });
   }

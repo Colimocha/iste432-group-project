@@ -35,7 +35,7 @@ export class VoteService {
   }
 
   async remove(id: number) {
-    if (this.findOne(id)) throw new BadRequestException('Vote not found');
+    if (!this.findOne(id)) throw new BadRequestException('Vote not found');
     return await this.prisma.vote.delete({ where: { id } });
   }
 

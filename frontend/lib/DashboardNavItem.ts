@@ -11,6 +11,10 @@ export const dashboardNavItems: DashboardNavItem[] = [
     slug: 'user',
   },
   {
+    name: 'Society',
+    slug: 'society',
+  },
+  {
     name: 'Ballot',
     slug: 'ballot',
   },

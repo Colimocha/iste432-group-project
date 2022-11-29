@@ -29,6 +29,8 @@ export class SocietyContactService {
             delete societyContact.password;
           });
         }
+
+        societyContacts.sort((a, b) => a.id - b.id);
         return societyContacts;
       });
   }
@@ -43,13 +45,18 @@ export class SocietyContactService {
   }
 
   async update(id: number, updateSocietyContactDto: UpdateSocietyContactDto) {
+    console.log(updateSocietyContactDto);
     await this.societyExists(updateSocietyContactDto.societyId);
     const { password, ...societyContact } = updateSocietyContactDto;
-    const hashedPassword = await argon.hash(password);
+    let hashedPassword = '';
+    if (password) hashedPassword = await argon.hash(password);
+
     return await this.prisma.societyContact
       .update({
         where: { id },
-        data: { ...societyContact, password: hashedPassword },
+        data: password
+          ? { ...societyContact, password: hashedPassword }
+          : { ...societyContact },
       })
       .then((societyContact) => {
         delete societyContact.password;
@@ -58,7 +65,7 @@ export class SocietyContactService {
   }
 
   async remove(id: number) {
-    if (this.findOne(id))
+    if (!this.findOne(id))
       throw new BadRequestException('Society contact not found');
     return await this.prisma.societyContact.delete({ where: { id } });
   }

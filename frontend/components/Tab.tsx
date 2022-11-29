@@ -24,7 +24,7 @@ export const Tab = ({
     <Link
       href={href}
       className={clsx('mt-2 mr-2 rounded-lg px-3 py-1 text-sm font-medium', {
-        'bg-blue-500 text-white hover:bg-blue-300': !isActive,
+        'bg-blue-300 text-white hover:bg-blue-400': !isActive,
         'bg-vercel-blue text-white': isActive,
       })}
     >

@@ -28,6 +28,9 @@ export class VotersService {
           delete voter.credential_2;
         });
       }
+
+      // sort voters by id
+      voters.sort((a, b) => a.id - b.id);
       return voters;
     });
   }
@@ -36,6 +39,7 @@ export class VotersService {
     return await this.prisma.voter
       .findUnique({ where: { id: id } })
       .then((voter) => {
+        console.log(voter);
         if (voter) delete voter.credential_2;
         return voter;
       });
@@ -43,12 +47,10 @@ export class VotersService {
 
   async update(id: number, updateVoterDto: UpdateVoterDto) {
     await this.societyExists(updateVoterDto.societyId);
-    const { credential_2, ...voter } = updateVoterDto;
-    const hash_credential_2 = await argon.hash(credential_2);
     return await this.prisma.voter
       .update({
         where: { id },
-        data: { ...voter, credential_2: hash_credential_2 },
+        data: { ...updateVoterDto },
       })
       .then((voter) => {
         delete voter.credential_2;
@@ -57,7 +59,8 @@ export class VotersService {
   }
 
   async remove(id: number) {
-    if (this.findOne(id)) throw new BadRequestException('Voter does not exist');
+    if (!this.findOne(id))
+      throw new BadRequestException('Voter does not exist');
     return await this.prisma.voter.delete({ where: { id } });
   }
 

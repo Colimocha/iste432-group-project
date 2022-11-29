@@ -1,4 +1,4 @@
-const API_URL = 'https://iste432-backend.vercel.app';
+import { Config } from '#/config';
 
 async function createOffice(
   token: string,
@@ -8,7 +8,7 @@ async function createOffice(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/office`, {
+    const res = await fetch(`${Config.API_URL}/office`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ async function editOffice(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/office/${officeId}`, {
+    const res = await fetch(`${Config.API_URL}/office/${officeId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ async function editOffice(
 
 async function deleteOffice(token: string, officeId: number) {
   try {
-    const res = await fetch(`${API_URL}/office/${officeId}`, {
+    const res = await fetch(`${Config.API_URL}/office/${officeId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ async function deleteOffice(token: string, officeId: number) {
 
 async function getOffices(token: string) {
   try {
-    const res = await fetch(`${API_URL}/office`, {
+    const res = await fetch(`${Config.API_URL}/office`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ async function getOffices(token: string) {
 
 async function getOffice(token: string, officeId: number) {
   try {
-    const res = await fetch(`${API_URL}/office/${officeId}`, {
+    const res = await fetch(`${Config.API_URL}/office/${officeId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

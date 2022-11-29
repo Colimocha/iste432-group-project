@@ -1,4 +1,4 @@
-const API_URL = 'https://iste432-backend.vercel.app';
+import { Config } from '#/config';
 
 async function createEmployee(
   token: string,
@@ -8,7 +8,7 @@ async function createEmployee(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/employee`, {
+    const res = await fetch(`${Config.API_URL}/employee`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ async function editEmployee(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/employee/${employeeId}`, {
+    const res = await fetch(`${Config.API_URL}/employee/${employeeId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ async function editEmployee(
 
 async function deleteEmployee(token: string, employeeId: number) {
   try {
-    const res = await fetch(`${API_URL}/employee/${employeeId}`, {
+    const res = await fetch(`${Config.API_URL}/employee/${employeeId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ async function deleteEmployee(token: string, employeeId: number) {
 
 async function getEmployee(token: string, employeeId: number) {
   try {
-    const res = await fetch(`${API_URL}/employee/${employeeId}`, {
+    const res = await fetch(`${Config.API_URL}/employee/${employeeId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ async function getEmployee(token: string, employeeId: number) {
 
 async function getEmployees(token: string) {
   try {
-    const res = await fetch(`${API_URL}/employee`, {
+    const res = await fetch(`${Config.API_URL}/employee`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

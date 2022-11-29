@@ -1,4 +1,4 @@
-const API_URL = 'https://iste432-backend.vercel.app';
+import { Config } from '#/config';
 
 async function createBallot(
   token: string,
@@ -9,7 +9,7 @@ async function createBallot(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/ballot`, {
+    const res = await fetch(`${Config.API_URL}/ballot`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ async function editBallot(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/ballot/${ballotId}`, {
+    const res = await fetch(`${Config.API_URL}/ballot/${ballotId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ async function editBallot(
 
 async function deleteBallot(token: string, ballotId: number) {
   try {
-    const res = await fetch(`${API_URL}/ballot/${ballotId}`, {
+    const res = await fetch(`${Config.API_URL}/ballot/${ballotId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ async function deleteBallot(token: string, ballotId: number) {
 
 async function getBallot(token: string, ballotId: number) {
   try {
-    const res = await fetch(`${API_URL}/ballot/${ballotId}`, {
+    const res = await fetch(`${Config.API_URL}/ballot/${ballotId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ async function getBallot(token: string, ballotId: number) {
 
 async function getBallots(token: string) {
   try {
-    const res = await fetch(`${API_URL}/ballot`, {
+    const res = await fetch(`${Config.API_URL}/ballot`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ async function getBallots(token: string) {
 
 async function getBallotsBySocietyID(token: string, societyId: number) {
   try {
-    const res = await fetch(`${API_URL}/ballot/society/${societyId}`, {
+    const res = await fetch(`${Config.API_URL}/ballot/society/${societyId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

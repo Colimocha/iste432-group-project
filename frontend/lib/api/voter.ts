@@ -1,4 +1,4 @@
-const API_URL = 'https://iste432-backend.vercel.app';
+import { Config } from '#/config';
 
 async function createVoter(
   token: string,
@@ -12,7 +12,7 @@ async function createVoter(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/voter`, {
+    const res = await fetch(`${Config.API_URL}/voter`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ async function editVoter(
   },
 ) {
   try {
-    const res = await fetch(`${API_URL}/voter/${voterId}`, {
+    const res = await fetch(`${Config.API_URL}/voter/${voterId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ async function editVoter(
 
 async function deleteVoter(token: string, voterId: number) {
   try {
-    const res = await fetch(`${API_URL}/voter/${voterId}`, {
+    const res = await fetch(`${Config.API_URL}/voter/${voterId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ async function deleteVoter(token: string, voterId: number) {
 
 async function getVoter(token: string, voterId: number) {
   try {
-    const res = await fetch(`${API_URL}/voter/${voterId}`, {
+    const res = await fetch(`${Config.API_URL}/voter/${voterId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ async function getVoter(token: string, voterId: number) {
 
 async function getVoters(token: string) {
   try {
-    const res = await fetch(`${API_URL}/voter`, {
+    const res = await fetch(`${Config.API_URL}/voter`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

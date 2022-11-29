@@ -5,6 +5,7 @@ import { Employee } from '#/lib/model/Employee';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import RemoveModal from '../RemoveModal';
 
 export default function EmployeeList() {
   const [employee, setEmployee] = useState<Employee[]>([]);
@@ -18,12 +19,12 @@ export default function EmployeeList() {
   }, []);
 
   return (
-    <table className="table table-zebra w-full">
+    <table className="table-zebra table w-full">
       <thead>
         <tr>
           <th>#</th>
           <th>Username</th>
-          <th>Controls</th>
+          <th className="flex justify-end">Controls</th>
         </tr>
       </thead>
       <tbody>
@@ -32,13 +33,14 @@ export default function EmployeeList() {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{data.username}</td>
-              <td className="space-x-2">
+              <td className="flex justify-end space-x-2">
                 <Link
                   href={path + '/' + data.id}
-                  className="btn btn-sm btn-primary"
+                  className="btn-primary btn-sm btn"
                 >
                   View/Edit
                 </Link>
+                <RemoveModal id={data.id} table={'employee'} />
               </td>
             </tr>
           ))}

@@ -1,20 +1,20 @@
 'use client';
 
-import { getBallots } from '#/lib/api/ballot';
-import { Ballot } from '#/lib/model/Ballot';
+import { getOffices } from '#/lib/api/office';
+import { Office } from '#/lib/model/Office';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import RemoveModal from '../RemoveModal';
 
-export default function BallotList() {
-  const [ballots, setBallots] = useState([]);
+export default function OfficeList() {
+  const [offices, setOffices] = useState([]);
   const path = usePathname();
 
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
-    getBallots(token)
-      .then((res) => setBallots(res))
+    getOffices(token)
+      .then((res) => setOffices(res))
       .catch((err) => console.log(err));
   }, []);
 
@@ -25,17 +25,17 @@ export default function BallotList() {
           <tr>
             <th>#</th>
             <th>Username</th>
-            <th>Society</th>
+            <th>Ballot</th>
             <th>Created</th>
             <th className="flex justify-end">Controls</th>
           </tr>
         </thead>
         <tbody>
-          {ballots.map((data: Ballot, index) => (
+          {offices.map((data: Office, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{data.name}</td>
-              <td>{data.societyId}</td>
+              <td>{data.ballotId}</td>
               <td>{data.createdAt.split('T')[0]}</td>
               <td className="flex justify-end space-x-2">
                 <Link
@@ -44,7 +44,7 @@ export default function BallotList() {
                 >
                   View/Edit
                 </Link>
-                <RemoveModal id={data.id} table={'ballot'} />
+                <RemoveModal id={data.id} table={'office'} />
               </td>
             </tr>
           ))}

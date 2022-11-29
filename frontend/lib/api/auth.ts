@@ -1,4 +1,4 @@
-const API_URL = 'https://iste432-backend.vercel.app';
+import { Config } from '#/config';
 
 export type AuthAdmin = {
   username: string;
@@ -7,7 +7,7 @@ export type AuthAdmin = {
 
 async function authEmployee(bodyForm: AuthAdmin) {
   try {
-    const res = await fetch(`${API_URL}/auth/employee`, {
+    const res = await fetch(`${Config.API_URL}/auth/employee`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ async function authEmployee(bodyForm: AuthAdmin) {
 
 async function authSocietyContact(bodyForm: AuthAdmin) {
   try {
-    const res = await fetch(`${API_URL}/auth/societyContact`, {
+    const res = await fetch(`${Config.API_URL}/auth/societyContact`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export type AuthVoter = {
 
 async function authVoter(bodyForm: AuthVoter) {
   try {
-    const res = await fetch(`${API_URL}/auth/voter`, {
+    const res = await fetch(`${Config.API_URL}/auth/voter`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,7 +1,6 @@
 'use client';
 
 import { editVoter, getVoter } from '#/lib/api/voter';
-import { delay } from '#/lib/delay';
 import { EditVoter } from '#/lib/model/Voter';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -40,7 +39,6 @@ export default function Page({ params }: { params: Params }) {
     setLoading(true);
     editVoter(token, Number(voterId), data)
       .then((res) => {
-        delay();
         setLoading(false);
         setEdit(false);
       })
@@ -51,13 +49,13 @@ export default function Page({ params }: { params: Params }) {
     <>
       <div className="flex justify-between">
         <button
-          className="btn btn-primary btn-sm"
+          className="btn-primary btn-sm btn"
           onClick={() => history.back()}
         >
           Back
         </button>
 
-        <label className="swap btn btn-outline btn-sm">
+        <label className="swap btn-outline btn-sm btn">
           <input
             type="checkbox"
             className="hidden"
@@ -70,7 +68,7 @@ export default function Page({ params }: { params: Params }) {
       <div className="w-full">
         <div className="mt-4">
           <div className="grid grid-cols-2 gap-4">
-            <div className="form-control ring-2 p-2 rounded-md">
+            <div className="form-control rounded-md p-2 ring-2">
               <label className="label">
                 <span className="label_text">First Name</span>
               </label>
@@ -78,14 +76,14 @@ export default function Page({ params }: { params: Params }) {
                 type="text"
                 name="firstName"
                 placeholder="First Name"
-                className="input input-bordered w-full"
+                className="input-bordered input w-full"
                 value={data?.firstName}
                 onChange={handleInputChange}
                 disabled={!edit}
               />
             </div>
 
-            <div className="form-control ring-2 p-2 rounded-md">
+            <div className="form-control rounded-md p-2 ring-2">
               <label className="label">
                 <span className="label_text">Last Name</span>
               </label>
@@ -93,14 +91,14 @@ export default function Page({ params }: { params: Params }) {
                 type="text"
                 name="lastName"
                 placeholder="First Name"
-                className="input input-bordered w-full"
+                className="input-bordered input w-full"
                 value={data?.lastName}
                 onChange={handleInputChange}
                 disabled={!edit}
               />
             </div>
 
-            <div className="form-control ring-2 p-2 rounded-md">
+            <div className="form-control rounded-md p-2 ring-2">
               <label className="label">
                 <span className="label_text">Date Of Birth</span>
               </label>
@@ -108,14 +106,14 @@ export default function Page({ params }: { params: Params }) {
                 type="text"
                 name="dateOfBirth"
                 placeholder="First Name"
-                className="input input-bordered w-full"
+                className="input-bordered input w-full"
                 value={data?.dateOfBirth}
                 onChange={handleInputChange}
                 disabled={!edit}
               />
             </div>
 
-            <div className="form-control ring-2 p-2 rounded-md">
+            <div className="form-control rounded-md p-2 ring-2">
               <label className="label">
                 <span className="label_text">Credential 1</span>
               </label>
@@ -123,7 +121,7 @@ export default function Page({ params }: { params: Params }) {
                 type="text"
                 name="credential_1"
                 placeholder="First Name"
-                className="input input-bordered w-full"
+                className="input-bordered input w-full"
                 value={data?.credential_1}
                 onChange={handleInputChange}
                 disabled={!edit}
@@ -132,7 +130,7 @@ export default function Page({ params }: { params: Params }) {
 
             {edit === true && (
               <button
-                className={clsx('btn btn-primary col-start-2', {
+                className={clsx('btn-primary btn col-start-2', {
                   loading: loading,
                 })}
                 onClick={handleSubmit}

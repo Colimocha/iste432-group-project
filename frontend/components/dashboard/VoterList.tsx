@@ -5,6 +5,7 @@ import { Voter } from '#/lib/model/Voter';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import RemoveModal from '../RemoveModal';
 
 export default function VoterList() {
   const [voters, setVoters] = useState([]);
@@ -18,13 +19,13 @@ export default function VoterList() {
   }, []);
 
   return (
-    <table className="table table-zebra w-full">
+    <table className="table-zebra table w-full">
       <thead>
         <tr>
           <th>#</th>
           <th>Name</th>
           <th>Date Of Birth</th>
-          <th>Controls</th>
+          <th className="flex justify-end">Controls</th>
         </tr>
       </thead>
       <tbody>
@@ -32,17 +33,16 @@ export default function VoterList() {
           voters.map((data: Voter, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>
-                {data.firstName} {data.lastName}
-              </td>
+              <td>{data.firstName}</td>
               <td>{data.dateOfBirth}</td>
-              <td className="space-x-2">
+              <td className="flex justify-end space-x-2">
                 <Link
                   href={path + '/' + data.id}
-                  className="btn btn-sm btn-primary"
+                  className="btn-primary btn-sm btn"
                 >
                   View/Edit
                 </Link>
+                <RemoveModal id={data.id} table={'voter'} />
               </td>
             </tr>
           ))}

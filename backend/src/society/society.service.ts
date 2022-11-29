@@ -25,7 +25,7 @@ export class SocietyService {
   }
 
   async remove(id: number) {
-    if (this.findOne(id)) throw new BadRequestException('Society not found');
+    if (!this.findOne(id)) throw new BadRequestException('Society not found');
     return this.prisma.society.delete({ where: { id } });
   }
 }
