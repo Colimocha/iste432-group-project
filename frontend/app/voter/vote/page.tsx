@@ -31,22 +31,6 @@ export default function Page() {
             .catch((err) => console.log(err));
     }, []);
 
-    const voterId = parseInt(sessionStorage.getItem('voterId')!);
-
-    // get specific voter entity based on voterId
-    const voter = voters.find(obj => {
-        return obj.id === voterId;
-    });
-
-    // get specific ballots based on voter-society id
-    const certainBallots = ballots.filter(obj => {
-        return obj.societyId === voter!.societyId;
-    });
-
-    console.log(certainBallots)
-
-
-
     // handle for Logout button
     const handleLogout = (e: { preventDefault: () => void }) => {
         e.preventDefault();
@@ -73,7 +57,7 @@ export default function Page() {
         // to do - generate confirmation code and store it database with
         // the vote entity
 
-        router.push('/vote/review');
+        router.push('/voter/vote/review');
     }
 
     return (

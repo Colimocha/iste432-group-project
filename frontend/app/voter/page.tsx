@@ -33,27 +33,15 @@ export default function Page() {
     router.push('/auth');
   };
 
-  // handle for Review button
-  //   const handleEnter = (e: { preventDefault: () => void }) => {
-  //     e.preventDefault();
-
-  //     // to do - wrap into ballot entity
-
-  //     // router.push('/vote/review');
-
-  //     // to do - push to rush with selected ballot data
-  //     router.push('/voter/vote');
-  //   };
-
   const handleEnter = (ballot: Ballot) => {
-
     // to do - push to rush with selected ballot data
+    sessionStorage.setItem('ballotId', ballot.id.toString());
     router.push('/voter/vote');
   };
 
   function getColumns() {
-    console.log('columns-' + cars.length.toString());
-    return 'col-' + cars.length.toString();
+    console.log('columns-' + ballots.length);
+    return 'columns-' + ballots.length;
   }
 
   return (
@@ -71,36 +59,40 @@ export default function Page() {
 
       {/* ballot name */}
       <div className="content flex items-center justify-center">
-        <div className="whiteBackground w-1/2 p-5 text-center text-4xl font-bold text-white">
-          Ballots
+        <div className="w-1/2 p-5 text-center text-4xl font-bold text-white">
+          Ballot Selection
         </div>
       </div>
       {/* end of ballot name */}
 
-      <div className="content flex items-center justify-center">
-        <div className={getColumns()}>
-          {/* use loop to create cards of ballot */}
-          {ballots.map((ballot) => (
-            <div className="card image-full w-96 bg-base-100 shadow-xl">
-              <figure>
-                <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{ballot.name}</h2>
-                <p>{ballot.createdAt}</p>
-                <div className="card-actions justify-end">
-                  <button
-                    className="btn-black btn-outline btn m-1"
-                    onClick={e => handleEnter(ballot)}
-                  >
-                    Enter
-                  </button>
+      <div className="content flex items-left justify-left overflow-x-scroll pb-10 scrollbar-hide md:scrollbar-default">
+        <div className="ml-10 flex flex-nowrap md:ml-20 lg:ml-40 ">
+          <div className={getColumns()}>
+            {/* use loop to create cards of ballot */}
+            {ballots.map((ballot) => (
+              <div className="card image-full w-96 bg-base-100 shadow-xl">
+                <figure>
+                  <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">{ballot.name}</h2>
+                  <p>{ballot.createdAt}</p>
+                  <div className="card-actions justify-end">
+                    <button
+                      className="btn-black btn-outline btn m-1"
+                      onClick={(e) => handleEnter(ballot)}
+                    >
+                      Enter
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
+
+    
   );
 }
