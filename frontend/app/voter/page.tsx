@@ -1,15 +1,16 @@
 'use client';
 import { getVoter, getVoters } from '#/lib/api/voter';
-import { getSocieties } from '#/lib/api/society';
 import { getBallots, getBallotsBySocietyID } from '#/lib/api/ballot';
-import { Voter } from '#/lib/model/Voter';
 import { Ballot } from '#/lib/model/Ballot';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import ca from 'date-fns/esm/locale/ca/index.js';
+
 export default function Page() {
-    
   const [ballots, setBallots] = useState<Ballot[]>([]);
   const router = useRouter();
+
+  const cars = ['Saab', 'Volvo'];
 
   // fetch data
   useEffect(() => {
@@ -33,18 +34,27 @@ export default function Page() {
   };
 
   // handle for Review button
-  const handleOk = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  //   const handleEnter = (e: { preventDefault: () => void }) => {
+  //     e.preventDefault();
 
-    // to do - wrap into vote entity
+  //     // to do - wrap into ballot entity
 
-    // to do - verify add the vote entity to database
+  //     // router.push('/vote/review');
 
-    // to do - generate confirmation code and store it database with
-    // the vote entity
+  //     // to do - push to rush with selected ballot data
+  //     router.push('/voter/vote');
+  //   };
 
-    router.push('/vote/review');
+  const handleEnter = (ballot: Ballot) => {
+
+    // to do - push to rush with selected ballot data
+    router.push('/voter/vote');
   };
+
+  function getColumns() {
+    console.log('columns-' + cars.length.toString());
+    return 'col-' + cars.length.toString();
+  }
 
   return (
     <div className="container">
@@ -67,7 +77,30 @@ export default function Page() {
       </div>
       {/* end of ballot name */}
 
-      <div className="content flex items-center justify-center"></div>
+      <div className="content flex items-center justify-center">
+        <div className={getColumns()}>
+          {/* use loop to create cards of ballot */}
+          {ballots.map((ballot) => (
+            <div className="card image-full w-96 bg-base-100 shadow-xl">
+              <figure>
+                <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title">{ballot.name}</h2>
+                <p>{ballot.createdAt}</p>
+                <div className="card-actions justify-end">
+                  <button
+                    className="btn-black btn-outline btn m-1"
+                    onClick={e => handleEnter(ballot)}
+                  >
+                    Enter
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
