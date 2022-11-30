@@ -10,7 +10,7 @@ export default function Page() {
   const [ballots, setBallots] = useState<Ballot[]>([]);
   const router = useRouter();
 
-  const cars = ['Saab', 'Volvo'];
+  const cars = ['Saab', 'Volvo', 'Volvo', 'Volvo', 'Volvo'];
 
   // fetch data
   useEffect(() => {
@@ -39,15 +39,12 @@ export default function Page() {
     router.push('/voter/vote');
   };
 
-  function getColumns() {
-    console.log('columns-' + ballots.length);
-    return 'columns-' + ballots.length;
-  }
-
   return (
-    <div className="container">
-      {/* top bar */}
-      <div className="... flex flex-row-reverse p-2">
+    // content
+    <div className="content bg-gray-100">
+
+      {/* navigation bar */}
+      <div className="... flex flex-row-reverse bg-zinc-900 p-2">
         <button
           className="btn-outline btn-accent btn m-1"
           onClick={handleLogout}
@@ -55,28 +52,18 @@ export default function Page() {
           Log out
         </button>
       </div>
-      {/* end of top bar */}
-
-      {/* ballot name */}
-      <div className="content flex items-center justify-center">
-        <div className="w-1/2 p-5 text-center text-4xl font-bold text-white">
-          Ballot Selection
-        </div>
-      </div>
-      {/* end of ballot name */}
-
-      <div className="content flex items-left justify-left overflow-x-scroll pb-10 scrollbar-hide md:scrollbar-default">
-        <div className="ml-10 flex flex-nowrap md:ml-20 lg:ml-40 ">
-          <div className={getColumns()}>
-            {/* use loop to create cards of ballot */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl py-1 sm:py-8 lg:max-w-none lg:py-10">
+          <h2 className="text-2xl font-bold text-gray-900">Ballot Selection</h2>
+          <div className="mt-6 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-5">
             {ballots.map((ballot) => (
-              <div className="card image-full w-96 bg-base-100 shadow-xl">
+              <div className="relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1 card image-full w-96 bg-base-100 shadow-xl">
                 <figure>
                   <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{ballot.name}</h2>
-                  <p>{ballot.createdAt}</p>
+                  <p>{ballot.name}</p>
                   <div className="card-actions justify-end">
                     <button
                       className="btn-black btn-outline btn m-1"
@@ -92,7 +79,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-
-    
   );
 }
