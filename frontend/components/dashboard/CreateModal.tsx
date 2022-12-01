@@ -1,7 +1,9 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { Config } from '#/config';
+import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
+import MasterList from './MasterList';
 
 interface Category {
   readonly category?:
@@ -22,6 +24,7 @@ const fields = {
     ['dateOfBirth', 'Date Of Birth'],
     ['credential_1', 'Credential 1'],
     ['credential_2', 'Credential 2'],
+    ['societyId', 'Society ID'],
   ],
   societyContact: [
     ['username', 'Username'],
@@ -63,7 +66,7 @@ async function createItem(
   data: Record<string, string | number | File>,
 ) {
   const token = sessionStorage.getItem('token') || '';
-  const res = await fetch(`/api/${category}`, {
+  const res = await fetch(`${Config.API_URL}/${category}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -81,10 +84,12 @@ export default function CreateModal(props: Category) {
     const form = e.currentTarget;
     const data = new FormData(form);
     const object = Object.fromEntries(data.entries());
-    createItem(props.category || '', object);
+    console.log(object);
+    // createItem(props.category || '', object);
     //refresh page
     router.refresh();
   }
+  const arr = ['societyId', 'ballotId', 'officeId'];
 
   return (
     <>
@@ -108,30 +113,42 @@ export default function CreateModal(props: Category) {
             >
               {props.category &&
                 fields[props.category!].map((field) => (
-                  <div
-                    className="form-control rounded-md p-2 ring-2"
-                    key={field[0]}
-                  >
-                    <label className="label">
-                      <span className="label_text text-base">{field[1]}</span>
-                    </label>
-                    <input
-                      type={getFieldType(field[0])}
-                      name={field[0]}
-                      placeholder={field[1]}
-                      className="input-bordered input w-full font-normal"
-                      required
-                    />
-                  </div>
+                  <>
+                    {!arr.includes(field[0]) ? (
+                      <div
+                        className="form-control rounded-md p-2 ring-2"
+                        key={field[0]}
+                      >
+                        <label className="label">
+                          <span className="label_text text-base">
+                            {field[1]}
+                          </span>
+                        </label>
+                        <input
+                          type={getFieldType(field[0])}
+                          name={field[0]}
+                          placeholder={field[1]}
+                          className="input-bordered input w-full font-normal"
+                          required
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        {field[0] === 'societyId' && (
+                          <MasterList category="society" />
+                        )}
+                      </>
+                    )}
+                  </>
                 ))}
               <div className="modal-action col-span-2">
-                <button>
-                  <label
+                <button className="btn-primary btn capitalize text-white">
+                  {/* <label
                     className="btn-primary btn capitalize text-white"
                     htmlFor="create_modal"
-                  >
-                    Create
-                  </label>
+                  > */}
+                  Create
+                  {/* </label> */}
                 </button>
               </div>
             </form>
