@@ -12,6 +12,7 @@ import { CandidateModule } from './candidate/candidate.module';
 import { VoteModule } from './vote/vote.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AnalysisModule } from './analysis/analysis.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AppService } from './app.service';
     OfficeModule,
     CandidateModule,
     VoteModule,
+    AnalysisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

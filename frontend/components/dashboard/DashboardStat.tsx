@@ -1,46 +1,72 @@
 'use client';
 
 import Stat from '#/components/Stat';
-import { getBallots } from '#/lib/api/ballot';
-import { getEmployees } from '#/lib/api/employee';
-import { getSocieties } from '#/lib/api/society';
-import { getVoters } from '#/lib/api/voter';
+import { getStat } from '#/lib/api/analysis';
 import { useEffect, useState } from 'react';
 
+type Stat = {
+  employees: number;
+  societyContacts: number;
+  voters: number;
+  societies: number;
+  ballots: number;
+  offices: number;
+  candidates: number;
+  votes: number;
+  ballot_completed: string;
+  ballot_incomplete: string;
+};
+
 export default function Page() {
-  const [ballots, setBallots] = useState('');
-  const [employees, setEmployees] = useState('');
-  const [societies, setSocieties] = useState('');
-  const [voters, setVoters] = useState('');
+  const [data, setData] = useState<Stat>({
+    employees: 0,
+    societyContacts: 0,
+    voters: 0,
+    societies: 0,
+    ballots: 0,
+    offices: 0,
+    candidates: 0,
+    votes: 0,
+    ballot_completed: '',
+    ballot_incomplete: '',
+  });
+
+  const {
+    employees,
+    societyContacts,
+    voters,
+    societies,
+    ballots,
+    offices,
+    candidates,
+    votes,
+    ballot_completed,
+    ballot_incomplete,
+  } = data;
 
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
 
-    getBallots(token)
-      .then((res) => setBallots(res.length))
-      .catch((err) => console.log(err));
-
-    getEmployees(token)
-      .then((res) => setEmployees(res.length))
-      .catch((err) => console.log(err));
-
-    getSocieties(token)
-      .then((res) => setSocieties(res.length))
-      .catch((err) => console.log(err));
-
-    getVoters(token)
-      .then((res) => setVoters(res.length))
-      .catch((err) => console.log(err));
-  }, []);
+    getStat(token)
+      .then((res) => setData(res))
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [setData]);
 
   return (
     <>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Stat title="Voter" value={voters} />
-        <Stat title="Society Contact" value={societies} />
-        <Stat title="Employee" value={employees} />
-        <Stat title="Ballot" value={ballots} />
-        <Stat title="Vote" value="0" />
+        <Stat title="Employee" value={'' + employees} />
+        <Stat title="Society Contact" value={'' + societyContacts} />
+        <Stat title="Voter" value={'' + voters} />
+        <Stat title="Society" value={'' + societies} />
+        <Stat title="Office" value={'' + offices} />
+        <Stat title="Candidates" value={'' + candidates} />
+        <Stat title="Ballot" value={'' + ballots} />
+        <Stat title="Ballot Completed" value={'' + ballot_completed} />
+        <Stat title="Ballot Incomplete" value={'' + ballot_incomplete} />
+        <Stat title="Vote" value={'' + votes} />
       </div>
     </>
   );
