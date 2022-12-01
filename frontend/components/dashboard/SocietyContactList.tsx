@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import RemoveModal from '../RemoveModal';
+import CreateModal from './CreateModal';
 
 export default function VoterList() {
   const [societyContacts, setSocietyContacts] = useState([]);
@@ -32,7 +33,10 @@ export default function VoterList() {
           <th>#</th>
           <th>Username</th>
           <th>Society</th>
-          <th className="flex justify-end">Controls</th>
+          <th className="flex items-center justify-end space-x-7">
+            <CreateModal category="societyContact" />
+            <label>Controls</label>
+          </th>
         </tr>
       </thead>
       <tbody>

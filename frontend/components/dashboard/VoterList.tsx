@@ -26,14 +26,8 @@ export default function VoterList() {
           <th>#</th>
           <th>Name</th>
           <th>Date Of Birth</th>
-          <th className="flex justify-end items-center space-x-6">
-            {/* <Link
-              href={''}
-              className="btn btn-success btn-sm hover:bg-transparent"
-            >
-              Add
-            </Link> */}
-            <CreateModal />
+          <th className="flex items-center justify-end space-x-7">
+            <CreateModal category="voter" />
             <label>Controls</label>
           </th>
         </tr>

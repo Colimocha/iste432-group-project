@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import RemoveModal from '../RemoveModal';
+import CreateModal from './CreateModal';
 
 export default function SocietyList() {
   const [societies, setSocieties] = useState<Society[]>([]);
@@ -25,7 +26,10 @@ export default function SocietyList() {
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th className="flex justify-end">Controls</th>
+            <th className="flex items-center justify-end space-x-7">
+              <CreateModal category="society" />
+              <label>Controls</label>
+            </th>
           </tr>
         </thead>
         <tbody>
