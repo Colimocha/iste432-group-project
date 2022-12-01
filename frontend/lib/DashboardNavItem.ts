@@ -1,6 +1,7 @@
 export type DashboardNavItem = {
   name: string;
   slug: string;
+  role?: string;
   description?: string;
   icon?: string;
 };
@@ -21,6 +22,10 @@ export const dashboardNavItems: DashboardNavItem[] = [
   {
     name: 'Office',
     slug: 'office',
+  },
+  {
+    name: 'Candidate',
+    slug: 'candidate',
   },
   {
     name: 'TBD...',

@@ -26,9 +26,9 @@ export default function MasterList({ category }: Props) {
 
   return (
     <>
-      <div className="form-control w-full ring-2 p-2">
+      <div className="form-control w-full ring-2 p-2 rounded-md">
         <label className="label">
-          <span className="label-text">{category.toUpperCase()}</span>
+          <span className="label-text capitalize text-base">{category}</span>
         </label>
         <select
           className="select select-bordered"

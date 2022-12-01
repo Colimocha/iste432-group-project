@@ -48,14 +48,14 @@ const fields = {
     ['firstName', 'First Name'],
     ['lastName', 'Last Name'],
     ['title', 'Title'],
-    ['image', 'Image'],
+    ['image', 'Image URL'],
     ['officeId', 'Office Id'],
     ['ballotId', 'Ballot Id'],
   ],
 };
 
 function getFieldType(field: string) {
-  if (field === 'image') return 'file';
+  // if (field === 'image') return 'file';
   if (field === 'password') return 'password';
   if (RegExp('Id$').test(field)) return 'number';
   return 'text';
@@ -136,6 +136,12 @@ export default function CreateModal(props: Category) {
                       <>
                         {field[0] === 'societyId' && (
                           <MasterList category="society" />
+                        )}
+                        {field[0] === 'officeId' && (
+                          <MasterList category="office" />
+                        )}
+                        {field[0] === 'ballotId' && (
+                          <MasterList category="ballot" />
                         )}
                       </>
                     )}

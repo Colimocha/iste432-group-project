@@ -118,4 +118,10 @@ async function getCandidates(token: string) {
   }
 }
 
-export {};
+export {
+  createCandidate,
+  editCandidate,
+  deleteCandidate,
+  getCandidate,
+  getCandidates,
+};
