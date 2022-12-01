@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 
 interface Props {
   readonly category: 'society' | 'office' | 'ballot';
+  value?: number | undefined;
+  disabled?: boolean | undefined;
+  change?: (e: any) => void | undefined;
 }
 
 async function getList(category: string) {
@@ -17,7 +20,12 @@ async function getList(category: string) {
   return await list.json();
 }
 
-export default function MasterList({ category }: Props) {
+export default function MasterList({
+  category,
+  value,
+  disabled,
+  change,
+}: Props) {
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -26,14 +34,17 @@ export default function MasterList({ category }: Props) {
 
   return (
     <>
-      <div className="form-control w-full ring-2 p-2 rounded-md">
+      <div className="form-control w-full rounded-md p-2 ring-2">
         <label className="label">
-          <span className="label-text capitalize text-base">{category}</span>
+          <span className="label-text text-base capitalize">{category}</span>
         </label>
         <select
-          className="select select-bordered"
+          className="select-bordered select"
           name={category + 'Id'}
-          required
+          value={value}
+          disabled={disabled}
+          defaultValue=""
+          onChange={change}
         >
           {list.map((item: any) => (
             <option key={item.id} value={item.id}>
