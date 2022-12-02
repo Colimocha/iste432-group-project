@@ -8,17 +8,59 @@ export class OfficeService {
 
   async create(createOfficeDto: CreateOfficeDto) {
     await this.ballotExists(createOfficeDto.ballotId);
-    return await this.prisma.office.create({ data: createOfficeDto });
+    return await this.prisma.office.create({
+      data: createOfficeDto,
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        ballot: { select: { id: true, name: true } },
+        _count: { select: { Candidate: true } },
+        Candidate: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            title: true,
+          },
+        },
+      },
+    });
   }
 
   async findAll() {
     return await this.prisma.office
-      .findMany()
+      .findMany({
+        select: {
+          id: true,
+          name: true,
+          createdAt: true,
+          ballot: { select: { id: true, name: true } },
+          _count: { select: { Candidate: true } },
+        },
+      })
       .then((offices) => offices.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {
-    return await this.prisma.office.findUnique({ where: { id } });
+    return await this.prisma.office.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        ballot: { select: { id: true, name: true } },
+        _count: { select: { Candidate: true } },
+        Candidate: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            title: true,
+          },
+        },
+      },
+    });
   }
 
   async update(id: number, updateOfficeDto: UpdateOfficeDto) {
@@ -26,6 +68,13 @@ export class OfficeService {
     return await this.prisma.office.update({
       where: { id },
       data: updateOfficeDto,
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+        ballot: { select: { id: true, name: true } },
+      },
     });
   }
 

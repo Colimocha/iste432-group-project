@@ -9,47 +9,54 @@ export class EmployeeService {
   async create(createEmployeeDto: CreateEmployeeDto) {
     const { password, ...employee } = createEmployeeDto;
     const hashedPassword = await argon.hash(password);
-    return await this.prisma.employee
-      .create({ data: { ...employee, password: hashedPassword } })
-      .then((employee) => {
-        delete employee.password;
-        return employee;
-      });
-  }
-
-  async findAll() {
-    return await this.prisma.employee.findMany().then((employees) => {
-      if (employees.length)
-        employees.forEach((employee) => delete employee.password);
-      employees.sort((a, b) => a.id - b.id);
-      return employees;
+    return await this.prisma.employee.create({
+      data: { ...employee, password: hashedPassword },
+      select: {
+        id: true,
+        username: true,
+        createdAt: true,
+      },
     });
   }
 
-  async findOne(id: number) {
+  async findAll() {
     return await this.prisma.employee
-      .findUnique({ where: { id } })
-      .then((employee) => {
-        if (employee) delete employee.password;
-        return employee;
-      });
+      .findMany({
+        select: {
+          id: true,
+          username: true,
+          createdAt: true,
+        },
+      })
+      .then((employees) => employees.sort((a, b) => a.id - b.id));
+  }
+
+  async findOne(id: number) {
+    return await this.prisma.employee.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        username: true,
+        createdAt: true,
+      },
+    });
   }
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
     const { password, ...employee } = updateEmployeeDto;
     let hashedPassword = '';
     if (password) hashedPassword = await argon.hash(password);
-    return await this.prisma.employee
-      .update({
-        where: { id },
-        data: password
-          ? { ...employee, password: hashedPassword }
-          : { ...employee },
-      })
-      .then((employee) => {
-        delete employee.password;
-        return employee;
-      });
+    return await this.prisma.employee.update({
+      where: { id },
+      data: password
+        ? { ...employee, password: hashedPassword }
+        : { ...employee },
+      select: {
+        id: true,
+        username: true,
+        createdAt: true,
+      },
+    });
   }
 
   async remove(id: number) {

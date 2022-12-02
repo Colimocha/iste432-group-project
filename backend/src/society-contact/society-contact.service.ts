@@ -10,38 +10,49 @@ export class SocietyContactService {
     await this.societyExists(createSocietyContactDto.societyId);
     const { password, ...societyContact } = createSocietyContactDto;
     const hashedPassword = await argon.hash(password);
-    return await this.prisma.societyContact
-      .create({
-        data: { ...societyContact, password: hashedPassword },
-      })
-      .then((societyContact) => {
-        delete societyContact.password;
-        return societyContact;
-      });
+    return await this.prisma.societyContact.create({
+      data: { ...societyContact, password: hashedPassword },
+      select: {
+        id: true,
+        username: true,
+        createdAt: true,
+      },
+    });
   }
 
   async findAll() {
     return await this.prisma.societyContact
-      .findMany()
-      .then((societyContacts) => {
-        if (societyContacts.length) {
-          societyContacts.forEach((societyContact) => {
-            delete societyContact.password;
-          });
-        }
-
-        societyContacts.sort((a, b) => a.id - b.id);
-        return societyContacts;
-      });
+      .findMany({
+        select: {
+          id: true,
+          username: true,
+          createdAt: true,
+          society: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      })
+      .then((societyContacts) => societyContacts.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {
-    return await this.prisma.societyContact
-      .findUnique({ where: { id } })
-      .then((societyContact) => {
-        if (societyContact) delete societyContact.password;
-        return societyContact;
-      });
+    return await this.prisma.societyContact.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        username: true,
+        createdAt: true,
+        society: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
   }
 
   async update(id: number, updateSocietyContactDto: UpdateSocietyContactDto) {
@@ -50,17 +61,18 @@ export class SocietyContactService {
     let hashedPassword = '';
     if (password) hashedPassword = await argon.hash(password);
 
-    return await this.prisma.societyContact
-      .update({
-        where: { id },
-        data: password
-          ? { ...societyContact, password: hashedPassword }
-          : { ...societyContact },
-      })
-      .then((societyContact) => {
-        delete societyContact.password;
-        return societyContact;
-      });
+    return await this.prisma.societyContact.update({
+      where: { id },
+      data: password
+        ? { ...societyContact, password: hashedPassword }
+        : { ...societyContact },
+      select: {
+        id: true,
+        username: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   async remove(id: number) {

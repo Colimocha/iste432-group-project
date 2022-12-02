@@ -8,27 +8,74 @@ export class BallotService {
 
   async create(createBallotDto: CreateBallotDto) {
     await this.societyExists(createBallotDto.societyId);
-    return await this.prisma.ballot.create({ data: createBallotDto });
+    return await this.prisma.ballot.create({
+      data: createBallotDto,
+      select: {
+        id: true,
+        name: true,
+        allowWriteIn: true,
+        start_date: true,
+        end_date: true,
+        createdAt: true,
+        society: { select: { id: true, name: true } },
+      },
+    });
   }
 
   async findAll() {
     return await this.prisma.ballot
-      .findMany()
+      .findMany({
+        select: {
+          id: true,
+          name: true,
+          allowWriteIn: true,
+          start_date: true,
+          end_date: true,
+          createdAt: true,
+          society: { select: { id: true, name: true } },
+          _count: { select: { Vote: true } },
+        },
+      })
       .then((ballots) => ballots.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {
-    return await this.prisma.ballot.findUnique({ where: { id } });
+    return await this.prisma.ballot.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        allowWriteIn: true,
+        start_date: true,
+        end_date: true,
+        createdAt: true,
+        society: { select: { id: true, name: true } },
+        Vote: true,
+        _count: { select: { Vote: true } },
+      },
+    });
   }
 
   async findManyBySocietyId(societyId: number) {
-    return (await this.prisma.ballot.findMany({ where: { societyId } })).filter(
-      (ballot) => {
-        if (ballot.end_date !== null)
-          return new Date(ballot.end_date) > new Date();
-        return true;
-      },
-    );
+    return (
+      await this.prisma.ballot.findMany({
+        where: { societyId },
+        select: {
+          id: true,
+          name: true,
+          allowWriteIn: true,
+          start_date: true,
+          end_date: true,
+          createdAt: true,
+          society: { select: { id: true, name: true } },
+          _count: { select: { Vote: true } },
+        },
+      })
+    ).filter((ballot) => {
+      if (ballot.end_date !== null)
+        return new Date(ballot.end_date) > new Date();
+      return true;
+    });
   }
 
   async update(id: number, updateBallotDto: UpdateBallotDto) {
@@ -36,6 +83,16 @@ export class BallotService {
     return await this.prisma.ballot.update({
       where: { id },
       data: updateBallotDto,
+      select: {
+        id: true,
+        name: true,
+        allowWriteIn: true,
+        start_date: true,
+        end_date: true,
+        createdAt: true,
+        updatedAt: true,
+        society: { select: { id: true, name: true } },
+      },
     });
   }
 

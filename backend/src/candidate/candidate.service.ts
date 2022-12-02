@@ -9,17 +9,52 @@ export class CandidateService {
   async create(createCandidateDto: CreateCandidateDto) {
     await this.ballotExists(createCandidateDto.ballotId);
     await this.officeExists(createCandidateDto.officeId);
-    return await this.prisma.candidate.create({ data: createCandidateDto });
+    return await this.prisma.candidate.create({
+      data: createCandidateDto,
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        title: true,
+        image: true,
+        createdAt: true,
+        office: { select: { id: true, name: true } },
+        ballot: { select: { id: true, name: true } },
+      },
+    });
   }
 
   async findAll() {
     return this.prisma.candidate
-      .findMany()
+      .findMany({
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          title: true,
+          image: true,
+          createdAt: true,
+          office: { select: { id: true, name: true } },
+          ballot: { select: { id: true, name: true } },
+        },
+      })
       .then((candidates) => candidates.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {
-    return this.prisma.candidate.findUnique({ where: { id } });
+    return this.prisma.candidate.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        title: true,
+        image: true,
+        createdAt: true,
+        office: { select: { id: true, name: true } },
+        ballot: { select: { id: true, name: true } },
+      },
+    });
   }
 
   async update(id: number, updateCandidateDto: UpdateCandidateDto) {

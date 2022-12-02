@@ -11,50 +11,66 @@ export class VotersService {
     await this.societyExists(createVoterDto.societyId);
     const { credential_2, ...voter } = createVoterDto;
     const hash_credential_2 = await argon.hash(credential_2);
-    return await this.prisma.voter
-      .create({
-        data: { ...voter, credential_2: hash_credential_2 },
-      })
-      .then((voter) => {
-        delete voter.credential_2;
-        return voter;
-      });
-  }
-
-  async findAll() {
-    return await this.prisma.voter.findMany().then((voters) => {
-      if (voters.length) {
-        voters.forEach((voter) => {
-          delete voter.credential_2;
-        });
-      }
-
-      // sort voters by id
-      voters.sort((a, b) => a.id - b.id);
-      return voters;
+    return await this.prisma.voter.create({
+      data: { ...voter, credential_2: hash_credential_2 },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        dateOfBirth: true,
+        createdAt: true,
+        society: { select: { id: true, name: true } },
+      },
     });
   }
 
-  async findOne(id: number) {
+  async findAll() {
     return await this.prisma.voter
-      .findUnique({ where: { id: id } })
-      .then((voter) => {
-        if (voter) delete voter.credential_2;
-        return voter;
-      });
+      .findMany({
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          credential_1: true,
+          dateOfBirth: true,
+          createdAt: true,
+          society: { select: { id: true, name: true } },
+        },
+      })
+      .then((voters) => voters.sort((a, b) => a.id - b.id));
+  }
+
+  async findOne(id: number) {
+    return await this.prisma.voter.findUnique({
+      where: { id: id },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        credential_1: true,
+        dateOfBirth: true,
+        createdAt: true,
+        society: { select: { id: true, name: true } },
+      },
+    });
   }
 
   async update(id: number, updateVoterDto: UpdateVoterDto) {
     await this.societyExists(updateVoterDto.societyId);
-    return await this.prisma.voter
-      .update({
-        where: { id },
-        data: { ...updateVoterDto },
-      })
-      .then((voter) => {
-        delete voter.credential_2;
-        return voter;
-      });
+    return await this.prisma.voter.update({
+      where: { id },
+      data: { ...updateVoterDto },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        credential_1: true,
+        dateOfBirth: true,
+        createdAt: true,
+        updatedAt: true,
+        society: { select: { id: true, name: true } },
+      },
+    });
   }
 
   async remove(id: number) {
