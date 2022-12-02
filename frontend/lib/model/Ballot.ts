@@ -1,4 +1,5 @@
 import { Society } from './Society';
+import { Vote } from './Vote';
 
 export interface Ballot {
   id: number;
@@ -8,7 +9,11 @@ export interface Ballot {
   end_date: string;
   societyId: number;
   society: Society;
+  Vote?: Vote[];
   createdAt: string;
+  _count: {
+    Vote: number;
+  };
 }
 
 export interface CreateBallot {

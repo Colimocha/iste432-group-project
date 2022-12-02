@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useSelectedLayoutSegment } from 'next/navigation';
 
+const role = sessionStorage.getItem('role') || '';
+
 export default function DashboardNav() {
   const [isOpen, setIsOpen] = useState(false);
   const close = () => setIsOpen(false);
@@ -64,15 +66,17 @@ export default function DashboardNav() {
       >
         <nav className="space-y-4 px-2 py-5">
           {dashboardNavItems.map((section) => {
-            return (
-              <div key={section.name}>
-                <DashboardNavItem
-                  key={section.slug}
-                  item={section}
-                  close={close}
-                />
-              </div>
-            );
+            if (section.role?.includes(role)) {
+              return (
+                <div key={section.name}>
+                  <DashboardNavItem
+                    key={section.slug}
+                    item={section}
+                    close={close}
+                  />
+                </div>
+              );
+            }
           })}
         </nav>
       </div>

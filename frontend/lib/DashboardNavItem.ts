@@ -20,7 +20,7 @@ export const dashboardNavItems: DashboardNavItem[] = [
   {
     name: 'Ballot',
     slug: 'ballot',
-    role: ['employee', 'societyContact'],
+    role: ['employee', 'society_contact'],
   },
   {
     name: 'Office',

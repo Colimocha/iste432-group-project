@@ -17,6 +17,8 @@ type Stat = {
   ballot_incomplete: string;
 };
 
+const role = sessionStorage.getItem('role') || '';
+
 export default function Page() {
   const [data, setData] = useState<Stat>({
     employees: 0,
@@ -56,17 +58,28 @@ export default function Page() {
 
   return (
     <>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Stat title="Employee" value={'' + employees} />
-        <Stat title="Society Contact" value={'' + societyContacts} />
-        <Stat title="Voter" value={'' + voters} />
-        <Stat title="Society" value={'' + societies} />
-        <Stat title="Office" value={'' + offices} />
-        <Stat title="Candidates" value={'' + candidates} />
-        <Stat title="Ballot" value={'' + ballots} />
-        {/* <Stat title="Ballot Completed" value={'' + ballot_completed} /> */}
-        {/* <Stat title="Ballot Incomplete" value={'' + ballot_incomplete} /> */}
-        <Stat title="Vote" value={'' + votes} />
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {role === 'employee' && (
+          <>
+            <Stat title="Employee" value={'' + employees} />
+            <Stat title="Society Contact" value={'' + societyContacts} />
+            <Stat title="Voter" value={'' + voters} />
+            <Stat title="Society" value={'' + societies} />
+            <Stat title="Office" value={'' + offices} />
+            <Stat title="Candidates" value={'' + candidates} />
+            <Stat title="Ballot" value={'' + ballots} />
+            {/* <Stat title="Ballot Completed" value={'' + ballot_completed} /> */}
+            {/* <Stat title="Ballot Incomplete" value={'' + ballot_incomplete} /> */}
+            <Stat title="Vote" value={'' + votes} />
+          </>
+        )}
+
+        {role === 'society_contact' && (
+          <>
+            <Stat title="Ballot" value={'' + ballots} />
+            <Stat title="Vote" value={'' + votes} />
+          </>
+        )}
       </div>
     </>
   );

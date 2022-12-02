@@ -1,13 +1,15 @@
 'use client';
 
 import React from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import LogoutButton from './LogoutButton';
 
 export function AddressBar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
-    <div className="flex items-center space-x-2 p-3.5 lg:px-5 lg:py-3">
+    <div className="flex items-center justify-between space-x-2 p-3.5 lg:px-5 lg:py-3">
       <div className="text-gray-600">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -51,6 +53,7 @@ export function AddressBar() {
           </>
         ) : null}
       </div>
+      <LogoutButton />
     </div>
   );
 }

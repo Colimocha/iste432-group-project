@@ -1,6 +1,7 @@
 'use client';
 
 import { authEmployee, authSocietyContact, authVoter } from '#/lib/api/auth';
+import { delay } from '#/lib/delay';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -26,59 +27,65 @@ export default function AuthPage() {
 
     if (role === 'v') {
       setLoading(true);
-      authVoter({
-        cred_1: input_1_Ref.current?.value!,
-        cred_2: input_2_Ref.current?.value!,
-      })
-        .then((res) => {
-          sessionStorage.setItem('token', res.access_token);
-          sessionStorage.setItem('role', 'voter');
-          sessionStorage.setItem('voterId', res.id);
-          router.push('/voter');
+      delay().then(() => {
+        authVoter({
+          cred_1: input_1_Ref.current?.value!,
+          cred_2: input_2_Ref.current?.value!,
         })
-        .catch((err) => {
-          setLoading(false);
-          setError(true);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+          .then((res) => {
+            sessionStorage.setItem('token', res.access_token);
+            sessionStorage.setItem('role', 'voter');
+            sessionStorage.setItem('voterId', res.id);
+            router.push('/voter');
+          })
+          .catch((err) => {
+            setLoading(false);
+            setError(true);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      });
     } else if (role === 'sc') {
       setLoading(true);
-      authSocietyContact({
-        username: input_1_Ref.current?.value!,
-        password: input_2_Ref.current?.value!,
-      })
-        .then((res) => {
-          sessionStorage.setItem('token', res.access_token);
-          sessionStorage.setItem('role', 'society_contact');
-          router.push('/dashboard');
+      delay().then(() => {
+        authSocietyContact({
+          username: input_1_Ref.current?.value!,
+          password: input_2_Ref.current?.value!,
         })
-        .catch((err) => {
-          setLoading(false);
-          setError(true);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+          .then((res) => {
+            sessionStorage.setItem('token', res.access_token);
+            sessionStorage.setItem('role', 'society_contact');
+            router.push('/dashboard');
+          })
+          .catch((err) => {
+            setLoading(false);
+            setError(true);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      });
     } else {
       setLoading(true);
-      authEmployee({
-        username: input_1_Ref.current?.value!,
-        password: input_2_Ref.current?.value!,
-      })
-        .then((res) => {
-          sessionStorage.setItem('token', res.access_token);
-          sessionStorage.setItem('role', 'employee');
-          router.push('/dashboard');
+      delay().then(() => {
+        authEmployee({
+          username: input_1_Ref.current?.value!,
+          password: input_2_Ref.current?.value!,
         })
-        .catch((err) => {
-          setLoading(false);
-          setError(true);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+          .then((res) => {
+            sessionStorage.setItem('token', res.access_token);
+            sessionStorage.setItem('role', 'employee');
+            router.push('/dashboard');
+          })
+          .catch((err) => {
+            setLoading(false);
+            setError(true);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      });
     }
   };
 
@@ -87,6 +94,46 @@ export default function AuthPage() {
       <div className="rounded-md bg-gray-200 p-5 shadow-lg lg:p-10">
         <h1 className="mb-6 text-4xl font-bold">Sign In</h1>
         <form className="mt-3 w-[400px] space-y-6">
+          {/* Username */}
+          <div>
+            <label
+              htmlFor={isVoter ? 'credential_1' : 'username'}
+              className="sr-only"
+            >
+              {isVoter ? 'Credential 1' : 'Username'}
+            </label>
+            <input
+              id={isVoter ? 'credential_1' : 'username'}
+              name={isVoter ? 'credential_1' : 'username'}
+              type="text"
+              autoComplete={isVoter ? 'credential_1' : 'username'}
+              required
+              className="input w-full"
+              placeholder={isVoter ? 'Credential 1' : 'Username'}
+              ref={input_1_Ref}
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label
+              htmlFor={isVoter ? 'credential_2' : 'password'}
+              className="sr-only"
+            >
+              {isVoter ? 'Credential 2' : 'Password'}
+            </label>
+            <input
+              id={isVoter ? 'credential_2' : 'password'}
+              name={isVoter ? 'credential_2' : 'password'}
+              type={isVoter ? 'text' : 'password'}
+              autoComplete="current-password"
+              required
+              className="input w-full"
+              placeholder={isVoter ? 'Credential 2' : 'Password'}
+              ref={input_2_Ref}
+            />
+          </div>
+
           {/* select role */}
           <div>
             <label htmlFor="role" className="sr-only">
@@ -111,47 +158,9 @@ export default function AuthPage() {
               <option value="e">Employee</option>
             </select>
           </div>
-          {/* Username */}
-          <div>
-            <label
-              htmlFor={isVoter ? 'credential_1' : 'username'}
-              className="sr-only"
-            >
-              {isVoter ? 'Credential 1' : 'Username'}
-            </label>
-            <input
-              id={isVoter ? 'credential_1' : 'username'}
-              name={isVoter ? 'credential_1' : 'username'}
-              type="text"
-              autoComplete={isVoter ? 'credential_1' : 'username'}
-              required
-              className="input w-full"
-              placeholder={isVoter ? 'Credential 1' : 'Username'}
-              ref={input_1_Ref}
-            />
-          </div>
-          {/* Password */}
-          <div>
-            <label
-              htmlFor={isVoter ? 'credential_2' : 'password'}
-              className="sr-only"
-            >
-              {isVoter ? 'Credential 2' : 'Password'}
-            </label>
-            <input
-              id={isVoter ? 'credential_2' : 'password'}
-              name={isVoter ? 'credential_2' : 'password'}
-              type={isVoter ? 'text' : 'password'}
-              autoComplete="current-password"
-              required
-              className="input w-full"
-              placeholder={isVoter ? 'Credential 2' : 'Password'}
-              ref={input_2_Ref}
-            />
-          </div>
 
           {/* Remember Me and Forget Password */}
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <div className="form-control">
               <label className="label cursor-pointer">
                 <input
@@ -170,11 +179,11 @@ export default function AuthPage() {
                 Forgot your password?
               </a>
             </div>
-          </div>
+          </div> */}
           <div>
             <button
               className={clsx('btn-primary btn w-full', {
-                'btn-loading': isLoading,
+                loading: isLoading,
               })}
               onClick={handleSubmit}
             >
