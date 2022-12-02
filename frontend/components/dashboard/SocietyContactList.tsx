@@ -1,9 +1,7 @@
 'use client';
 
 import { getSocietyContacts } from '#/lib/api/societyContact';
-import { getSocieties } from '#/lib/api/society';
 import { SocietyContact } from '#/lib/model/SocietyContact';
-import { Society } from '#/lib/model/Society';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -12,17 +10,12 @@ import CreateModal from './CreateModal';
 
 export default function VoterList() {
   const [societyContacts, setSocietyContacts] = useState([]);
-  const [societies, setSocieties] = useState([]);
   const path = usePathname();
 
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
     getSocietyContacts(token)
       .then((res) => setSocietyContacts(res))
-      .catch((err) => console.log(err));
-
-    getSocieties(token)
-      .then((res) => setSocieties(res))
       .catch((err) => console.log(err));
   }, []);
 
@@ -33,6 +26,7 @@ export default function VoterList() {
           <th>#</th>
           <th>Username</th>
           <th>Society</th>
+          <th>Created</th>
           <th className="flex items-center justify-end space-x-7">
             <CreateModal category="societyContact" />
             <label>Controls</label>
@@ -44,11 +38,8 @@ export default function VoterList() {
           <tr key={index}>
             <td>{index + 1}</td>
             <td>{data.username}</td>
-            <td>
-              {societies.map((society: Society) => {
-                if (society.id == data.id) return society.name;
-              })}
-            </td>
+            <td>{data.society.name}</td>
+            <td>{data.createdAt.split('T')[0]}</td>
             <td className="flex justify-end space-x-2">
               <Link
                 href={path + '/' + data.id}

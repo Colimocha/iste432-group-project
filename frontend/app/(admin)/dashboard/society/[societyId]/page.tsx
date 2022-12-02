@@ -92,7 +92,7 @@ export default function Page({ params }: { params: Params }) {
           <form className="grid grid-cols-2 gap-4" onSubmit={handleEdit}>
             <div className="form-control rounded-md p-2 ring-2">
               <label className="label">
-                <span className="label_text">Ballot Name</span>
+                <span className="label_text">Society Name</span>
               </label>
               <input
                 type="text"

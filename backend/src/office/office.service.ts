@@ -49,6 +49,7 @@ export class OfficeService {
         id: true,
         name: true,
         createdAt: true,
+        ballotId: true,
         ballot: { select: { id: true, name: true } },
         _count: { select: { Candidate: true } },
         Candidate: {

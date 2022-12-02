@@ -4,6 +4,6 @@ import { BallotController } from './ballot.controller';
 
 @Module({
   controllers: [BallotController],
-  providers: [BallotService]
+  providers: [BallotService],
 })
 export class BallotModule {}

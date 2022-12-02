@@ -4,6 +4,6 @@ import { SocietyContactController } from './society-contact.controller';
 
 @Module({
   controllers: [SocietyContactController],
-  providers: [SocietyContactService]
+  providers: [SocietyContactService],
 })
 export class SocietyContactModule {}

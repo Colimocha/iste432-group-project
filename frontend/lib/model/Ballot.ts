@@ -1,3 +1,5 @@
+import { Society } from './Society';
+
 export interface Ballot {
   id: number;
   name: string;
@@ -5,6 +7,7 @@ export interface Ballot {
   start_date: string;
   end_date: string;
   societyId: number;
+  society: Society;
   createdAt: string;
 }
 

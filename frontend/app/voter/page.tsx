@@ -42,7 +42,6 @@ export default function Page() {
   return (
     // content
     <div className="content bg-gray-100">
-
       {/* navigation bar */}
       <div className="... flex flex-row-reverse bg-zinc-900 p-2">
         <button
@@ -57,7 +56,7 @@ export default function Page() {
           <h2 className="text-2xl font-bold text-gray-900">Ballot Selection</h2>
           <div className="mt-6 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-5">
             {ballots.map((ballot) => (
-              <div className="relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1 card image-full w-96 bg-base-100 shadow-xl">
+              <div className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 card image-full relative h-80 w-full w-96 overflow-hidden rounded-lg bg-white bg-base-100 shadow-xl group-hover:opacity-75 sm:h-64">
                 <figure>
                   <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
                 </figure>

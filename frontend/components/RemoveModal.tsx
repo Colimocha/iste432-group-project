@@ -103,7 +103,7 @@ export default function RemoveModal({
   };
 
   return (
-    <div className="dropdown dropdown-bottom dropdown-end">
+    <div className="dropdown-bottom dropdown-end dropdown">
       <label tabIndex={0} className="btn-error btn-sm btn">
         Remove
       </label>

@@ -1,3 +1,6 @@
+import { Ballot } from './Ballot';
+import { Office } from './Office';
+
 export interface Candidate {
   id: number;
   firstName: string;
@@ -6,6 +9,9 @@ export interface Candidate {
   image: string;
   officeId: number;
   ballotId: number;
+  createdAt: string;
+  office: Office;
+  ballot: Ballot;
 }
 
 export interface CreateCandidate {

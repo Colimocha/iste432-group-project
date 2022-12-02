@@ -49,6 +49,7 @@ export class VotersService {
         lastName: true,
         credential_1: true,
         dateOfBirth: true,
+        societyId: true,
         createdAt: true,
         society: { select: { id: true, name: true } },
       },

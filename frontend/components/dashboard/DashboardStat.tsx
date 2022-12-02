@@ -56,7 +56,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Stat title="Employee" value={'' + employees} />
         <Stat title="Society Contact" value={'' + societyContacts} />
         <Stat title="Voter" value={'' + voters} />

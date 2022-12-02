@@ -58,7 +58,7 @@ export default function DashboardNav() {
 
       <div
         className={clsx('overflow-y-auto lg:static lg:block', {
-          'fixed inset-x-0 top-14 mt-px bg-white rounded-b-lg': isOpen,
+          'fixed inset-x-0 top-14 mt-px rounded-b-lg bg-white': isOpen,
           hidden: !isOpen,
         })}
       >
@@ -96,7 +96,7 @@ function DashboardNavItem({
       href={href}
       className={clsx('block rounded-md px-3 py-2 text-sm font-medium ', {
         'hover:bg-blue-200 hover:text-black': !isActive,
-        'text-white bg-blue-500': isActive,
+        'bg-blue-500 text-white': isActive,
       })}
     >
       {name}

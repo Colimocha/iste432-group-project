@@ -44,6 +44,7 @@ export class SocietyContactService {
       select: {
         id: true,
         username: true,
+        societyId: true,
         createdAt: true,
         society: {
           select: {

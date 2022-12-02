@@ -1,6 +1,7 @@
 export interface Society {
   id: number;
   name: string;
+  createdAt: string;
 }
 
 export interface EditSociety {

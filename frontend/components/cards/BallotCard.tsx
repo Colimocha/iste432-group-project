@@ -3,11 +3,7 @@
 import React from 'react';
 import { Ballot } from '#/lib/model/Ballot';
 
-export default function BallotCard({
-  ballot
-}: {
-  ballot: Ballot;
-}) {
+export default function BallotCard({ ballot }: { ballot: Ballot }) {
   return (
     <div className="card image-full w-96 bg-base-100 shadow-xl">
       <figure>

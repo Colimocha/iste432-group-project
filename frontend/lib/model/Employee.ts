@@ -1,6 +1,7 @@
 export interface Employee {
   id: number;
   username: string;
+  createdAt: string;
 }
 
 export interface EditEmployee {

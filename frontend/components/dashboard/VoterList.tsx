@@ -24,8 +24,10 @@ export default function VoterList() {
       <thead>
         <tr>
           <th>#</th>
-          <th>Name</th>
+          <th>Full Name</th>
           <th>Date Of Birth</th>
+          <th>Society</th>
+          <th>Created</th>
           <th className="flex items-center justify-end space-x-7">
             <CreateModal category="voter" />
             <label>Controls</label>
@@ -37,8 +39,10 @@ export default function VoterList() {
           voters.map((data: Voter, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{data.firstName}</td>
+              <td>{data.firstName + ' ' + data.lastName}</td>
               <td>{data.dateOfBirth}</td>
+              <td>{data.society.name}</td>
+              <td>{data.createdAt.split('T')[0]}</td>
               <td className="flex justify-end space-x-2">
                 <Link
                   href={path + '/' + data.id}

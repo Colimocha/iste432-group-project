@@ -1,3 +1,5 @@
+import { Society } from './Society';
+
 export interface Voter {
   id: number;
   firstName: string;
@@ -6,6 +8,8 @@ export interface Voter {
   credential_2: string;
   dateOfBirth: string;
   societyId: number;
+  createdAt: string;
+  society: Society;
 }
 
 export interface CreateVoter {

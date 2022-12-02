@@ -25,7 +25,7 @@ export default function BallotList() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Username</th>
+            <th>Ballot Name</th>
             <th>Society</th>
             <th>Created</th>
             <th className="flex items-center justify-end space-x-7">
@@ -39,7 +39,7 @@ export default function BallotList() {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{data.name}</td>
-              <td>{data.societyId}</td>
+              <td>{data.society.name}</td>
               <td>{data.createdAt.split('T')[0]}</td>
               <td className="flex justify-end space-x-2">
                 <Link

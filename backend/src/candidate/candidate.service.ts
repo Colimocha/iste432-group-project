@@ -50,6 +50,8 @@ export class CandidateService {
         lastName: true,
         title: true,
         image: true,
+        officeId: true,
+        ballotId: true,
         createdAt: true,
         office: { select: { id: true, name: true } },
         ballot: { select: { id: true, name: true } },

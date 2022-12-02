@@ -25,7 +25,8 @@ export default function SocietyList() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>Society Name</th>
+            <th>Created</th>
             <th className="flex items-center justify-end space-x-7">
               <CreateModal category="society" />
               <label>Controls</label>
@@ -37,6 +38,7 @@ export default function SocietyList() {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{data.name}</td>
+              <td>{data.createdAt.split('T')[0]}</td>
               <td className="flex justify-end space-x-2">
                 <Link
                   href={path + '/' + data.id}
