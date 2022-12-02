@@ -123,9 +123,12 @@ export default function Page({ params }: { params: Params }) {
 
             {edit === true && (
               <button
-                className={clsx('btn-primary btn col-start-2', {
-                  loading: loading,
-                })}
+                className={clsx(
+                  'btn-primary btn col-span-2 lg:col-span-1 lg:col-start-2',
+                  {
+                    loading: loading,
+                  },
+                )}
               >
                 Save
               </button>

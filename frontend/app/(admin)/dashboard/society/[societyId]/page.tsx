@@ -90,7 +90,7 @@ export default function Page({ params }: { params: Params }) {
       <div className="w-full">
         <div className="mt-4">
           <form className="grid grid-cols-2 gap-4" onSubmit={handleEdit}>
-            <div className="form-control rounded-md p-2 ring-2">
+            <div className="form-control col-span-2 rounded-md p-2 ring-2">
               <label className="label">
                 <span className="label_text">Society Name</span>
               </label>
@@ -107,9 +107,12 @@ export default function Page({ params }: { params: Params }) {
 
             {edit && (
               <button
-                className={clsx('btn-primary btn col-start-2', {
-                  loading: loading,
-                })}
+                className={clsx(
+                  'btn-primary btn col-span-2 lg:col-span-1 lg:col-start-2',
+                  {
+                    loading: loading,
+                  },
+                )}
               >
                 Save
               </button>
