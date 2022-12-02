@@ -64,8 +64,8 @@ export default function Page() {
         <Stat title="Office" value={'' + offices} />
         <Stat title="Candidates" value={'' + candidates} />
         <Stat title="Ballot" value={'' + ballots} />
-        <Stat title="Ballot Completed" value={'' + ballot_completed} />
-        <Stat title="Ballot Incomplete" value={'' + ballot_incomplete} />
+        {/* <Stat title="Ballot Completed" value={'' + ballot_completed} /> */}
+        {/* <Stat title="Ballot Incomplete" value={'' + ballot_incomplete} /> */}
         <Stat title="Vote" value={'' + votes} />
       </div>
     </>

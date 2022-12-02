@@ -24,7 +24,7 @@ export function AddressBar() {
       </div>
       <div className="flex space-x-1 text-sm font-medium">
         <div>
-          <span className="px-2 text-black">domain</span>
+          <span className="px-2 text-black">dashboard</span>
         </div>
         {pathname ? (
           <>
