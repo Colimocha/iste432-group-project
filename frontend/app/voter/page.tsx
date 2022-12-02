@@ -1,21 +1,32 @@
 'use client';
-import { getVoter, getVoters } from '#/lib/api/voter';
-import { getBallots, getBallotsBySocietyID } from '#/lib/api/ballot';
+import { getVoter } from '#/lib/api/voter';
+import { getSociety } from '#/lib/api/society';
+import { getBallotsBySocietyID } from '#/lib/api/ballot';
 import { Ballot } from '#/lib/model/Ballot';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import ca from 'date-fns/esm/locale/ca/index.js';
+import { Society } from '#/lib/model/Society';
+
+// Ballot Section
 
 export default function Page() {
   const [ballots, setBallots] = useState<Ballot[]>([]);
+  const [society, setSociety] = useState<Society>();
   const router = useRouter();
-
-  const cars = ['Saab', 'Volvo', 'Volvo', 'Volvo', 'Volvo'];
 
   // fetch data
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
     const voterId = sessionStorage.getItem('voterId');
+
+    getVoter(token, parseInt(voterId!))
+      .then((voter) => {
+        getSociety(token, parseInt(voter.societyId))
+          .then((b) => setSociety(b))
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+
     getVoter(token, parseInt(voterId!))
       .then((voter) => {
         getBallotsBySocietyID(token, voter.societyId)
@@ -44,10 +55,7 @@ export default function Page() {
     <div className="content bg-gray-100">
       {/* navigation bar */}
       <div className="... flex flex-row-reverse bg-zinc-900 p-2">
-        <button
-          className="btn-outline btn-accent btn m-1"
-          onClick={handleLogout}
-        >
+        <button className="btn-outline btn-info btn m-1" onClick={handleLogout}>
           Log out
         </button>
       </div>
@@ -58,14 +66,14 @@ export default function Page() {
             {ballots.map((ballot) => (
               <div className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 card image-full relative h-80 w-full w-96 overflow-hidden rounded-lg bg-white bg-base-100 shadow-xl group-hover:opacity-75 sm:h-64">
                 <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+                  <img src="https://iili.io/HfipnUl.jpg" alt="Shoes" />
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{ballot.name}</h2>
-                  <p>{ballot.name}</p>
+                  <p>{society?.name}</p>
                   <div className="card-actions justify-end">
                     <button
-                      className="btn-black btn-outline btn m-1"
+                      className="btn-accent btn btn m-1"
                       onClick={(e) => handleEnter(ballot)}
                     >
                       Enter
