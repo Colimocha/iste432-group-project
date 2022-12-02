@@ -6,6 +6,7 @@ import { Ballot } from '#/lib/model/Ballot';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Society } from '#/lib/model/Society';
+import Image from 'next/image';
 
 // Ballot Section
 
@@ -64,16 +65,19 @@ export default function Page() {
           <h2 className="text-2xl font-bold text-gray-900">Ballot Selection</h2>
           <div className="mt-6 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-5">
             {ballots.map((ballot) => (
-              <div className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 card image-full relative h-80 w-full w-96 overflow-hidden rounded-lg bg-white bg-base-100 shadow-xl group-hover:opacity-75 sm:h-64">
+              <div
+                key={ballot.id}
+                className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 card image-full relative h-80 w-96 overflow-hidden rounded-lg bg-white shadow-xl group-hover:opacity-75 sm:h-64 lg:w-full"
+              >
                 <figure>
-                  <img src="https://iili.io/HfipnUl.jpg" alt="Shoes" />
+                  <Image src="https://iili.io/HfipnUl.jpg" alt="Shoes" />
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{ballot.name}</h2>
                   <p>{society?.name}</p>
                   <div className="card-actions justify-end">
                     <button
-                      className="btn-accent btn btn m-1"
+                      className="btn-accent btn m-1"
                       onClick={(e) => handleEnter(ballot)}
                     >
                       Enter
