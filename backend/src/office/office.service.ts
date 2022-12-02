@@ -12,7 +12,9 @@ export class OfficeService {
   }
 
   async findAll() {
-    return await this.prisma.office.findMany();
+    return await this.prisma.office
+      .findMany()
+      .then((offices) => offices.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {

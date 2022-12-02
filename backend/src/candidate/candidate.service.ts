@@ -13,7 +13,9 @@ export class CandidateService {
   }
 
   async findAll() {
-    return this.prisma.candidate.findMany();
+    return this.prisma.candidate
+      .findMany()
+      .then((candidates) => candidates.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {

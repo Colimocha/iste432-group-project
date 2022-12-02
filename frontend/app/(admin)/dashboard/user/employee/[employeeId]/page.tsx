@@ -1,13 +1,22 @@
 'use client';
 
 import { editEmployee, getEmployee } from '#/lib/api/employee';
+import { delay } from '#/lib/delay';
 import { EditEmployee, Employee } from '#/lib/model/Employee';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface Params {
   employeeId: string;
 }
+
+const fields = [
+  ['username', 'Username'],
+  ['password', 'Password'],
+];
+
+const token = sessionStorage.getItem('token') || '';
 
 export default function Page({ params }: { params: Params }) {
   const { employeeId } = params;
@@ -16,37 +25,52 @@ export default function Page({ params }: { params: Params }) {
     password: '',
   });
   const [edit, setEdit] = useState(false);
-  const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    setToken(sessionStorage.getItem('token') || '');
     getEmployee(token, parseInt(employeeId))
       .then((res) => setData(res))
       .catch((err) => console.log(err));
-  }, [employeeId, token]);
+  }, [employeeId]);
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setData({ ...data, [name]: value });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
-    editEmployee(token, Number(employeeId), data)
-      .then((res) => {
-        setLoading(false);
-        setEdit(false);
-        setData({ ...data, password: '' });
-      })
-      .catch((err) => {});
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const object = Object.fromEntries(data.entries());
+
+    //convert to EditEmployee
+    const editEmployeeObject: EditEmployee = {
+      username: object.username as string,
+      password: object.password as string,
+    };
+
+    if (editEmployeeObject.password === '') {
+      delete editEmployeeObject.password;
+    }
+
+    delay().then(() => {
+      editEmployee(token, parseInt(employeeId), editEmployeeObject)
+        .then(() => {
+          setEdit(false);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
+    });
   };
+
   return (
     <>
       <div className="flex justify-between">
         <button
           className="btn-primary btn-sm btn"
-          onClick={() => history.back()}
+          onClick={() => router.back()}
         >
           Back
         </button>
@@ -63,48 +87,34 @@ export default function Page({ params }: { params: Params }) {
       </div>
       <div className="w-full">
         <div className="mt-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="form-control rounded-md p-2 ring-2">
-              <label className="label">
-                <span className="label_text">Username</span>
-              </label>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                className="input-bordered input w-full"
-                value={data?.username}
-                onChange={handleInputChange}
-                disabled={!edit}
-              />
-            </div>
+          <form className="grid grid-cols-2 gap-4" onSubmit={handleEdit}>
+            {fields.map(([key, label]) => (
+              <div className="form-control rounded-md p-2 ring-2" key={key}>
+                <label className="label">
+                  <span className="label_text">{label}</span>
+                </label>
+                <input
+                  type="text"
+                  name={key}
+                  placeholder={label}
+                  className="input-bordered input w-full"
+                  value={key === 'username' ? data.username : data.password}
+                  onChange={handleInputChange}
+                  disabled={!edit}
+                />
+              </div>
+            ))}
 
-            {edit === true && (
-              <>
-                <div className="form-control rounded-md p-2 ring-2">
-                  <label className="label">
-                    <span className="label_text">Password</span>
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    className="input-bordered input w-full"
-                    value={data?.password}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <button
-                  className={clsx('btn-primary btn col-start-2', {
-                    loading: loading,
-                  })}
-                  onClick={handleSubmit}
-                >
-                  Save
-                </button>
-              </>
+            {edit && (
+              <button
+                className={clsx('btn-primary btn col-start-2', {
+                  loading: loading,
+                })}
+              >
+                Save
+              </button>
             )}
-          </div>
+          </form>
         </div>
       </div>
     </>

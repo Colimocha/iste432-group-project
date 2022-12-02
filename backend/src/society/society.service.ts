@@ -10,7 +10,9 @@ export class SocietyService {
   }
 
   async findAll() {
-    return this.prisma.society.findMany();
+    return this.prisma.society
+      .findMany()
+      .then((societies) => societies.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {

@@ -6,7 +6,7 @@ export interface SocietyContact {
 
 export interface EditSocietyContact {
   username: string;
-  password: string;
+  password?: string;
   societyId: number;
 }
 

@@ -39,7 +39,6 @@ export class VotersService {
     return await this.prisma.voter
       .findUnique({ where: { id: id } })
       .then((voter) => {
-        console.log(voter);
         if (voter) delete voter.credential_2;
         return voter;
       });

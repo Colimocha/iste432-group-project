@@ -32,7 +32,7 @@ async function editSocietyContact(
   societyContactId: number,
   bodyForm: {
     username: string;
-    password: string;
+    password?: string;
     societyId: number;
   },
 ) {

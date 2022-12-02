@@ -45,7 +45,6 @@ export class SocietyContactService {
   }
 
   async update(id: number, updateSocietyContactDto: UpdateSocietyContactDto) {
-    console.log(updateSocietyContactDto);
     await this.societyExists(updateSocietyContactDto.societyId);
     const { password, ...societyContact } = updateSocietyContactDto;
     let hashedPassword = '';

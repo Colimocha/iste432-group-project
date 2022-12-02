@@ -12,7 +12,9 @@ export class BallotService {
   }
 
   async findAll() {
-    return await this.prisma.ballot.findMany();
+    return await this.prisma.ballot
+      .findMany()
+      .then((ballots) => ballots.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {

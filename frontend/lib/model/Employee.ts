@@ -5,7 +5,7 @@ export interface Employee {
 
 export interface EditEmployee {
   username: string;
-  password: string;
+  password?: string;
 }
 
 export interface CreateEmployee {

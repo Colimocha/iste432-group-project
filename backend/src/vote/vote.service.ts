@@ -19,7 +19,9 @@ export class VoteService {
   }
 
   async findAll() {
-    return await this.prisma.vote.findMany();
+    return await this.prisma.vote
+      .findMany()
+      .then((votes) => votes.sort((a, b) => a.id - b.id));
   }
 
   async findOne(id: number) {

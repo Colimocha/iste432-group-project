@@ -3,7 +3,7 @@
 import MasterList from '#/components/dashboard/MasterList';
 import { editCandidate, getCandidate } from '#/lib/api/candidate';
 import { delay } from '#/lib/delay';
-import { Candidate, EditCandidate } from '#/lib/model/Candidate';
+import { EditCandidate } from '#/lib/model/Candidate';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
@@ -19,6 +19,8 @@ const fields = [
   ['image', 'Image URL'],
 ];
 
+const token = sessionStorage.getItem('token') || '';
+
 export default function Page({ params }: { params: Params }) {
   const router = useRouter();
   const { candidateId } = params;
@@ -31,15 +33,13 @@ export default function Page({ params }: { params: Params }) {
     officeId: 0,
   });
   const [edit, setEdit] = useState(false);
-  const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setToken(sessionStorage.getItem('token') || '');
     getCandidate(token, parseInt(candidateId))
       .then((res) => setData(res))
       .catch((err) => console.log(err));
-  }, [candidateId, token]);
+  }, [candidateId]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = event.target;
@@ -65,13 +65,11 @@ export default function Page({ params }: { params: Params }) {
 
     delay().then(() => {
       editCandidate(token, Number(candidateId), editCandidateObject)
-        .then((res) => {
-          setLoading(false);
+        .then(() => {
           setEdit(false);
         })
-        .catch((err) => {
-          setLoading(false);
-        });
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
     });
   };
 
@@ -99,22 +97,22 @@ export default function Page({ params }: { params: Params }) {
       <div className="w-full">
         <div className="mt-4">
           <form className="grid grid-cols-2 gap-4" onSubmit={handleEdit}>
-            {fields.map(([name, label]) => (
-              <div className="form-control rounded-md p-2 ring-2" key={name}>
+            {fields.map(([key, label]) => (
+              <div className="form-control rounded-md p-2 ring-2" key={key}>
                 <label className="label">
                   <span className="label_text">{label}</span>
                 </label>
                 <input
                   type="text"
-                  name={name}
+                  name={key}
                   placeholder={label}
                   className="input-bordered input w-full"
                   value={
-                    name === 'firstName'
+                    key === 'firstName'
                       ? data.firstName
-                      : name === 'lastName'
+                      : key === 'lastName'
                       ? data.lastName
-                      : name === 'title'
+                      : key === 'title'
                       ? data.title
                       : data.image
                   }
@@ -137,7 +135,7 @@ export default function Page({ params }: { params: Params }) {
               disabled={!edit}
             />
 
-            {edit === true && (
+            {edit && (
               <button
                 className={clsx('btn-primary btn col-start-2', {
                   loading: loading,

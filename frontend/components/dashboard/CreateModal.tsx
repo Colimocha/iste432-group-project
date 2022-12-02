@@ -105,7 +105,6 @@ export default function CreateModal(props: Category) {
               <span className="text-red-500">
                 &nbsp;{props && props.category}
               </span>
-              &nbsp;(WIP)
             </h3>
             <form
               className="mt-4 grid grid-cols-2 gap-4 normal-case"

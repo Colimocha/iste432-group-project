@@ -31,7 +31,7 @@ async function editEmployee(
   employeeId: number,
   bodyForm: {
     username: string;
-    password: string;
+    password?: string;
   },
 ) {
   try {
