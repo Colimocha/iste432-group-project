@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prisma:generate": "dotenv -e .env.development prisma generate",
+    "prisma:studio": "dotenv -e .env.development prisma studio",
     "prisma:push": "dotenv -e .env.development prisma db push",
     "prisma:pull": "dotenv -e .env.development prisma db pull",
     "prebuild": "rimraf dist",

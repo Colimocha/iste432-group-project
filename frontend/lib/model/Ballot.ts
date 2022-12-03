@@ -1,3 +1,4 @@
+import { Office } from './Office';
 import { Society } from './Society';
 import { Vote } from './Vote';
 
@@ -10,6 +11,7 @@ export interface Ballot {
   societyId: number;
   society: Society;
   Vote?: Vote[];
+  Office?: Office[];
   createdAt: string;
   _count: {
     Vote: number;
