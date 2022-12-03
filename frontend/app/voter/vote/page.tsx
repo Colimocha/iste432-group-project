@@ -1,40 +1,46 @@
 'use client';
-import { getVoters } from '#/lib/api/voter';
+import { getVoter } from '#/lib/api/voter';
 import { getSocieties } from '#/lib/api/society';
-import { getBallots } from '#/lib/api/ballot';
+import { getBallot } from '#/lib/api/ballot';
 import { Voter } from '#/lib/model/Voter';
 import { Society } from '#/lib/model/Society';
 import { Ballot } from '#/lib/model/Ballot';
+import { Office } from '#/lib/model/Office';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 export default function Page() {
-  const [voters, setVoters] = useState<Voter[]>([]);
-  const [societies, setSocieties] = useState<Society[]>([]);
-  const [ballots, setBallots] = useState<Ballot[]>([]);
+  const [voter, setVoter] = useState<Voter[]>([]);
+  const [ballot, setBallot] = useState<Ballot[]>([]);
 
   const router = useRouter();
 
   // fetch data
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
-    getVoters(token)
-      .then((res) => setVoters(res))
+    const voterId = sessionStorage.getItem('voterId');
+    const ballotId = sessionStorage.getItem('ballotId');
+
+    // get voter who logged in
+    getVoter(token, parseInt(voterId!))
+      .then((res) => setVoter(res))
       .catch((err) => console.log(err));
 
-    getSocieties(token)
-      .then((res) => setSocieties(res))
-      .catch((err) => console.log(err));
-
-    getBallots(token)
-      .then((res) => setBallots(res))
+      // get selected ballot
+    getBallot(token, parseInt(ballotId!))
+      .then((res) => setBallot(res))
       .catch((err) => console.log(err));
   }, []);
+
+  console.log(ballot);
 
   // handle for Logout button
   const handleLogout = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
+    // remove token from session storage
     sessionStorage.removeItem('token');
+
+    // push back to login page
     router.push('/auth');
   };
 
@@ -60,11 +66,11 @@ export default function Page() {
   };
 
   return (
-    <div className="container">
+    <div className="container bg-gray-100">
       {/* top bar */}
-      <div className="... flex flex-row-reverse p-2">
+      <div className="... flex flex-row-reverse bg-zinc-900 p-2">
         <button
-          className="btn-outline btn-accent btn m-1"
+          className="btn-outline btn-info btn m-1"
           onClick={handleLogout}
         >
           Log out
@@ -74,7 +80,7 @@ export default function Page() {
 
       {/* ballot name */}
       <div className="content flex items-center justify-center">
-        <div className="whiteBackground w-1/2 p-5 text-center text-4xl font-bold text-white">
+        <div className="whiteBackground w-1/2 p-5 text-center text-4xl font-bold">
           Ballot Name
         </div>
       </div>

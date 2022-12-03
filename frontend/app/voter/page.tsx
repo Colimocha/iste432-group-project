@@ -6,7 +6,6 @@ import { Ballot } from '#/lib/model/Ballot';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Society } from '#/lib/model/Society';
-import Image from 'next/image';
 
 // Ballot Section
 
@@ -41,13 +40,18 @@ export default function Page() {
   const handleLogout = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
+    // remove token from session storage
     sessionStorage.removeItem('token');
+
+    // push back to login page
     router.push('/auth');
   };
 
   const handleEnter = (ballot: Ballot) => {
-    // to do - push to rush with selected ballot data
+    // store ballot id in session storage
     sessionStorage.setItem('ballotId', ballot.id.toString());
+
+    // push to vote process page
     router.push('/voter/vote');
   };
 
@@ -67,17 +71,17 @@ export default function Page() {
             {ballots.map((ballot) => (
               <div
                 key={ballot.id}
-                className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 card image-full relative h-80 w-96 overflow-hidden rounded-lg bg-white shadow-xl group-hover:opacity-75 sm:h-64 lg:w-full"
+                className="card w-96 bg-base-100 shadow-xl image-full m-2 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1"
               >
                 <figure>
-                  <Image src="https://iili.io/HfipnUl.jpg" alt="Shoes" />
+                  <img src="https://iili.io/HfipnUl.jpg" alt="Shoes" />
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{ballot.name}</h2>
                   <p>{society?.name}</p>
                   <div className="card-actions justify-end">
                     <button
-                      className="btn-accent btn m-1"
+                      className="btn btn-accent"
                       onClick={(e) => handleEnter(ballot)}
                     >
                       Enter
