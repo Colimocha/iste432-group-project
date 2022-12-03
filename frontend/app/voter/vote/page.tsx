@@ -1,34 +1,40 @@
 'use client';
 import { getVoter } from '#/lib/api/voter';
-import { getSocieties } from '#/lib/api/society';
 import { getBallot } from '#/lib/api/ballot';
 import { Voter } from '#/lib/model/Voter';
-import { Society } from '#/lib/model/Society';
+import { Vote } from '#/lib/model/Vote';
 import { Ballot } from '#/lib/model/Ballot';
 import { Office } from '#/lib/model/Office';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { off } from 'process';
 export default function Page() {
-  const [voter, setVoter] = useState<Voter[]>([]);
-  const [ballot, setBallot] = useState<Ballot[]>([]);
+  const [voter, setVoter] = useState<Voter>();
+  const [ballot, setBallot] = useState<Ballot>();
 
   const router = useRouter();
 
+  const token = sessionStorage.getItem('token') || '';
+  const voterId = sessionStorage.getItem('voterId');
+  const ballotId = sessionStorage.getItem('ballotId');
+
+  const selectedPreisdent = "asdasdasdasdasd";
+  const selectedVicePresident = "tesasdasdasdasdt";
+  const treasurers = ["test", "tesasdasdasdt"];
+  const secretaries = ["test", "teasdasdasdasdst", "tesasdasdaaasadt"];
+
   // fetch data
   useEffect(() => {
-    const token = sessionStorage.getItem('token') || '';
-    const voterId = sessionStorage.getItem('voterId');
-    const ballotId = sessionStorage.getItem('ballotId');
-
     // get voter who logged in
     getVoter(token, parseInt(voterId!))
       .then((res) => setVoter(res))
       .catch((err) => console.log(err));
 
-      // get selected ballot
+    // get selected ballot
     getBallot(token, parseInt(ballotId!))
       .then((res) => setBallot(res))
       .catch((err) => console.log(err));
+
   }, []);
 
   console.log(ballot);
@@ -51,13 +57,36 @@ export default function Page() {
     // to do - clear all checkboxes
   };
 
-  // handle for Review button
-  const handleReview = (e: { preventDefault: () => void }) => {
+    // handle for Select button
+    const handleSelect = (e: { preventDefault: () => void }) => {
+      e.preventDefault();
+
+      // to do - colored the button and uncolored the other buttons in same row
+
+      // to do - set candidate id value to candidate Id array
+    };
+
+  // handle for Vote button
+  const handleVote = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     // to do - wrap into vote entity
 
-    // to do - verify add the vote entity to database
+
+    // async function createVote(
+    //   token: string,
+    //   bodyForm: {
+    //     voted: boolean;
+    //     result: string;
+    //     isWriteIn: boolean;
+    //     ballotId: number;
+    //   },
+
+    // // to do - verify add the vote entity to database
+
+    // createVoter(token, parseInt(vote!))
+    //   .then((res) => setVoter(res))
+    //   .catch((err) => console.log(err));
 
     // to do - generate confirmation code and store it database with
     // the vote entity
@@ -66,7 +95,7 @@ export default function Page() {
   };
 
   return (
-    <div className="container bg-gray-100">
+    <div className="container bg-gray-200">
       {/* top bar */}
       <div className="... flex flex-row-reverse bg-zinc-900 p-2">
         <button
@@ -81,274 +110,98 @@ export default function Page() {
       {/* ballot name */}
       <div className="content flex items-center justify-center">
         <div className="whiteBackground w-1/2 p-5 text-center text-4xl font-bold">
-          Ballot Name
+          {ballot?.name} Ballot
         </div>
       </div>
       {/* end of ballot name */}
 
-      <div className="content flex items-center justify-center">
-        {/* white background */}
-        <div className="whiteBackground w-1/2 rounded-md bg-[#fafaf9] p-3">
-          {/* president section */}
-          <div className="presidentSection">
-            {/* president title */}
-            <div className="presidentTitle m-2 text-center text-2xl font-bold">
-              Presidents
-            </div>
-            {/* end of president title */}
+      {ballot?.Office?.map((office) => (
+        <div className="content flex items-center justify-center">
 
-            <div className="presidentItems columns-3">
-              <div className="presidentCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="presidentCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="presidentCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="vicePresidentSection pt-4">
-            {/* vice president title */}
-            <div className="vicePresidentTitle m-2 text-center text-2xl font-bold">
-              Vice Presidents
-            </div>
-            {/* end of vice president title */}
-
-            <div className="vicePresidentItems columns-3">
-              <div className="vicePresidentCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="vicePresidentCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="vicePresidentCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="secretarySection">
-            <div className="secretaryTitle m-2 text-center text-2xl font-bold">
-              Secretary
+          <div className="whiteBackground w-1/2 rounded-md bg-[#fafaf9] p-3 m-3">
+            <div className="sectionTitle m-2 text-center text-3xl font-bold">
+              {office.name}
             </div>
 
-            <div className="secretaryItems columns-3">
-              <div className="secretaryCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
+            <div className="mt-6 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-5">
+
+              {office.Candidate?.map((candidate) => (
+                <div
+                  key={candidate.id}
+                  className="bg-base-100 rounded-box mx-2 grid w-72 flex-shrink-0 place-items-center items-center gap-4 p-4 py-8 shadow-xl xl:mx-0 xl:w-full">
+                  <div className="avatar">
+                    <div className="mask mask-squircle bg-base-content h-24 w-24 bg-opacity-10 p-px">
+                      <img src="https://iili.io/HfipnUl.jpg" width="94" height="94" alt="Profile Image" className="mask mask-squircle" />
+                    </div>
                   </div>
-                </div>
-              </div>
-
-              <div className="secretaryCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
+                  <div>
+                    <div className="text-center">
+                      <div className="text-lg font-extrabold">
+                        {candidate.firstName} {candidate.lastName}
+                      </div>
+                      <div className="text-base-content/70 my-3 text-sm">
+                        biography<br /> {/*where is bio? */}
+                        statement<br /> {/*where is statement? */}
+                      </div>
+                    </div>
                   </div>
+                  <button
+                    className="btn btn-outline btn-accent btn-sm">Unselected</button>
                 </div>
-              </div>
-
-              <div className="secretaryCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="treasurerSection">
-            <div className="treasurerTitle m-2 text-center text-2xl font-bold">
-              Treasurer
-            </div>
-
-            <div className="treasurerItems columns-3">
-              <div className="treasurerCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="treasurerCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="treasurerCard w-30 glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Life hack</h2>
-                  <p>How to park your car at your garage?</p>
-                  <div className="card-actions justify-end">
-                    <input
-                      type="checkbox"
-                      defaultChecked
-                      className="checkbox-secondary checkbox"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bottomSection">
-            <div className="... flex flex-row-reverse bg-[#fafaf9] p-2">
-              <button
-                className="btn-black btn-outline btn m-1"
-                onClick={handleReview}
-              >
-                Review
-              </button>
-              <button
-                className="btn-black btn-outline btn m-1"
-                onClick={handleClear}
-              >
-                Clear
-              </button>
+              ))}
             </div>
           </div>
         </div>
-        {/* end of white background */}
+      ))}
+
+      <div className="fixed bottom-3 right-3">
+        <div
+          className="bg-base-100 rounded-box place-items-center items-center gap-4 p-4 py-8 shadow-xl">
+          <div>
+            <div className="text-lg font-bold">
+              Preisdent
+            </div>
+            <div className="text-base-content/70 text-sm">
+              &nbsp; {selectedPreisdent}
+            </div>
+            <div className="text-lg font-bold">
+              Vice President
+            </div>
+            <div className="text-base-content/70 text-sm">
+              &nbsp; {selectedVicePresident}
+            </div>
+            <div className="text-lg font-bold">
+              Secretaries
+            </div>
+            {secretaries.map((secretary) => (
+              <div className="text-base-content/70 text-sm">
+                &nbsp; {secretary}
+              </div>
+            ))}
+            <div className="text-lg font-bold">
+              Treasurers
+            </div>
+            {treasurers.map((Treasurer) => (
+              <div className="text-base-content/70 text-sm">
+                &nbsp; {Treasurer}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <button
+          className="btn m-2 btn-accent btn-sm"
+          onClick={handleClear}>
+          Clear
+        </button>
+
+        <button
+          className="btn btn-accent btn-sm"
+          onClick={handleVote}>
+          Vote
+        </button>
       </div>
+
     </div>
   );
 }
