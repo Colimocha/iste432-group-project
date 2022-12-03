@@ -51,6 +51,21 @@ export class BallotService {
         createdAt: true,
         societyId: true,
         society: { select: { id: true, name: true } },
+        Office: {
+          select: {
+            id: true,
+            name: true,
+            Candidate: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                title: true,
+                image: true,
+              },
+            },
+          },
+        },
         Vote: true,
         _count: { select: { Vote: true } },
       },
@@ -99,7 +114,7 @@ export class BallotService {
   }
 
   async remove(id: number) {
-    if (!this.findOne(id))
+    if (!(await this.findOne(id)))
       throw new BadRequestException('Ballot does not exist');
     return await this.prisma.ballot.delete({ where: { id } });
   }

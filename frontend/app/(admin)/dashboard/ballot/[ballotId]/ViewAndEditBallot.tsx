@@ -20,7 +20,7 @@ const fields = [
 
 const token = sessionStorage.getItem('token') || '';
 
-export default function ViewAndEditBallot(params: Params) {
+export default function ViewAndEditBallot({params}: { params:Params }) {
   const router = useRouter();
   const { ballotId } = params;
   const [data, setData] = useState<EditBallot>({
