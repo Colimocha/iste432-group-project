@@ -13,6 +13,7 @@ export class OfficeService {
       select: {
         id: true,
         name: true,
+        limit: true,
         createdAt: true,
         ballot: { select: { id: true, name: true } },
         _count: { select: { Candidate: true } },
@@ -34,6 +35,7 @@ export class OfficeService {
         select: {
           id: true,
           name: true,
+          limit: true,
           createdAt: true,
           ballot: { select: { id: true, name: true } },
           _count: { select: { Candidate: true } },
@@ -48,6 +50,7 @@ export class OfficeService {
       select: {
         id: true,
         name: true,
+        limit: true,
         createdAt: true,
         ballotId: true,
         ballot: { select: { id: true, name: true } },
@@ -72,6 +75,7 @@ export class OfficeService {
       select: {
         id: true,
         name: true,
+        limit: true,
         createdAt: true,
         updatedAt: true,
         ballot: { select: { id: true, name: true } },

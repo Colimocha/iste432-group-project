@@ -12,7 +12,10 @@ interface Params {
   officeId: string;
 }
 
-const fields = [['name', 'Name']];
+const fields = [
+  ['name', 'Name'],
+  ['limit', 'Maximum Number of Candidates'],
+];
 
 const token = sessionStorage.getItem('token') || '';
 
@@ -20,6 +23,7 @@ export default function Page({ params }: { params: Params }) {
   const { officeId } = params;
   const [data, setData] = useState<EditOffice>({
     name: '',
+    limit: 1,
     ballotId: 0,
   });
   const [edit, setEdit] = useState(false);
@@ -47,6 +51,7 @@ export default function Page({ params }: { params: Params }) {
     //convert to EditOffice
     const editOfficeObject: EditOffice = {
       name: object.name as string,
+      limit: parseInt(object.limit as string),
       ballotId: parseInt(object.ballotId as string),
     };
 

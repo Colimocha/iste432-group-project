@@ -54,6 +54,7 @@ export class BallotService {
           select: {
             id: true,
             name: true,
+            limit: true,
             Candidate: {
               select: {
                 id: true,
@@ -88,6 +89,7 @@ export class BallotService {
             select: {
               id: true,
               name: true,
+              limit: true,
               Candidate: {
                 select: {
                   id: true,

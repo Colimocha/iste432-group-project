@@ -42,6 +42,7 @@ const fields = {
   ],
   office: [
     ['name', 'Name'],
+    ['limit', 'Maximum Number of Candidates'],
     ['ballotId', 'Ballot Id'],
   ],
   candidate: [
@@ -57,7 +58,8 @@ const fields = {
 function getFieldType(field: string) {
   // if (field === 'image') return 'file';
   if (field === 'password') return 'password';
-  if (RegExp('Id$').test(field)) return 'number';
+  if (field === 'dateOfBirth') return 'date';
+  if (field === 'limit') return 'number';
   return 'text';
 }
 

@@ -7,5 +7,9 @@ export class CreateOfficeDto {
 
   @IsNotEmpty()
   @IsNumber()
+  limit: number;
+
+  @IsNotEmpty()
+  @IsNumber()
   ballotId: number;
 }
