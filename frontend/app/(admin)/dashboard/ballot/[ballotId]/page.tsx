@@ -8,6 +8,7 @@ type Params = {
 };
 
 const role = sessionStorage.getItem('role') || '';
+
 export default function Page(params: Params) {
   return (
     <>

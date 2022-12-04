@@ -1,6 +1,7 @@
 'use client';
 
-import { getBallots } from '#/lib/api/ballot';
+import { getBallots, getBallotsBySocietyID } from '#/lib/api/ballot';
+import { getSocietyContact } from '#/lib/api/societyContact';
 import { Ballot } from '#/lib/model/Ballot';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -10,15 +11,24 @@ import CreateModal from './CreateModal';
 
 const token = sessionStorage.getItem('token') || '';
 const role = sessionStorage.getItem('role') || '';
+const scId = sessionStorage.getItem('societyContactId') || '';
 
 export default function BallotList() {
   const [ballots, setBallots] = useState([]);
   const path = usePathname();
 
   useEffect(() => {
-    getBallots(token)
-      .then((res) => setBallots(res))
-      .catch((err) => console.log(err));
+    if (role === 'society_contact') {
+      getSocietyContact(token, parseInt(scId)).then((sc) => {
+        getBallotsBySocietyID(token, sc.societyId)
+          .then((res) => setBallots(res))
+          .catch((err) => console.log(err));
+      });
+    } else {
+      getBallots(token)
+        .then((res) => setBallots(res))
+        .catch((err) => console.log(err));
+    }
   }, []);
 
   return (

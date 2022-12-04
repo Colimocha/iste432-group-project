@@ -131,6 +131,28 @@ async function getBallotsBySocietyID(token: string, societyId: number) {
   }
 }
 
+async function getBallotVoteResults(token: string, ballotId: number) {
+  try {
+    const res = await fetch(
+      `${Config.API_URL}/ballot/${ballotId}/vote-results`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return await res.json();
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error(error);
+    } else {
+      throw new Error('Something went wrong');
+    }
+  }
+}
+
 export {
   createBallot,
   editBallot,
@@ -138,4 +160,5 @@ export {
   getBallot,
   getBallots,
   getBallotsBySocietyID,
+  getBallotVoteResults,
 };

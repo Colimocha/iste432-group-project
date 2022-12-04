@@ -73,4 +73,15 @@ export class BallotController {
   ) {
     return this.ballotService.remove(+id);
   }
+
+  @Get(':id/vote-results')
+  getVoteResult(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: string,
+  ) {
+    return this.ballotService.getVoteResult(+id);
+  }
 }

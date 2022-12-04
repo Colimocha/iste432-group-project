@@ -56,6 +56,7 @@ export default function AuthPage() {
           .then((res) => {
             sessionStorage.setItem('token', res.access_token);
             sessionStorage.setItem('role', 'society_contact');
+            sessionStorage.setItem('societyContactId', res.id);
             router.push('/dashboard');
           })
           .catch((err) => {
