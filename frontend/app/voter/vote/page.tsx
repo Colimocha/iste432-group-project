@@ -9,9 +9,31 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { off } from 'process';
 import React from 'react';
+import { Office } from '#/lib/model/Office';
+
+interface ListOC {
+  office: string,
+  candidates: [{
+    id: number,
+    full_name: string,
+    selected: boolean
+  }]
+}
+
+const voteId = sessionStorage.getItem('voteId') || '';
+
 export default function Page() {
   const [voter, setVoter] = useState<Voter>();
   const [ballot, setBallot] = useState<Ballot>();
+  const [office, setOffice] = useState<Office[]>();
+  // const [buttons, setButtons] = useState<ListOC>({
+  //   "office": "President",
+  //   candidates: [{
+  //     id:6,
+  //     full_name: "whatever",
+  //     selected: false
+  //   }]
+  // });
   const router = useRouter();
 
   const token = sessionStorage.getItem('token') || '';
@@ -31,6 +53,24 @@ export default function Page() {
   const buttons = new Map();
   const elements = [];
 
+  // const convertMap = (ballot: Ballot, offices: Office) => {
+  //   const map = new Map();
+  //   for (const office of offices) {
+  //     map.set(office.name, {});
+  //     for (const candidate of office.Candidate!) {
+  //       map[office.name][candidate.id] = {
+  //         id: candidate.id,
+  //         full_name: `${candidate.firstName} ${candidate.lastName}`,
+  //         selected: false,
+  //       };
+  //     }
+  //   }
+  //   return map;
+  // }
+
+  // console.log(convertMap(office!));
+  // console.log(ballot);
+
   useEffect(() => {
     // get voter who logged in
     getVoter(token, parseInt(voterId!))
@@ -39,7 +79,8 @@ export default function Page() {
 
     // get selected ballot
     getBallot(token, parseInt(ballotId!))
-      .then((res) => setBallot(res))
+      .then((res) => {setBallot(res);
+      setOffice(res.Office)})
       .catch((err) => console.log(err));
 
   }, []);
@@ -58,7 +99,18 @@ export default function Page() {
   // handle for Clear button
   const handleClear = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    let list = document.getElementsByClassName("vote-btn");
+    console.log(list.length);
+    for (let i = 0; i < list.length; i++){
+      list[i].className = "btn btn-outline btn-accent btn-sm vote-btn test";
+    }
 
+    buttons.forEach((i, s) => {
+      // setButtons.set(i, "Unselected");
+      // buttons.set(s, "Unselected");
+      console.log(s)
+      // setButtons(btns => btns.set(s, "Unselected"))
+    })
     // to do - unselect all buttons (how the fk do i select all buttons)
   };
 
@@ -67,6 +119,8 @@ export default function Page() {
     updateButton(e, candidate.id);
   };
 
+  let previousSelect: React.MouseEvent<HTMLButtonElement, MouseEvent>;
+  let previousSelectId: number = -1;
   // changeButtonAttribute
   const updateButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
 
@@ -74,26 +128,25 @@ export default function Page() {
     if (buttons.get(id) === "Unselected") {
       buttons.set(id, "Selected")
       e.currentTarget.innerText = "Selected";
+      e.currentTarget.className = "btn m-2 btn-accent btn-sm vote-btn";
+
+      if(previousSelect){
+        previousSelect.currentTarget.innerText = "Unselected";
+        previousSelect.currentTarget.className = "btn btn-outline btn-accent btn-sm vote-btn"
+      }
     }
     else {
       buttons.set(id, "Unselected")
       e.currentTarget.innerText = "Unselected";
+      e.currentTarget.className = "btn btn-outline btn-accent btn-sm vote-btn"
     }
 
-    // change color on the current button
-    if (e.currentTarget.className === "btn m-2 btn-accent btn-sm") {
-      e.currentTarget.className = "btn btn-outline btn-accent btn-sm"
-    }
-    else {
-      e.currentTarget.className = "btn m-2 btn-accent btn-sm";
-    }
-
+    // if(e.currentTarget.parentElement.ele
     // to do - uncolored the other buttons in same row if its on president or vice president row
   }
 
   // handle for Vote button
   const handleVote = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
 
     // wrap into bodyForm
     type BodyForm = {
@@ -103,10 +156,8 @@ export default function Page() {
       ballotId: number;
     };
 
-    // testing
+    // create result
     const result = getResult()
-
-    console.log(result)
 
     // create bodyForm object
     let bodyForm: BodyForm = {
@@ -129,18 +180,19 @@ export default function Page() {
 
     // to do - iternate through buttons and update the selected positions
 
-    return "{\n\t\"result\": {" +
-      "\n\t\t\"President\": " + selectedPresidentId + "," +
-      "\n\t\t\"Vice President\": " + selectedVicePresidentId + "," +
-      "\n\t\t\"Secretary\": [" + secretariesId + "]," +
-      "\n\t\t\"Treasurer\": [" + treasurersId + "]" +
-      "\n\t}\n}"
+    return "{\"result\": {" +
+      "\"President\": " + selectedPresidentId + "," +
+      "\"Vice President\": " + selectedVicePresidentId + "," +
+      "\"Secretary\": [" + secretariesId + "]," +
+      "\"Treasurer\": [" + treasurersId + "]" +
+      "}}"
   };
 
   // to do - put all buttons into an array for calling all buttons to set unselect when handleClear() is called
   const addButtonElementToArray = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     elements.push(e.currentTarget);
   }
+
 
   return (
     <div className="container bg-gray-200">
@@ -194,7 +246,7 @@ export default function Page() {
                   </div>
                   <button
                     onClick={(e) => handleSelect(e, candidate, office.name)}
-                    className="btn btn-outline btn-accent btn-sm">
+                    className="btn btn-outline btn-accent btn-sm vote-btn">
                     {buttons.get(candidate.id)}
                   </button>
                 </div>
@@ -204,7 +256,7 @@ export default function Page() {
         </div>
       ))}
 
-      <div className="fixed bottom-3 right-3">
+      <div className="review fixed bottom-3 right-3">
         <div
           className="bg-base-100 rounded-box place-items-center items-center gap-4 p-4 py-8 shadow-xl">
           <div>
