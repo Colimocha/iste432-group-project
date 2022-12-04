@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Office } from '#/lib/model/Office';
 import LogoutButton from '#/components/LogoutButton';
+import clsx from 'clsx';
 
 interface ListOC {
   office: string;
@@ -22,25 +23,14 @@ interface ListOC {
   ];
 }
 
-const voteId = sessionStorage.getItem('voteId') || '';
+const token = sessionStorage.getItem('token') || '';
+const voterId = sessionStorage.getItem('voterId') || '';
+const ballotId = sessionStorage.getItem('ballotId') || '';
 
 export default function Page() {
-  const [voter, setVoter] = useState<Voter>();
   const [ballot, setBallot] = useState<Ballot>();
-  const [office, setOffice] = useState<Office[]>();
-  // const [buttons, setButtons] = useState<ListOC>({
-  //   "office": "President",
-  //   candidates: [{
-  //     id:6,
-  //     full_name: "whatever",
-  //     selected: false
-  //   }]
-  // });
+  const [map, setMap] = useState<Map<any, any>>(new Map());
   const router = useRouter();
-
-  const token = sessionStorage.getItem('token') || '';
-  const voterId = sessionStorage.getItem('voterId');
-  const ballotId = sessionStorage.getItem('ballotId');
 
   let selectedPresident = 'asdasdasdasdasd';
   let selectedVicePresident = 'tesasdasdasdasdt';
@@ -51,9 +41,6 @@ export default function Page() {
   let selectedVicePresidentId = 7;
   let treasurersId = [3, 4];
   let secretariesId = [3, 4];
-
-  const buttons = new Map();
-  const elements = [];
 
   const convertMap = (ballot: Ballot) => {
     const map = new Map();
@@ -72,78 +59,15 @@ export default function Page() {
     return map;
   };
 
-  console.log(convertMap(ballot!));
-
   useEffect(() => {
-    // get voter who logged in
-    getVoter(token, parseInt(voterId!))
-      .then((res) => setVoter(res))
-      .catch((err) => console.log(err));
-
     // get selected ballot
     getBallot(token, parseInt(ballotId!))
       .then((res) => {
         setBallot(res);
-        setOffice(res.Office);
+        setMap(convertMap(res));
       })
       .catch((err) => console.log(err));
-  }, [ballotId, token, voterId]);
-
-  // handle for Clear button
-  const handleClear = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    let list = document.getElementsByClassName('vote-btn');
-    console.log(list.length);
-    for (let i = 0; i < list.length; i++) {
-      list[i].className = 'btn btn-outline btn-accent btn-sm vote-btn test';
-    }
-
-    buttons.forEach((i, s) => {
-      // setButtons.set(i, "Unselected");
-      // buttons.set(s, "Unselected");
-      console.log(s);
-      // setButtons(btns => btns.set(s, "Unselected"))
-    });
-    // to do - unselect all buttons (how the fk do i select all buttons)
-  };
-
-  // handle for Select button
-  const handleSelect = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    candidate: Candidate,
-    officeName: string,
-  ) => {
-    updateButton(e, candidate.id);
-  };
-
-  let previousSelect: React.MouseEvent<HTMLButtonElement, MouseEvent>;
-  let previousSelectId: number = -1;
-  // changeButtonAttribute
-  const updateButton = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: number,
-  ) => {
-    // update button text
-    if (buttons.get(id) === 'Unselected') {
-      buttons.set(id, 'Selected');
-      e.currentTarget.innerText = 'Selected';
-      e.currentTarget.className = 'btn btn-accent btn-sm vote-btn';
-
-      if (previousSelect) {
-        previousSelect.currentTarget.innerText = 'Unselected';
-        previousSelect.currentTarget.className =
-          'btn btn-outline btn-accent btn-sm vote-btn';
-      }
-    } else {
-      buttons.set(id, 'Unselected');
-      e.currentTarget.innerText = 'Unselected';
-      e.currentTarget.className = 'btn btn-outline btn-accent btn-sm vote-btn';
-    }
-    console.log(buttons);
-
-    // if(e.currentTarget.parentElement.ele
-    // to do - uncolored the other buttons in same row if its on president or vice president row
-  };
+  }, []);
 
   // handle for Vote button
   const handleVote = (e: { preventDefault: () => void }) => {
@@ -196,13 +120,6 @@ export default function Page() {
     );
   };
 
-  // to do - put all buttons into an array for calling all buttons to set unselect when handleClear() is called
-  const addButtonElementToArray = (
-    e: React.SyntheticEvent<HTMLButtonElement>,
-  ) => {
-    elements.push(e.currentTarget);
-  };
-
   return (
     <div className="container mx-auto bg-gray-200">
       {/* top bar */}
@@ -226,48 +143,62 @@ export default function Page() {
               {office.name}
             </div>
             <div className="mt-6 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-5">
-              {office.Candidate?.map(
-                (candidate) => (
-                  buttons.set(candidate.id, 'Unselected'),
-                  (
-                    <div
-                      key={candidate.id}
-                      className="rounded-box mx-2 grid w-72 flex-shrink-0 place-items-center items-center gap-4 bg-base-100 p-4 py-8 shadow-xl xl:mx-0 xl:w-full"
-                    >
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-24 w-24 bg-base-content bg-opacity-10 p-px">
-                          <img
-                            src="https://iili.io/HfipnUl.jpg"
-                            width="94"
-                            height="94"
-                            alt="Profile Image"
-                            className="mask mask-squircle"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-center">
-                          <div className="text-lg font-extrabold">
-                            {candidate.firstName} {candidate.lastName}
-                          </div>
-                          <div className="my-3 text-sm text-base-content/70">
-                            biography
-                            <br /> {/*where is bio? */}
-                            statement
-                            <br /> {/*where is statement? */}
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        onClick={(e) => handleSelect(e, candidate, office.name)}
-                        className="vote-btn btn-outline btn-accent btn-sm btn"
-                      >
-                        {buttons.get(candidate.id)}
-                      </button>
+              {office.Candidate?.map((candidate) => (
+                <div
+                  key={candidate.id}
+                  className="rounded-box mx-2 grid w-72 flex-shrink-0 place-items-center items-center gap-4 bg-base-100 p-4 py-8 shadow-xl xl:mx-0 xl:w-full"
+                >
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-24 w-24 bg-base-content bg-opacity-10 p-px">
+                      <img
+                        src="https://iili.io/HfipnUl.jpg"
+                        width="94"
+                        height="94"
+                        alt="Profile Image"
+                        className="mask mask-squircle"
+                      />
                     </div>
-                  )
-                ),
-              )}
+                  </div>
+                  <div>
+                    <div className="text-center">
+                      <div className="text-lg font-extrabold">
+                        {candidate.firstName} {candidate.lastName}
+                      </div>
+                      <div className="my-3 text-sm text-base-content/70">
+                        biography
+                        <br /> {/*where is bio? */}
+                        statement
+                        <br /> {/*where is statement? */}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className={clsx('btn-sm btn', {
+                      'btn-primary': map.get(office.name)[candidate.id]
+                        .selected,
+                      'btn-outline btn-primary': !map.get(office.name)[
+                        candidate.id
+                      ].selected,
+                    })}
+                    onClick={(e) => {
+                      setMap((prev) =>
+                        new Map(prev).set(office.name, {
+                          ...prev.get(office.name),
+                          [candidate.id]: {
+                            ...prev.get(office.name)[candidate.id],
+                            selected: !prev.get(office.name)[candidate.id]
+                              .selected,
+                          },
+                        }),
+                      );
+                    }}
+                  >
+                    {map.get(office.name)[candidate.id].selected === true
+                      ? 'Selected'
+                      : 'Unselected'}
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -299,7 +230,7 @@ export default function Page() {
           </div>
         </div>
 
-        <button className="btn-accent btn-sm btn m-2" onClick={handleClear}>
+        <button className="btn-accent btn-sm btn m-2" onClick={() => {}}>
           Clear
         </button>
 
