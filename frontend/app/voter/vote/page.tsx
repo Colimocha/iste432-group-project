@@ -2,12 +2,13 @@
 import { getVoter } from '#/lib/api/voter';
 import { getBallot } from '#/lib/api/ballot';
 import { Voter } from '#/lib/model/Voter';
-import { Vote } from '#/lib/model/Vote';
+import { createVote } from '#/lib/api/vote';
 import { Ballot } from '#/lib/model/Ballot';
-import { Office } from '#/lib/model/Office';
+import { Candidate } from '#/lib/model/Candidate';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { off } from 'process';
+import React from 'react';
 export default function Page() {
   const [voter, setVoter] = useState<Voter>();
   const [ballot, setBallot] = useState<Ballot>();
@@ -18,10 +19,15 @@ export default function Page() {
   const voterId = sessionStorage.getItem('voterId');
   const ballotId = sessionStorage.getItem('ballotId');
 
-  const selectedPreisdent = "asdasdasdasdasd";
-  const selectedVicePresident = "tesasdasdasdasdt";
-  const treasurers = ["test", "tesasdasdasdt"];
-  const secretaries = ["test", "teasdasdasdasdst", "tesasdasdaaasadt"];
+  let selectedPresident = "asdasdasdasdasd";
+  let selectedVicePresident = "tesasdasdasdasdt";
+  let treasurers = ["test", "tesasdasdasdt"];
+  let secretaries = ["test", "teasdasdasdasdst", "tesasdasdaaasadt"];
+
+  let selectedPresidentId = 6;
+  let selectedVicePresidentId = 7;
+  let treasurersId = [3, 4];
+  let secretariesId = [3, 4];
 
   // fetch data
   useEffect(() => {
@@ -36,8 +42,6 @@ export default function Page() {
       .catch((err) => console.log(err));
 
   }, []);
-
-  console.log(ballot);
 
   // handle for Logout button
   const handleLogout = (e: { preventDefault: () => void }) => {
@@ -54,42 +58,65 @@ export default function Page() {
   const handleClear = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    // to do - clear all checkboxes
+    // to do - unselect all buttons (how the fk do i select all buttons)
   };
 
-    // handle for Select button
-    const handleSelect = (e: { preventDefault: () => void }) => {
-      e.preventDefault();
+  // handle for Select button
+  const handleSelect = (candidate: Candidate, officeName: string) => {
 
-      // to do - colored the button and uncolored the other buttons in same row
+    // to do - colored the current button and uncolored the other buttons in same row if its on president or vice president row
 
-      // to do - set candidate id value to candidate Id array
-    };
+    // testing - update specific position variable - fail..
+    switch (officeName) {
+      case "President":
+        selectedPresident = candidate.firstName + " " + candidate.lastName;
+        selectedPresidentId = candidate.id;
+        console.log("selectedPreisdent: " + selectedPresident);
+
+      case "Vice president":
+        selectedVicePresident = candidate.firstName + " " + candidate.lastName;
+        selectedVicePresidentId = candidate.id;
+        console.log("selectedVicePreisdent " + selectedVicePresident);
+
+      case "Secretary": ;
+      case "Treasurer": ;
+    }
+  };
 
   // handle for Vote button
   const handleVote = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    // to do - wrap into vote entity
+    // to do - wrap into bodyForm
+    type BodyForm = {
+      voted: boolean;
+      result: string;
+      isWriteIn: boolean;
+      ballotId: number;
+    };
 
+    // testing
+    const result = "{\n\t\"result\": {" +
+      "\n\t\t\"President\": " + selectedPresidentId + "," +
+      "\n\t\t\"Vice President\": " + selectedVicePresidentId + "," +
+      "\n\t\t\"Secretary\": [" + secretariesId + "]," +
+      "\n\t\t\"Treasurer\": [" + treasurersId + "]" +
+      "\n\t}\n}"
 
-    // async function createVote(
-    //   token: string,
-    //   bodyForm: {
-    //     voted: boolean;
-    //     result: string;
-    //     isWriteIn: boolean;
-    //     ballotId: number;
-    //   },
+    console.log(result)
 
-    // // to do - verify add the vote entity to database
+    // testing
+    let bodyForm: BodyForm = {
+      voted: true,
+      result: result,
+      isWriteIn: true,
+      ballotId: parseInt(ballotId!),
+    };
 
-    // createVoter(token, parseInt(vote!))
-    //   .then((res) => setVoter(res))
-    //   .catch((err) => console.log(err));
-
-    // to do - generate confirmation code and store it database with
-    // the vote entity
+    //  to do - verify adding the vote to database
+    createVote(token, bodyForm)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
     router.push('/voter/vote/review');
   };
@@ -146,7 +173,11 @@ export default function Page() {
                     </div>
                   </div>
                   <button
-                    className="btn btn-outline btn-accent btn-sm">Unselected</button>
+                    key={candidate.id}
+                    onClick={() => handleSelect(candidate, office.name)}
+                    className="btn btn-outline btn-accent btn-sm">
+                    Unselected
+                  </button>
                 </div>
               ))}
             </div>
@@ -159,10 +190,10 @@ export default function Page() {
           className="bg-base-100 rounded-box place-items-center items-center gap-4 p-4 py-8 shadow-xl">
           <div>
             <div className="text-lg font-bold">
-              Preisdent
+              President
             </div>
             <div className="text-base-content/70 text-sm">
-              &nbsp; {selectedPreisdent}
+              &nbsp; {selectedPresident}
             </div>
             <div className="text-lg font-bold">
               Vice President
@@ -181,9 +212,9 @@ export default function Page() {
             <div className="text-lg font-bold">
               Treasurers
             </div>
-            {treasurers.map((Treasurer) => (
+            {treasurers.map((treasurer) => (
               <div className="text-base-content/70 text-sm">
-                &nbsp; {Treasurer}
+                &nbsp; {treasurer}
               </div>
             ))}
           </div>
