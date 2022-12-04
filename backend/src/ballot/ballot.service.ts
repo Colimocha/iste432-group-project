@@ -135,7 +135,7 @@ export class BallotService {
     const vote = ballot.Vote;
     const map = new Map();
 
-    if (!offices.length) return ballot;
+    if (!offices.length) return { result: [] };
 
     for (const office of offices) {
       map[office.name] = {};
@@ -147,26 +147,25 @@ export class BallotService {
       }
     }
 
-    for (const v of vote) {
+    vote.forEach((v) => {
       const json = JSON.parse(v.result).result;
-      const president = json['President'];
-      const vicePresident = json['Vice President'];
-      const secretary = json['Secretary'];
-      const treasurer = json['Treasurer'];
+      for (const [key, value] of Object.entries(json)) {
+        if (Array.isArray(value)) {
+          for (const v of value) map[key][v].votes++;
+          continue;
+        }
+        map[key][value].votes++;
+      }
+    });
 
-      map['President'][president].votes++;
-      map['Vice President'][vicePresident].votes++;
-      for (const s of secretary) map['Secretary'][s].votes++;
-      for (const t of treasurer) map['Treasurer'][t].votes++;
+    // get total votes into map
+    for (const [key, value] of Object.entries(map)) {
+      let total = 0;
+      for (const [, v] of Object.entries(value)) {
+        total += v['votes'];
+      }
+      map[key]['total'] = total;
     }
-
-    map['President']['total'] = this.totalVotes(map, 'President');
-    map['Vice President']['total'] = this.totalVotes(map, 'Vice President');
-    map['Secretary']['total'] = this.totalVotes(map, 'Secretary');
-    map['Treasurer']['total'] = this.totalVotes(map, 'Treasurer');
-
-    delete ballot.Office;
-    delete ballot.Vote;
 
     // Convert map to object
     const object = [];
@@ -178,11 +177,7 @@ export class BallotService {
       object.push({ office: key, candidates, total: value['total'] });
     }
 
-    return { ballot: ballot, result: object };
-  }
-
-  private totalVotes(map: Map<any, any>, office: string) {
-    return Object.values(map[office]).reduce((a, b) => a + b['votes'], 0);
+    return { result: object };
   }
 
   async remove(id: number) {

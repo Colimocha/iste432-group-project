@@ -95,28 +95,32 @@ export default function DetailsBallot({ params }: { params: Params }) {
                       </h1>
                       <div className="grid gap-4">
                         {/* TODO: Loop code here for candidates */}
-                        {r.candidates.map((c: any, index: number) => (
-                          <>
-                            <div
-                              className="md:justify-none flex justify-between rounded-md p-2 shadow-lg ring-2 lg:ml-8"
-                              key={index}
-                            >
-                              <div className="md:w-60">{c.full_name}</div>
-                              <div className="hidden w-full md:block">
-                                <progress
-                                  className="progress progress-primary"
-                                  value={c.votes}
-                                  max={r.total}
-                                />
+                        {r.candidates.length > 0 ? (
+                          r.candidates.map((c: any, index: number) => (
+                            <>
+                              <div
+                                className="md:justify-none flex justify-between rounded-md p-2 shadow-lg ring-2 lg:ml-8"
+                                key={index}
+                              >
+                                <div className="md:w-60">{c.full_name}</div>
+                                <div className="hidden w-full md:block">
+                                  <progress
+                                    className="progress progress-primary"
+                                    value={c.votes}
+                                    max={r.total}
+                                  />
+                                </div>
+                                <div className="text-center md:w-24">
+                                  <span className="badge-secondary badge badge-lg text-white">
+                                    {c.votes}
+                                  </span>
+                                </div>
                               </div>
-                              <div className="text-center md:w-24">
-                                <span className="badge-secondary badge badge-lg text-white">
-                                  {c.votes}
-                                </span>
-                              </div>
-                            </div>
-                          </>
-                        ))}
+                            </>
+                          ))
+                        ) : (
+                          <div className="">No candidates</div>
+                        )}
                       </div>
                     </div>
                   </>
