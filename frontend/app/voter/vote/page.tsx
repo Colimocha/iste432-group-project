@@ -12,7 +12,6 @@ import React from 'react';
 export default function Page() {
   const [voter, setVoter] = useState<Voter>();
   const [ballot, setBallot] = useState<Ballot>();
-
   const router = useRouter();
 
   const token = sessionStorage.getItem('token') || '';
@@ -29,7 +28,9 @@ export default function Page() {
   let treasurersId = [3, 4];
   let secretariesId = [3, 4];
 
-  // fetch data
+  const buttons = new Map();
+  const elements = [];
+
   useEffect(() => {
     // get voter who logged in
     getVoter(token, parseInt(voterId!))
@@ -62,32 +63,39 @@ export default function Page() {
   };
 
   // handle for Select button
-  const handleSelect = (candidate: Candidate, officeName: string) => {
-
-    // to do - colored the current button and uncolored the other buttons in same row if its on president or vice president row
-
-    // testing - update specific position variable - fail..
-    switch (officeName) {
-      case "President":
-        selectedPresident = candidate.firstName + " " + candidate.lastName;
-        selectedPresidentId = candidate.id;
-        console.log("selectedPreisdent: " + selectedPresident);
-
-      case "Vice president":
-        selectedVicePresident = candidate.firstName + " " + candidate.lastName;
-        selectedVicePresidentId = candidate.id;
-        console.log("selectedVicePreisdent " + selectedVicePresident);
-
-      case "Secretary": ;
-      case "Treasurer": ;
-    }
+  const handleSelect = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, candidate: Candidate, officeName: string) => {
+    updateButton(e, candidate.id);
   };
+
+  // changeButtonAttribute
+  const updateButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: number) => {
+
+    // update button text
+    if (buttons.get(id) === "Unselected") {
+      buttons.set(id, "Selected")
+      e.currentTarget.innerText = "Selected";
+    }
+    else {
+      buttons.set(id, "Unselected")
+      e.currentTarget.innerText = "Unselected";
+    }
+
+    // change color on the current button
+    if (e.currentTarget.className === "btn m-2 btn-accent btn-sm") {
+      e.currentTarget.className = "btn btn-outline btn-accent btn-sm"
+    }
+    else {
+      e.currentTarget.className = "btn m-2 btn-accent btn-sm";
+    }
+
+    // to do - uncolored the other buttons in same row if its on president or vice president row
+  }
 
   // handle for Vote button
   const handleVote = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    // to do - wrap into bodyForm
+    // wrap into bodyForm
     type BodyForm = {
       voted: boolean;
       result: string;
@@ -96,16 +104,11 @@ export default function Page() {
     };
 
     // testing
-    const result = "{\n\t\"result\": {" +
-      "\n\t\t\"President\": " + selectedPresidentId + "," +
-      "\n\t\t\"Vice President\": " + selectedVicePresidentId + "," +
-      "\n\t\t\"Secretary\": [" + secretariesId + "]," +
-      "\n\t\t\"Treasurer\": [" + treasurersId + "]" +
-      "\n\t}\n}"
+    const result = getResult()
 
     console.log(result)
 
-    // testing
+    // create bodyForm object
     let bodyForm: BodyForm = {
       voted: true,
       result: result,
@@ -113,13 +116,31 @@ export default function Page() {
       ballotId: parseInt(ballotId!),
     };
 
-    //  to do - verify adding the vote to database
+    // add the vote to database
     createVote(token, bodyForm)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
 
+    // process to the confirmation page
     router.push('/voter/vote/review');
   };
+
+  const getResult = () => {
+
+    // to do - iternate through buttons and update the selected positions
+
+    return "{\n\t\"result\": {" +
+      "\n\t\t\"President\": " + selectedPresidentId + "," +
+      "\n\t\t\"Vice President\": " + selectedVicePresidentId + "," +
+      "\n\t\t\"Secretary\": [" + secretariesId + "]," +
+      "\n\t\t\"Treasurer\": [" + treasurersId + "]" +
+      "\n\t}\n}"
+  };
+
+  // to do - put all buttons into an array for calling all buttons to set unselect when handleClear() is called
+  const addButtonElementToArray = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    elements.push(e.currentTarget);
+  }
 
   return (
     <div className="container bg-gray-200">
@@ -151,8 +172,7 @@ export default function Page() {
             </div>
 
             <div className="mt-6 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:gap-y-5">
-
-              {office.Candidate?.map((candidate) => (
+              {office.Candidate?.map((candidate) => (buttons.set(candidate.id, "Unselected"),
                 <div
                   key={candidate.id}
                   className="bg-base-100 rounded-box mx-2 grid w-72 flex-shrink-0 place-items-center items-center gap-4 p-4 py-8 shadow-xl xl:mx-0 xl:w-full">
@@ -173,10 +193,9 @@ export default function Page() {
                     </div>
                   </div>
                   <button
-                    key={candidate.id}
-                    onClick={() => handleSelect(candidate, office.name)}
+                    onClick={(e) => handleSelect(e, candidate, office.name)}
                     className="btn btn-outline btn-accent btn-sm">
-                    Unselected
+                    {buttons.get(candidate.id)}
                   </button>
                 </div>
               ))}
@@ -232,7 +251,6 @@ export default function Page() {
           Vote
         </button>
       </div>
-
     </div>
   );
 }
