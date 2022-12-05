@@ -5,24 +5,24 @@ import * as argon from 'argon2';
 
 /**
  * A class that contains the business logic for the voter data and pass it to controller
- * 
+ *
  * @class VotersService
  */
 @Injectable()
 export class VotersService {
   /**
    * a constructor for the voter service
-   * 
-   * @param prisma 
+   *
+   * @param prisma
    * @constructor
    */
   constructor(private prisma: PrismaService) {}
 
   /**
    * Create a voter with the CreateVoterDto object
-   * 
-   * @param createVoterDto 
-   * @returns 
+   *
+   * @param createVoterDto
+   * @returns
    */
   async create(createVoterDto: CreateVoterDto) {
     await this.societyExists(createVoterDto.societyId);
@@ -30,21 +30,13 @@ export class VotersService {
     const hash_credential_2 = await argon.hash(credential_2);
     return await this.prisma.voter.create({
       data: { ...voter, credential_2: hash_credential_2 },
-      select: {
-        id: true,
-        firstName: true,
-        lastName: true,
-        dateOfBirth: true,
-        createdAt: true,
-        society: { select: { id: true, name: true } },
-      },
     });
   }
 
   /**
    * Return all voters from the database
-   * 
-   * @returns 
+   *
+   * @returns
    */
   async findAll() {
     return await this.prisma.voter
@@ -64,9 +56,9 @@ export class VotersService {
 
   /**
    * Find specific voter with the id
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async findOne(id: number) {
     return await this.prisma.voter.findUnique({
@@ -86,10 +78,10 @@ export class VotersService {
 
   /**
    * update a voter with the id via the UpdateVoterDto object
-   * 
-   * @param id 
-   * @param updateVoterDto 
-   * @returns 
+   *
+   * @param id
+   * @param updateVoterDto
+   * @returns
    */
   async update(id: number, updateVoterDto: UpdateVoterDto) {
     await this.societyExists(updateVoterDto.societyId);
@@ -111,9 +103,9 @@ export class VotersService {
 
   /**
    * Delete a voter from the database
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async remove(id: number) {
     if (!this.findOne(id))
@@ -123,8 +115,8 @@ export class VotersService {
 
   /**
    * Check if the society with the id exists or not
-   * 
-   * @param societyId 
+   *
+   * @param societyId
    */
   private async societyExists(societyId: number) {
     const found = await this.prisma.society.findUnique({

@@ -17,7 +17,7 @@ import { UpdateSocietyContactDto } from './dto/update-society-contact.dto';
 
 /**
  * A controller that handle the request for society contact from the frontend
- * 
+ *
  * @class SocietyContactController
  */
 @Controller('societycontact')
@@ -25,8 +25,8 @@ import { UpdateSocietyContactDto } from './dto/update-society-contact.dto';
 export class SocietyContactController {
   /**
    * a constructor for society contact controller
-   * 
-   * @param societyContactService 
+   *
+   * @param societyContactService
    * @constructor
    */
   constructor(private readonly societyContactService: SocietyContactService) {}

@@ -8,17 +8,17 @@ import { Role } from './role';
 
 /**
  * A class that contains the business logic for the authentication service
- * 
+ *
  * @class AuthService
  */
 @Injectable()
 export class AuthService {
   /**
    * a constructor for the authentication service
-   * 
-   * @param prisma 
-   * @param jwt 
-   * @param config 
+   *
+   * @param prisma
+   * @param jwt
+   * @param config
    */
   constructor(
     private readonly prisma: PrismaService,
@@ -28,7 +28,7 @@ export class AuthService {
 
   /**
    * Generate JWT token
-   * 
+   *
    * @param sub - user id
    * @param role - user role
    * @returns - access token
@@ -43,7 +43,7 @@ export class AuthService {
 
   /**
    * Voter login
-   * 
+   *
    * @param dto VoterAuthDto - cred_1 and cred_2
    * @returns access token
    */
@@ -66,7 +66,7 @@ export class AuthService {
 
   /**
    * Society contact login
-   * 
+   *
    * @param dto SCAuthDto - username and password
    * @returns access token
    */
@@ -89,7 +89,7 @@ export class AuthService {
 
   /**
    * Employee login
-   * 
+   *
    * @param dto EmployeeAuthDto - username and password
    * @returns access token
    */
@@ -105,6 +105,18 @@ export class AuthService {
     // validate password
     const isMatchPwd = await argon.verify(employee.password, password);
     if (!isMatchPwd) throw new ForbiddenException('Invalid credentials');
+
+    // return token
+    return await this.generateToken(employee.id, Role.Employee);
+  }
+
+  async register(dto: EmployeeAuthDto) {
+    const { username, password } = dto;
+    const hashpwd = await argon.hash(password);
+    // find employee by username
+    const employee = await this.prisma.employee.create({
+      data: { username, password: hashpwd },
+    });
 
     // return token
     return await this.generateToken(employee.id, Role.Employee);

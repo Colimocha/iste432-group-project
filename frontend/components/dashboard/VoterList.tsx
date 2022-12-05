@@ -35,7 +35,7 @@ export default function VoterList() {
         </tr>
       </thead>
       <tbody>
-        {voters.length &&
+        {voters.length > 0 &&
           voters.map((data: Voter, index) => (
             <tr key={index}>
               <td>{index + 1}</td>

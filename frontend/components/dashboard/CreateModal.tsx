@@ -1,8 +1,10 @@
 'use client';
 
 import { Config } from '#/config';
+import { delay } from '#/lib/delay';
+import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import MasterList from './MasterList';
 
 interface Category {
@@ -68,27 +70,38 @@ async function createItem(
   data: Record<string, string | number | File>,
 ) {
   const token = sessionStorage.getItem('token') || '';
+  if (data.societyId) data.societyId = Number(data.societyId);
+  if (data.ballotId) data.ballotId = Number(data.ballotId);
+  if (data.officeId) data.officeId = Number(data.officeId);
+  if (data.limit) data.limit = Number(data.limit);
+
   const res = await fetch(`${Config.API_URL}/${category}`, {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   });
+  if (!res.ok) throw new Error('Error creating item');
   return res;
 }
 
 export default function CreateModal(props: Category) {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   function handleCreate(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
     const object = Object.fromEntries(data.entries());
-    console.log(object);
-    // createItem(props.category || '', object);
-    //refresh page
+    setLoading(true);
+    delay()
+      .then(() => {
+        createItem(props.category || '', object);
+      })
+      .finally(() => setLoading(false));
     router.refresh();
   }
   const arr = ['societyId', 'ballotId', 'officeId'];
@@ -149,13 +162,12 @@ export default function CreateModal(props: Category) {
                   </>
                 ))}
               <div className="modal-action col-span-2">
-                <button className="btn-primary btn capitalize text-white">
-                  {/* <label
-                    className="btn-primary btn capitalize text-white"
-                    htmlFor="create_modal"
-                  > */}
+                <button
+                  className={clsx('btn-primary btn capitalize text-white', {
+                    loading: loading,
+                  })}
+                >
                   Create
-                  {/* </label> */}
                 </button>
               </div>
             </form>
