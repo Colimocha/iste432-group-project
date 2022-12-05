@@ -54,19 +54,7 @@ export default function Page({ params }: { params: Params }) {
         .finally(() => setLoading(false));
     });
   };
-
-  const handleSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    editSociety(token, Number(societyId), data)
-      .then((res) => {
-        setLoading(false);
-        setEdit(false);
-        setData(data);
-      })
-      .catch((err) => {});
-  };
-
+  
   return (
     <>
       <div className="flex justify-between">
