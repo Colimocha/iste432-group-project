@@ -37,7 +37,7 @@ export default function CandidateList() {
           </tr>
         </thead>
         <tbody>
-          {candidates.map((data: Candidate, index) => (
+          {candidates.length > 0 ? candidates.map((data: Candidate, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{[data.firstName, data.lastName].join(' ')}</td>
@@ -55,7 +55,7 @@ export default function CandidateList() {
                 <RemoveModal id={data.id} table={'ballot'} />
               </td>
             </tr>
-          ))}
+          )) : <></>}
         </tbody>
       </table>
     </>

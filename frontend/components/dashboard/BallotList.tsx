@@ -50,7 +50,7 @@ export default function BallotList() {
           </tr>
         </thead>
         <tbody>
-          {ballots.map((data: Ballot, index) => (
+          {ballots.length > 0 ? ballots.map((data: Ballot, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{data.name}</td>
@@ -71,7 +71,7 @@ export default function BallotList() {
                 )}
               </td>
             </tr>
-          ))}
+          )): <></>}
         </tbody>
       </table>
     </>

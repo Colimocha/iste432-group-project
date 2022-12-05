@@ -35,7 +35,7 @@ export default function OfficeList() {
           </tr>
         </thead>
         <tbody>
-          {offices.map((data: Office, index) => (
+          {offices.length > 0 ? offices.map((data: Office, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{data.name}</td>
@@ -51,7 +51,7 @@ export default function OfficeList() {
                 <RemoveModal id={data.id} table={'office'} />
               </td>
             </tr>
-          ))}
+          )): <></>}
         </tbody>
       </table>
     </>
