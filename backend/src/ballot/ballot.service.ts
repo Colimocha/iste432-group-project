@@ -4,24 +4,24 @@ import { CreateBallotDto, UpdateBallotDto } from './dto';
 
 /**
  * a class that contains the business logic for handling the ballot data and pass it back to the controller
- * 
+ *
  * @class BallotService
  */
 @Injectable()
 export class BallotService {
   /**
    * A constructor for the ballot service
-   * 
-   * @param prisma 
+   *
+   * @param prisma
    * @constructor
    */
   constructor(private prisma: PrismaService) {}
 
   /**
    * create a ballot with the createBallotDto object
-   * 
-   * @param createBallotDto 
-   * @returns 
+   *
+   * @param createBallotDto
+   * @returns
    */
   async create(createBallotDto: CreateBallotDto) {
     await this.societyExists(createBallotDto.societyId);
@@ -41,8 +41,8 @@ export class BallotService {
 
   /**
    * Get all ballots in the database
-   * 
-   * @returns 
+   *
+   * @returns
    */
   async findAll() {
     return await this.prisma.ballot.findMany({
@@ -62,9 +62,9 @@ export class BallotService {
 
   /**
    * Get specific ballot via its id
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async findOne(id: number) {
     return await this.prisma.ballot.findUnique({
@@ -102,9 +102,9 @@ export class BallotService {
 
   /**
    * Get multiple ballots with the society id
-   * 
-   * @param societyId 
-   * @returns 
+   *
+   * @param societyId
+   * @returns
    */
   async findManyBySocietyId(societyId: number) {
     return (
@@ -149,10 +149,10 @@ export class BallotService {
 
   /**
    * Update a specific ballot with the id and new data
-   * 
-   * @param id 
-   * @param updateBallotDto 
-   * @returns 
+   *
+   * @param id
+   * @param updateBallotDto
+   * @returns
    */
   async update(id: number, updateBallotDto: UpdateBallotDto) {
     await this.societyExists(updateBallotDto.societyId);
@@ -174,9 +174,9 @@ export class BallotService {
 
   /**
    * Get the vote result for this specific ballot with id
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async getVoteResult(id: number) {
     const ballot = await this.findOne(id);
@@ -200,13 +200,11 @@ export class BallotService {
 
     //reading through the map to count the amount of votes for every candidate
     vote.forEach((v) => {
-      const json = JSON.parse(v.result).result;
+      const json = JSON.parse(v.result);
       for (const [key, value] of Object.entries(json)) {
         if (Array.isArray(value)) {
           for (const v of value) map[key][v].votes++;
-          continue;
         }
-        map[key][value].votes++;
       }
     });
 
@@ -234,9 +232,9 @@ export class BallotService {
 
   /**
    * remove a ballot from the database with the id
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async remove(id: number) {
     if (!(await this.findOne(id)))
@@ -246,8 +244,8 @@ export class BallotService {
 
   /**
    * Check if the specific society exists or not
-   * 
-   * @param id 
+   *
+   * @param id
    */
   private async societyExists(id: number) {
     const found = await this.prisma.society.findUnique({ where: { id } });

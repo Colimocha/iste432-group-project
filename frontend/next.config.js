@@ -5,6 +5,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    domains: ['placeimg.com'],
+  },
 };
 
 module.exports = nextConfig;
