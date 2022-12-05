@@ -49,7 +49,8 @@ export default function MasterList({
           {list.length > 0 ? (
             list.map((item: any) => (
               <option key={item.id} value={item.id}>
-                {item.name}
+                {item.name}{' '}
+                {category === 'office' ? `(${item.ballot.name})` : ''}
               </option>
             ))
           ) : (

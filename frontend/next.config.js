@@ -6,8 +6,8 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['placeimg.com', 'avatars.dicebear.com'],
+    domains: ['placeimg.com', 'avatars.dicebear.com', 'randomuser.me'],
   },
 };
 
-module.exports = nextConfig;
+https: module.exports = nextConfig;
