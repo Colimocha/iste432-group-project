@@ -10,14 +10,13 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { delay } from '#/lib/delay';
 
-const token = sessionStorage.getItem('token') || '';
-const ballotId = sessionStorage.getItem('ballotId') || '';
-
 export default function Page() {
   const [ballot, setBallot] = useState<Ballot>();
   const [map, setMap] = useState<Map<any, any>>(new Map());
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState('');
+  const [ballotId, setBallotId] = useState('');
 
   const convertMap = (ballot: Ballot) => {
     const map = new Map();
@@ -39,11 +38,13 @@ export default function Page() {
   };
 
   useEffect(() => {
+    setToken(sessionStorage.getItem('token') || '');
+    setBallotId(sessionStorage.getItem('ballotId') || '');
     getBallot(token, parseInt(ballotId!)).then((res) => {
       setBallot(res);
       setMap(convertMap(res));
     });
-  }, []);
+  }, [ballotId, token]);
 
   // handle for Vote button
   const handleVote = (e: { preventDefault: () => void }) => {
