@@ -41,6 +41,9 @@ const fields = {
   ballot: [
     ['name', 'Name'],
     ['societyId', 'Society Id'],
+    ['start_date', 'Start Date'],
+    ['end_date', 'End Date'],
+    ['allowWriteIn', 'Allow Write-In'],
   ],
   office: [
     ['name', 'Name'],
@@ -60,20 +63,25 @@ const fields = {
 function getFieldType(field: string) {
   // if (field === 'image') return 'file';
   if (field === 'password') return 'password';
-  if (field === 'dateOfBirth') return 'date';
+  if (field === 'dateOfBirth' || field === 'start_date' || field === 'end_date')
+    return 'date';
   if (field === 'limit') return 'number';
   return 'text';
 }
 
 async function createItem(
   category: string,
-  data: Record<string, string | number | File>,
+  data: Record<string, string | number | File | boolean>,
 ) {
   const token = sessionStorage.getItem('token') || '';
   if (data.societyId) data.societyId = Number(data.societyId);
   if (data.ballotId) data.ballotId = Number(data.ballotId);
   if (data.officeId) data.officeId = Number(data.officeId);
   if (data.limit) data.limit = Number(data.limit);
+  if (data.allowWriteIn)
+    data.allowWriteIn = Boolean(data.allowWriteIn === 'on' ? true : false);
+
+  console.log(data);
 
   const res = await fetch(`${Config.API_URL}/${category}`, {
     method: 'POST',
@@ -107,7 +115,7 @@ export default function CreateModal(props: Category) {
         window.location.reload(); 
       });
   }
-  const arr = ['societyId', 'ballotId', 'officeId'];
+  const arr = ['societyId', 'ballotId', 'officeId', 'allowWriteIn'];
 
   return (
     <>
@@ -151,6 +159,22 @@ export default function CreateModal(props: Category) {
                       </div>
                     ) : (
                       <>
+                        {field[0] === 'allowWriteIn' && (
+                          <>
+                            <div className="form-control items-center justify-center rounded-md px-2 py-1 ring-2">
+                              <label className="label cursor-pointer space-x-20">
+                                <span className="label-text">
+                                  Allow Write In?
+                                </span>
+                                <input
+                                  type="checkbox"
+                                  className="checkbox"
+                                  name={field[0]}
+                                />
+                              </label>
+                            </div>
+                          </>
+                        )}
                         {field[0] === 'societyId' && (
                           <MasterList category="society" />
                         )}
@@ -164,6 +188,7 @@ export default function CreateModal(props: Category) {
                     )}
                   </>
                 ))}
+
               <div className="modal-action col-span-2">
                 <button
                   className={clsx('btn-primary btn capitalize text-white', {
