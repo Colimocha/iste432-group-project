@@ -8,6 +8,9 @@ const nextConfig = {
   images: {
     domains: ['placeimg.com', 'avatars.dicebear.com', 'randomuser.me'],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 https: module.exports = nextConfig;
