@@ -3,7 +3,7 @@
 import { getOffices } from '#/lib/api/office';
 import { Office } from '#/lib/model/Office';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import RemoveModal from '../RemoveModal';
 import CreateModal from './CreateModal';
@@ -11,6 +11,7 @@ import CreateModal from './CreateModal';
 export default function OfficeList() {
   const [offices, setOffices] = useState([]);
   const path = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const token = sessionStorage.getItem('token') || '';
@@ -35,23 +36,27 @@ export default function OfficeList() {
           </tr>
         </thead>
         <tbody>
-          {offices.length > 0 ? offices.map((data: Office, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{data.name}</td>
-              <td>{data.ballot.name}</td>
-              <td>{data.createdAt.split('T')[0]}</td>
-              <td className="flex justify-end space-x-2">
-                <Link
-                  href={path + '/' + data.id}
-                  className="btn-primary btn-sm btn"
-                >
-                  View/Edit
-                </Link>
-                <RemoveModal id={data.id} table={'office'} />
-              </td>
-            </tr>
-          )): <></>}
+          {offices.length > 0 ? (
+            offices.map((data: Office, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{data.name}</td>
+                <td>{data.ballot.name}</td>
+                <td>{data.createdAt.split('T')[0]}</td>
+                <td className="flex justify-end space-x-2">
+                  <Link
+                    href={path + '/' + data.id}
+                    className="btn-primary btn-sm btn"
+                  >
+                    View/Edit
+                  </Link>
+                  <RemoveModal id={data.id} table={'office'} />
+                </td>
+              </tr>
+            ))
+          ) : (
+            <></>
+          )}
         </tbody>
       </table>
     </>

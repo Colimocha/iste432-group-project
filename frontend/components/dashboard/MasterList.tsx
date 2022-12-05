@@ -30,7 +30,6 @@ export default function MasterList({
 
   useEffect(() => {
     getList(category).then((res) => setList(res));
-    console.log(list);
   }, [category]);
 
   return (
@@ -47,11 +46,15 @@ export default function MasterList({
           defaultValue=""
           onChange={change}
         >
-          {list.length > 0 ? list.map((item: any) => (
-            <option key={item.id} value={item.id}>
-              {item.name}
-            </option>
-          )) : <></>}
+          {list.length > 0 ? (
+            list.map((item: any) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))
+          ) : (
+            <></>
+          )}
         </select>
       </div>
     </>
