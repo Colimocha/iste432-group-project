@@ -19,11 +19,20 @@ const fields = [
 
 const token = sessionStorage.getItem('token') || '';
 
+function getFieldType(field: string) {
+  // if (field === 'image') return 'file';
+  if (field === 'password') return 'password';
+  if (field === 'dateOfBirth' || field === 'start_date' || field === 'end_date')
+    return 'date';
+  if (field === 'limit') return 'number';
+  return 'text';
+}
+
 export default function Page({ params }: { params: Params }) {
   const { officeId } = params;
   const [data, setData] = useState<EditOffice>({
     name: '',
-    limit: 1,
+    limit: 0,
     ballotId: 0,
   });
   const [edit, setEdit] = useState(false);
@@ -94,11 +103,11 @@ export default function Page({ params }: { params: Params }) {
                   <span className="label_text">{label}</span>
                 </label>
                 <input
-                  type="text"
+                  type={getFieldType(key)}
                   name={key}
                   placeholder={label}
                   className="input-bordered input w-full"
-                  value={key === 'name' ? data.name : ''}
+                  value={key === 'name' ? data.name : data.limit}
                   onChange={handleInputChange}
                   disabled={!edit}
                 />

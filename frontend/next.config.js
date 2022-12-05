@@ -6,7 +6,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['placeimg.com'],
+    domains: ['placeimg.com', 'avatars.dicebear.com'],
   },
 };
 

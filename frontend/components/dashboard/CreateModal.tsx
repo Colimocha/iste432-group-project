@@ -151,6 +151,13 @@ export default function CreateModal(props: Category) {
                           name={field[0]}
                           placeholder={field[1]}
                           className="input-bordered input w-full font-normal"
+                          value={
+                            field[0] === 'image'
+                              ? 'https://avatars.dicebear.com/api/big-smile/' +
+                                Math.random().toString(36).substring(7) +
+                                '.svg'
+                              : undefined
+                          }
                           required
                         />
                       </div>
