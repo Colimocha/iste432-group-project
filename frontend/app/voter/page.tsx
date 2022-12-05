@@ -71,7 +71,7 @@ export default function Page() {
             {ballots.map((ballot) => (
               <div
                 key={ballot.id}
-                className="card w-96 bg-base-100 shadow-xl image-full m-2 sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1"
+                className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 card image-full m-2 w-96 bg-base-100 shadow-xl"
               >
                 <figure>
                   <img src="https://iili.io/HfipnUl.jpg" alt="Shoes" />
@@ -81,7 +81,7 @@ export default function Page() {
                   <p>{society?.name}</p>
                   <div className="card-actions justify-end">
                     <button
-                      className="btn btn-accent"
+                      className="btn-accent btn"
                       onClick={(e) => handleEnter(ballot)}
                     >
                       Enter

@@ -54,7 +54,7 @@ export default function Page({ params }: { params: Params }) {
         .finally(() => setLoading(false));
     });
   };
-  
+
   return (
     <>
       <div className="flex justify-between">

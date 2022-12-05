@@ -50,28 +50,32 @@ export default function BallotList() {
           </tr>
         </thead>
         <tbody>
-          {ballots.length > 0 ? ballots.map((data: Ballot, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{data.name}</td>
-              <td>{data.society.name}</td>
-              <td>{data._count.Vote}</td>
-              <td>{data.start_date ?? 'N/A'}</td>
-              <td>{data.end_date ?? 'N/A'}</td>
-              <td>{data.createdAt.split('T')[0]}</td>
-              <td className="flex justify-end space-x-2">
-                <Link
-                  href={path + '/' + data.id}
-                  className="btn-primary btn-sm btn"
-                >
-                  {role === 'employee' ? 'View/Edit' : 'Details'}
-                </Link>
-                {role === 'employee' && (
-                  <RemoveModal id={data.id} table={'ballot'} />
-                )}
-              </td>
-            </tr>
-          )): <></>}
+          {ballots.length > 0 ? (
+            ballots.map((data: Ballot, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{data.name}</td>
+                <td>{data.society.name}</td>
+                <td>{data._count.Vote}</td>
+                <td>{data.start_date ?? 'N/A'}</td>
+                <td>{data.end_date ?? 'N/A'}</td>
+                <td>{data.createdAt.split('T')[0]}</td>
+                <td className="flex justify-end space-x-2">
+                  <Link
+                    href={path + '/' + data.id}
+                    className="btn-primary btn-sm btn"
+                  >
+                    {role === 'employee' ? 'View/Edit' : 'Details'}
+                  </Link>
+                  {role === 'employee' && (
+                    <RemoveModal id={data.id} table={'ballot'} />
+                  )}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <></>
+          )}
         </tbody>
       </table>
     </>

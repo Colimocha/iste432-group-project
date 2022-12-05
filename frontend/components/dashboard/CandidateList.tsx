@@ -37,25 +37,29 @@ export default function CandidateList() {
           </tr>
         </thead>
         <tbody>
-          {candidates.length > 0 ? candidates.map((data: Candidate, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{[data.firstName, data.lastName].join(' ')}</td>
-              <td>{data.title}</td>
-              <td>{data.office.name}</td>
-              <td>{data.ballot.name}</td>
-              <td>{data.createdAt.split('T')[0]}</td>
-              <td className="flex justify-end space-x-2">
-                <Link
-                  href={path + '/' + data.id}
-                  className="btn-primary btn-sm btn"
-                >
-                  View/Edit
-                </Link>
-                <RemoveModal id={data.id} table={'ballot'} />
-              </td>
-            </tr>
-          )) : <></>}
+          {candidates.length > 0 ? (
+            candidates.map((data: Candidate, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{[data.firstName, data.lastName].join(' ')}</td>
+                <td>{data.title}</td>
+                <td>{data.office.name}</td>
+                <td>{data.ballot.name}</td>
+                <td>{data.createdAt.split('T')[0]}</td>
+                <td className="flex justify-end space-x-2">
+                  <Link
+                    href={path + '/' + data.id}
+                    className="btn-primary btn-sm btn"
+                  >
+                    View/Edit
+                  </Link>
+                  <RemoveModal id={data.id} table={'ballot'} />
+                </td>
+              </tr>
+            ))
+          ) : (
+            <></>
+          )}
         </tbody>
       </table>
     </>

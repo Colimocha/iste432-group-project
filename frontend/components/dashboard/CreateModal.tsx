@@ -110,9 +110,9 @@ export default function CreateModal(props: Category) {
       .then(() => {
         createItem(props.category || '', object);
       })
-      .finally(() => { 
+      .finally(() => {
         setLoading(false);
-        window.location.reload(); 
+        window.location.reload();
       });
   }
   const arr = ['societyId', 'ballotId', 'officeId', 'allowWriteIn'];

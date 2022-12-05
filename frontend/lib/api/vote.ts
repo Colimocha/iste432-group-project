@@ -114,4 +114,4 @@ async function getVotes(token: string) {
   }
 }
 
-export {createVote, editVote, deleteVote, getVote, getVotes};
+export { createVote, editVote, deleteVote, getVote, getVotes };
