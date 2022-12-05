@@ -3,9 +3,27 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateSocietyContactDto, UpdateSocietyContactDto } from './dto';
 import * as argon from 'argon2';
 
+/**
+ * A service that handle the society contact data and pass it to controller
+ * 
+ * @class SocietyContactService
+ */
 @Injectable()
 export class SocietyContactService {
+  /**
+   * A constructor for the society contact service
+   * 
+   * @param prisma 
+   * @constructor
+   */
   constructor(private prisma: PrismaService) {}
+  
+  /**
+   * Create a society contact with the CreateSocietyContactDto object
+   * 
+   * @param createSocietyContactDto 
+   * @returns 
+   */
   async create(createSocietyContactDto: CreateSocietyContactDto) {
     await this.societyExists(createSocietyContactDto.societyId);
     const { password, ...societyContact } = createSocietyContactDto;
@@ -20,6 +38,11 @@ export class SocietyContactService {
     });
   }
 
+  /**
+   * Return all society contacts from the database
+   * 
+   * @returns 
+   */
   async findAll() {
     return await this.prisma.societyContact
       .findMany({
@@ -38,6 +61,12 @@ export class SocietyContactService {
       .then((societyContacts) => societyContacts.sort((a, b) => a.id - b.id));
   }
 
+  /**
+   * Return the specific society contact with the id
+   * 
+   * @param id 
+   * @returns 
+   */
   async findOne(id: number) {
     return await this.prisma.societyContact.findUnique({
       where: { id },
@@ -56,9 +85,18 @@ export class SocietyContactService {
     });
   }
 
+  /**
+   * Update the society contact with the id and new data via UpdateSocietyContactDto object
+   * 
+   * @param id 
+   * @param updateSocietyContactDto 
+   * @returns 
+   */
   async update(id: number, updateSocietyContactDto: UpdateSocietyContactDto) {
     await this.societyExists(updateSocietyContactDto.societyId);
     const { password, ...societyContact } = updateSocietyContactDto;
+    
+    //Encrpyt the password for a security reason
     let hashedPassword = '';
     if (password) hashedPassword = await argon.hash(password);
 
@@ -76,12 +114,23 @@ export class SocietyContactService {
     });
   }
 
+  /**
+   * Delete a society contact from the database
+   * 
+   * @param id 
+   * @returns 
+   */
   async remove(id: number) {
     if (!this.findOne(id))
       throw new BadRequestException('Society contact not found');
     return await this.prisma.societyContact.delete({ where: { id } });
   }
 
+  /**
+   * Check if a society with the id exists or not
+   * 
+   * @param id 
+   */
   private async societyExists(id: number) {
     const society = await this.prisma.society.findUnique({ where: { id } });
     if (!society) throw new BadRequestException('Society not found');

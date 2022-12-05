@@ -4,6 +4,9 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategy';
 
+/**
+ * the module that contains the JWT module, the authentication service and controller
+ */
 @Module({
   // import the JwtModule and register the jwtStrategy.
   imports: [JwtModule.register({})],

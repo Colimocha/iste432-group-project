@@ -14,9 +14,20 @@ import {
 import { BallotService } from './ballot.service';
 import { CreateBallotDto, UpdateBallotDto } from './dto';
 
+/**
+ * A controller that handle the requests for the ballots from the frontend
+ * 
+ * @class BallotController
+ */
 @Controller('ballot')
 @UseGuards(JwtGuard)
 export class BallotController {
+  /**
+   * A constructor for the ballot controller
+   * 
+   * @param ballotService
+   * @controller 
+   */
   constructor(private readonly ballotService: BallotService) {}
 
   @Post()
@@ -73,7 +84,7 @@ export class BallotController {
   ) {
     return this.ballotService.remove(+id);
   }
-
+  
   @Get(':id/vote-results')
   getVoteResult(
     @Param(

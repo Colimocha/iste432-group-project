@@ -3,10 +3,27 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateVoterDto, UpdateVoterDto } from './dto';
 import * as argon from 'argon2';
 
+/**
+ * A class that contains the business logic for the voter data and pass it to controller
+ * 
+ * @class VotersService
+ */
 @Injectable()
 export class VotersService {
+  /**
+   * a constructor for the voter service
+   * 
+   * @param prisma 
+   * @constructor
+   */
   constructor(private prisma: PrismaService) {}
 
+  /**
+   * Create a voter with the CreateVoterDto object
+   * 
+   * @param createVoterDto 
+   * @returns 
+   */
   async create(createVoterDto: CreateVoterDto) {
     await this.societyExists(createVoterDto.societyId);
     const { credential_2, ...voter } = createVoterDto;
@@ -24,6 +41,11 @@ export class VotersService {
     });
   }
 
+  /**
+   * Return all voters from the database
+   * 
+   * @returns 
+   */
   async findAll() {
     return await this.prisma.voter
       .findMany({
@@ -40,6 +62,12 @@ export class VotersService {
       .then((voters) => voters.sort((a, b) => a.id - b.id));
   }
 
+  /**
+   * Find specific voter with the id
+   * 
+   * @param id 
+   * @returns 
+   */
   async findOne(id: number) {
     return await this.prisma.voter.findUnique({
       where: { id: id },
@@ -56,6 +84,13 @@ export class VotersService {
     });
   }
 
+  /**
+   * update a voter with the id via the UpdateVoterDto object
+   * 
+   * @param id 
+   * @param updateVoterDto 
+   * @returns 
+   */
   async update(id: number, updateVoterDto: UpdateVoterDto) {
     await this.societyExists(updateVoterDto.societyId);
     return await this.prisma.voter.update({
@@ -74,12 +109,23 @@ export class VotersService {
     });
   }
 
+  /**
+   * Delete a voter from the database
+   * 
+   * @param id 
+   * @returns 
+   */
   async remove(id: number) {
     if (!this.findOne(id))
       throw new BadRequestException('Voter does not exist');
     return await this.prisma.voter.delete({ where: { id } });
   }
 
+  /**
+   * Check if the society with the id exists or not
+   * 
+   * @param societyId 
+   */
   private async societyExists(societyId: number) {
     const found = await this.prisma.society.findUnique({
       where: { id: societyId },

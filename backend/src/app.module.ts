@@ -14,6 +14,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AnalysisModule } from './analysis/analysis.module';
 
+/**
+ * A module that contains all sub modules 
+ */
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env.development' }),

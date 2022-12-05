@@ -2,9 +2,27 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateSocietyDto, UpdateSocietyDto } from './dto';
 
+/**
+ * A class that contains the business logic for handling the society data and pass it to the controller
+ * 
+ * @class SocietyService
+ */
 @Injectable()
 export class SocietyService {
+  /**
+   * a constructor for the society service
+   * 
+   * @param prisma 
+   * @constructor
+   */
   constructor(private readonly prisma: PrismaService) {}
+  
+  /**
+   * create a society with the CreateSocietyDto object
+   * 
+   * @param createSocietyDto 
+   * @returns 
+   */
   async create(createSocietyDto: CreateSocietyDto) {
     return this.prisma.society.create({
       data: createSocietyDto,
@@ -45,6 +63,11 @@ export class SocietyService {
     });
   }
 
+  /**
+   * Get all societies from the database
+   * 
+   * @returns 
+   */
   async findAll() {
     return this.prisma.society
       .findMany({
@@ -64,6 +87,12 @@ export class SocietyService {
       .then((societies) => societies.sort((a, b) => a.id - b.id));
   }
 
+  /**
+   * Get the specific society with the id
+   * 
+   * @param id 
+   * @returns 
+   */
   async findOne(id: number) {
     return this.prisma.society.findUnique({
       where: { id },
@@ -104,6 +133,13 @@ export class SocietyService {
     });
   }
 
+  /**
+   * update the society with the id and the UpdateSocietyDto object
+   * 
+   * @param id 
+   * @param updateSocietyDto 
+   * @returns 
+   */
   async update(id: number, updateSocietyDto: UpdateSocietyDto) {
     return this.prisma.society.update({
       where: { id },
@@ -145,6 +181,12 @@ export class SocietyService {
     });
   }
 
+  /**
+   * Remove the society from the database
+   * 
+   * @param id 
+   * @returns 
+   */
   async remove(id: number) {
     if (!this.findOne(id)) throw new BadRequestException('Society not found');
     return this.prisma.society.delete({ where: { id } });

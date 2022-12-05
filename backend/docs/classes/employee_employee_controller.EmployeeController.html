@@ -16,12 +16,15 @@
 <li><a href="../modules/employee_employee_controller.html">employee/employee.controller</a></li>
 <li><a href="employee_employee_controller.EmployeeController.html">EmployeeController</a></li></ul>
 <h1>Class EmployeeController</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>A controller that handle the requests for employee from the frontend</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">EmployeeController</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/employee/employee.controller.ts#L20">src/employee/employee.controller.ts:20</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/employee/employee.controller.ts#L25">src/employee/employee.controller.ts:25</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -50,6 +53,8 @@
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_EmployeeController">new <wbr/>Employee<wbr/>Controller<span class="tsd-signature-symbol">(</span>employeeService<span class="tsd-signature-symbol">: </span><a href="employee_employee_service.EmployeeService.html" class="tsd-signature-type" data-tsd-kind="Class">EmployeeService</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="employee_employee_controller.EmployeeController.html" class="tsd-signature-type" data-tsd-kind="Class">EmployeeController</a><a href="#constructor.new_EmployeeController" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>A constructor for the employee controller</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -57,14 +62,14 @@
 <h5>employeeService: <a href="employee_employee_service.EmployeeService.html" class="tsd-signature-type" data-tsd-kind="Class">EmployeeService</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="employee_employee_controller.EmployeeController.html" class="tsd-signature-type" data-tsd-kind="Class">EmployeeController</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/employee/employee.controller.ts#L21">src/employee/employee.controller.ts:21</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/employee/employee.controller.ts#L32">src/employee/employee.controller.ts:32</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="employeeService" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>employee<wbr/>Service</span><a href="#employeeService" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">employee<wbr/>Service<span class="tsd-signature-symbol">:</span> <a href="employee_employee_service.EmployeeService.html" class="tsd-signature-type" data-tsd-kind="Class">EmployeeService</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/employee/employee.controller.ts#L21">src/employee/employee.controller.ts:21</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/employee/employee.controller.ts#L32">src/employee/employee.controller.ts:32</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="create" class="tsd-anchor"></a>
@@ -79,7 +84,7 @@
 <h5>createEmployeeDto: <a href="employee_dto_create_employee_dto.CreateEmployeeDto.html" class="tsd-signature-type" data-tsd-kind="Class">CreateEmployeeDto</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>createdAt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>username<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/employee/employee.controller.ts#L23">src/employee/employee.controller.ts:23</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/employee/employee.controller.ts#L34">src/employee/employee.controller.ts:34</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="findAll" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>find<wbr/>All</span><a href="#findAll" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -87,7 +92,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>createdAt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>username<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/employee/employee.controller.ts#L28">src/employee/employee.controller.ts:28</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/employee/employee.controller.ts#L39">src/employee/employee.controller.ts:39</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="findOne" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>find<wbr/>One</span><a href="#findOne" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -100,7 +105,7 @@
 <h5>id: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>createdAt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>username<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/employee/employee.controller.ts#L33">src/employee/employee.controller.ts:33</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/employee/employee.controller.ts#L44">src/employee/employee.controller.ts:44</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="remove" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>remove</span><a href="#remove" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -113,7 +118,7 @@
 <h5>id: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Employee</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/employee/employee.controller.ts#L56">src/employee/employee.controller.ts:56</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/employee/employee.controller.ts#L67">src/employee/employee.controller.ts:67</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="update" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update</span><a href="#update" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -128,7 +133,7 @@
 <h5>updateEmployeeDto: <a href="employee_dto_update_employee_dto.UpdateEmployeeDto.html" class="tsd-signature-type" data-tsd-kind="Class">UpdateEmployeeDto</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>createdAt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>username<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/employee/employee.controller.ts#L44">src/employee/employee.controller.ts:44</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/employee/employee.controller.ts#L55">src/employee/employee.controller.ts:55</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

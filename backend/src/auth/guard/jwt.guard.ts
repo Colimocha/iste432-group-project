@@ -1,8 +1,9 @@
 import { AuthGuard } from '@nestjs/passport';
 
 /**
- * Author: Xiangyu Shi
  * Description: This guard is used to verify the JWT token.
+ * 
+ * @class JwtGuard
  */
 export class JwtGuard extends AuthGuard('jwt') {
   constructor() {

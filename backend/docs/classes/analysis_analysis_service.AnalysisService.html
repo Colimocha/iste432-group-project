@@ -16,12 +16,15 @@
 <li><a href="../modules/analysis_analysis_service.html">analysis/analysis.service</a></li>
 <li><a href="analysis_analysis_service.AnalysisService.html">AnalysisService</a></li></ul>
 <h1>Class AnalysisService</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>A class that contains the count of every records including employees, voters, and other more.</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">AnalysisService</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/analysis/analysis.service.ts#L5">src/analysis/analysis.service.ts:5</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/analysis/analysis.service.ts#L10">src/analysis/analysis.service.ts:10</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -46,21 +49,28 @@
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_AnalysisService">new <wbr/>Analysis<wbr/>Service<span class="tsd-signature-symbol">(</span>prisma<span class="tsd-signature-symbol">: </span><a href="prisma_prisma_service.PrismaService.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaService</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="analysis_analysis_service.AnalysisService.html" class="tsd-signature-type" data-tsd-kind="Class">AnalysisService</a><a href="#constructor.new_AnalysisService" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Returns</h3><p>list - a list that hold the number of every records</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5>prisma: <a href="prisma_prisma_service.PrismaService.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaService</a></h5></li></ul></div>
+<h5>prisma: <a href="prisma_prisma_service.PrismaService.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaService</a></h5>
+<div class="tsd-comment tsd-typography"><p>Prisma object that can access to the database</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="analysis_analysis_service.AnalysisService.html" class="tsd-signature-type" data-tsd-kind="Class">AnalysisService</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/analysis/analysis.service.ts#L6">src/analysis/analysis.service.ts:6</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/analysis/analysis.service.ts#L16">src/analysis/analysis.service.ts:16</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="prisma" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>prisma</span><a href="#prisma" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature">prisma<span class="tsd-signature-symbol">:</span> <a href="prisma_prisma_service.PrismaService.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaService</a></div><aside class="tsd-sources">
+<div class="tsd-signature">prisma<span class="tsd-signature-symbol">:</span> <a href="prisma_prisma_service.PrismaService.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaService</a></div>
+<div class="tsd-comment tsd-typography"><p>Prisma object that can access to the database</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/analysis/analysis.service.ts#L6">src/analysis/analysis.service.ts:6</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/analysis/analysis.service.ts#L16">src/analysis/analysis.service.ts:16</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getStat" class="tsd-anchor"></a>
@@ -70,7 +80,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>ballot_completed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>ballot_incomplete<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>ballots<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>candidates<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>employees<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>offices<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>societies<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>societyContacts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>voters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>votes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/analysis/analysis.service.ts#L8">src/analysis/analysis.service.ts:8</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/analysis/analysis.service.ts#L18">src/analysis/analysis.service.ts:18</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

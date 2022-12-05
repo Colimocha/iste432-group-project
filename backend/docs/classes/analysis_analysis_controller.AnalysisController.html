@@ -16,12 +16,15 @@
 <li><a href="../modules/analysis_analysis_controller.html">analysis/analysis.controller</a></li>
 <li><a href="analysis_analysis_controller.AnalysisController.html">AnalysisController</a></li></ul>
 <h1>Class AnalysisController</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Return the statistics</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
 <li><span class="target">AnalysisController</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/analysis/analysis.controller.ts#L7">src/analysis/analysis.controller.ts:7</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/analysis/analysis.controller.ts#L12">src/analysis/analysis.controller.ts:12</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -53,14 +56,14 @@
 <h5>analysisService: <a href="analysis_analysis_service.AnalysisService.html" class="tsd-signature-type" data-tsd-kind="Class">AnalysisService</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="analysis_analysis_controller.AnalysisController.html" class="tsd-signature-type" data-tsd-kind="Class">AnalysisController</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/analysis/analysis.controller.ts#L8">src/analysis/analysis.controller.ts:8</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/analysis/analysis.controller.ts#L13">src/analysis/analysis.controller.ts:13</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="analysisService" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>analysis<wbr/>Service</span><a href="#analysisService" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">analysis<wbr/>Service<span class="tsd-signature-symbol">:</span> <a href="analysis_analysis_service.AnalysisService.html" class="tsd-signature-type" data-tsd-kind="Class">AnalysisService</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/analysis/analysis.controller.ts#L8">src/analysis/analysis.controller.ts:8</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/analysis/analysis.controller.ts#L13">src/analysis/analysis.controller.ts:13</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getStat" class="tsd-anchor"></a>
@@ -68,9 +71,12 @@
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="getStat.getStat-1">get<wbr/>Stat<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>ballot_completed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>ballot_incomplete<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>ballots<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>candidates<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>employees<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>offices<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>societies<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>societyContacts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>voters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>votes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span><a href="#getStat.getStat-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography">
+<h3>Returns</h3><p>the number of records from the database</p>
+</div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>ballot_completed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>ballot_incomplete<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>ballots<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>candidates<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>employees<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>offices<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>societies<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>societyContacts<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>voters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span>votes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/analysis/analysis.controller.ts#L10">src/analysis/analysis.controller.ts:10</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/analysis/analysis.controller.ts#L18">src/analysis/analysis.controller.ts:18</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

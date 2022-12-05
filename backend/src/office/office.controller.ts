@@ -15,9 +15,20 @@ import { OfficeService } from './office.service';
 import { CreateOfficeDto } from './dto/create-office.dto';
 import { UpdateOfficeDto } from './dto/update-office.dto';
 
+/**
+ * A controller that handle the requests from the frontend for the offices
+ * 
+ * @class OfficeController
+ */
 @Controller('office')
 @UseGuards(JwtGuard)
 export class OfficeController {
+  /**
+   * a constructor for the office controller
+   * 
+   * @param officeService 
+   * @constructor
+   */
   constructor(private readonly officeService: OfficeService) {}
 
   @Post()

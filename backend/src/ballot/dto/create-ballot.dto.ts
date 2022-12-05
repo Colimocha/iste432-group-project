@@ -6,6 +6,11 @@ import {
   IsOptional,
 } from 'class-validator';
 
+/**
+ * A class that is used to create a ballot
+ * 
+ * @class CreateBallotDto
+ */
 export class CreateBallotDto {
   @IsNotEmpty()
   @IsString()

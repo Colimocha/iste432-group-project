@@ -15,9 +15,20 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { JwtGuard } from './../auth/guard/jwt.guard';
 
+/**
+ * A controller that handle the requests for employee from the frontend
+ * 
+ * @class EmployeeController
+ */
 @Controller('employee')
 @UseGuards(JwtGuard)
 export class EmployeeController {
+  /**
+   * A constructor for the employee controller
+   * 
+   * @param employeeService 
+   * @constructor
+   */
   constructor(private readonly employeeService: EmployeeService) {}
 
   @Post()

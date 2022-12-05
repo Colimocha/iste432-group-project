@@ -16,6 +16,9 @@
 <li><a href="../modules/auth_strategy_jwt_strategy.html">auth/strategy/jwt.strategy</a></li>
 <li><a href="auth_strategy_jwt_strategy.JwtStrategy.html">JwtStrategy</a></li></ul>
 <h1>Class JwtStrategy</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>THe configuration and setup for the JWT Strategy</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
@@ -23,7 +26,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">JwtStrategy</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/auth/strategy/jwt.strategy.ts#L9">src/auth/strategy/jwt.strategy.ts:9</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/auth/strategy/jwt.strategy.ts#L14">src/auth/strategy/jwt.strategy.ts:14</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -65,7 +68,7 @@
 <h4 class="tsd-returns-title">Returns <a href="auth_strategy_jwt_strategy.JwtStrategy.html" class="tsd-signature-type" data-tsd-kind="Class">JwtStrategy</a></h4><aside class="tsd-sources">
 <p>Overrides PassportStrategy(Strategy, &#39;jwt&#39;).constructor</p>
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/auth/strategy/jwt.strategy.ts#L10">src/auth/strategy/jwt.strategy.ts:10</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/auth/strategy/jwt.strategy.ts#L15">src/auth/strategy/jwt.strategy.ts:15</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="name" class="tsd-anchor"></a>
@@ -78,7 +81,7 @@
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>prisma</span><a href="#prisma" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">prisma<span class="tsd-signature-symbol">:</span> <a href="prisma_prisma_service.PrismaService.html" class="tsd-signature-type" data-tsd-kind="Class">PrismaService</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/auth/strategy/jwt.strategy.ts#L10">src/auth/strategy/jwt.strategy.ts:10</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/auth/strategy/jwt.strategy.ts#L15">src/auth/strategy/jwt.strategy.ts:15</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a id="authenticate" class="tsd-anchor"></a>
@@ -229,10 +232,9 @@ details.</p>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="validate.validate-1">validate<span class="tsd-signature-symbol">(</span>payload<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>role<span class="tsd-signature-symbol">: </span><a href="../enums/auth_role_role_enum.Role.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Role</a><span class="tsd-signature-symbol">; </span><br/><span>    </span>sub<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><a href="#validate.validate-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Author: Xiangyu Shi
-Description: This method is used to verify the JWT token.</p>
+<div class="tsd-comment tsd-typography"><p>Used to verify the JWT token</p>
 
-<h3>Returns</h3><p>The voter object.</p>
+<h3>Returns</h3><p>The data that contains the id of the user</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -248,7 +250,7 @@ Description: This method is used to verify the JWT token.</p>
 <h5>sub<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/bdd8bd1/backend/src/auth/strategy/jwt.strategy.ts#L23">src/auth/strategy/jwt.strategy.ts:23</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/Colimocha/iste432-group-project/blob/58faf66/backend/src/auth/strategy/jwt.strategy.ts#L28">src/auth/strategy/jwt.strategy.ts:28</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">

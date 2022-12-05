@@ -15,9 +15,20 @@ import { SocietyService } from './society.service';
 import { CreateSocietyDto } from './dto/create-society.dto';
 import { UpdateSocietyDto } from './dto/update-society.dto';
 
+/**
+ * A controller that handle the requests for society from the frontend
+ * 
+ * @class SocietyController
+ */
 @Controller('society')
 @UseGuards(JwtGuard)
 export class SocietyController {
+  /**
+   * a constructor for the society controller
+   * 
+   * @param societyService 
+   * @constructor
+   */
   constructor(private readonly societyService: SocietyService) {}
 
   @Post()
