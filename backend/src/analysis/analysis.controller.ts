@@ -4,7 +4,7 @@ import { AnalysisService } from './analysis.service';
 
 /**
  * Return the statistics
- * 
+ *
  * @class AnalysisController
  */
 @UseGuards(JwtGuard)

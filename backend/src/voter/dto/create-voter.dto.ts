@@ -9,7 +9,7 @@ import {
 
 /**
  * A class that create a voter
- * 
+ *
  * @class CreateVoterDto
  */
 export class CreateVoterDto {

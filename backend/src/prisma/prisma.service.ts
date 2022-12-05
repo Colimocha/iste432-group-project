@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 
 /**
  * A class that connect the backend to the database
- * 
+ *
  * @class PrismaService
  */
 @Injectable()

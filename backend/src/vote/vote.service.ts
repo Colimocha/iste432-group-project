@@ -5,24 +5,24 @@ import { nanoid } from 'nanoid';
 
 /**
  * A class that contains the business logic for handling the vote data
- * 
+ *
  * @class VoteService
  */
 @Injectable()
 export class VoteService {
   /**
    * a constructor for the vote service
-   * 
-   * @param prisma 
+   *
+   * @param prisma
    * @constructor
    */
   constructor(private prisma: PrismaService) {}
 
   /**
    * create a vote with the CreateVoteDto object
-   * 
-   * @param createVoteDto 
-   * @returns 
+   *
+   * @param createVoteDto
+   * @returns
    */
   async create(createVoteDto: CreateVoteDto) {
     await this.ballotExists(createVoteDto.ballotId);
@@ -36,9 +36,9 @@ export class VoteService {
   }
 
   /**
-   * Return all votes 
-   * 
-   * @returns 
+   * Return all votes
+   *
+   * @returns
    */
   async findAll() {
     return await this.prisma.vote
@@ -48,9 +48,9 @@ export class VoteService {
 
   /**
    * Get specific vote with the id
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async findOne(id: number) {
     return await this.prisma.vote.findUnique({ where: { id } });
@@ -58,10 +58,10 @@ export class VoteService {
 
   /**
    * Update the vote with the id via the UpdateVoteDto object
-   * 
-   * @param id 
-   * @param updateVoteDto 
-   * @returns 
+   *
+   * @param id
+   * @param updateVoteDto
+   * @returns
    */
   async update(id: number, updateVoteDto: UpdateVoteDto) {
     await this.prisma.vote.findUnique({ where: { id } });
@@ -73,9 +73,9 @@ export class VoteService {
 
   /**
    * Delete a vote with the id from database
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async remove(id: number) {
     if (!this.findOne(id)) throw new BadRequestException('Vote not found');
@@ -84,8 +84,8 @@ export class VoteService {
 
   /**
    * Check if a ballot with the id exists or not
-   * 
-   * @param id 
+   *
+   * @param id
    */
   private async ballotExists(id: number) {
     const ballot = await this.prisma.ballot.findUnique({ where: { id } });

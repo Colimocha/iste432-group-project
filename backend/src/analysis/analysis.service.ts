@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 
 /**
  * A class that contains the count of every records including employees, voters, and other more.
- * 
+ *
  * @class AnalysisService
  */
 @Injectable()

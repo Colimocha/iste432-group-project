@@ -16,7 +16,7 @@ import { CreateBallotDto, UpdateBallotDto } from './dto';
 
 /**
  * A controller that handle the requests for the ballots from the frontend
- * 
+ *
  * @class BallotController
  */
 @Controller('ballot')
@@ -24,9 +24,9 @@ import { CreateBallotDto, UpdateBallotDto } from './dto';
 export class BallotController {
   /**
    * A constructor for the ballot controller
-   * 
+   *
    * @param ballotService
-   * @controller 
+   * @controller
    */
   constructor(private readonly ballotService: BallotService) {}
 
@@ -84,7 +84,7 @@ export class BallotController {
   ) {
     return this.ballotService.remove(+id);
   }
-  
+
   @Get(':id/vote-results')
   getVoteResult(
     @Param(

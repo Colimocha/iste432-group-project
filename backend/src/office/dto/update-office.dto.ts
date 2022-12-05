@@ -3,7 +3,7 @@ import { CreateOfficeDto } from '.';
 
 /**
  * A class that update the office, inheriting from CreateOfficeDto class
- * 
- * @class UpdateOfficeDto 
-*/
+ *
+ * @class UpdateOfficeDto
+ */
 export class UpdateOfficeDto extends PartialType(CreateOfficeDto) {}

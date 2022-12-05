@@ -7,7 +7,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 
 /**
  * THe configuration and setup for the JWT Strategy
- * 
+ *
  * @class JwtStrategy
  */
 @Injectable()
@@ -21,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   /**
    * Used to verify the JWT token
-   * 
+   *
    * @param payload The payload of the JWT token.
    * @returns The data that contains the id of the user
    */

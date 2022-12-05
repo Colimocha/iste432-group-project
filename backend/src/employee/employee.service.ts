@@ -5,24 +5,24 @@ import * as argon from 'argon2';
 
 /**
  * A class that contains the business logic for the employees
- * 
+ *
  * @class EmployeeService
  */
 @Injectable()
 export class EmployeeService {
   /**
    * A constructor for the emplyoee service
-   * 
-   * @param prisma 
+   *
+   * @param prisma
    * @constructor
    */
-  constructor(private prisma: PrismaService) { }
-  
+  constructor(private prisma: PrismaService) {}
+
   /**
    * create a ballot with the createEmployeeDto
-   * 
-   * @param createEmployeeDto 
-   * @returns 
+   *
+   * @param createEmployeeDto
+   * @returns
    */
   async create(createEmployeeDto: CreateEmployeeDto) {
     const { password, ...employee } = createEmployeeDto;
@@ -39,8 +39,8 @@ export class EmployeeService {
 
   /**
    * Return all employees from database
-   * 
-   * @returns 
+   *
+   * @returns
    */
   async findAll() {
     return await this.prisma.employee
@@ -56,9 +56,9 @@ export class EmployeeService {
 
   /**
    * Find the employee with the id
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async findOne(id: number) {
     return await this.prisma.employee.findUnique({
@@ -73,10 +73,10 @@ export class EmployeeService {
 
   /**
    * Update the employee with the id and new data via the UpdateEmployeeDto object
-   * 
-   * @param id 
-   * @param updateEmployeeDto 
-   * @returns 
+   *
+   * @param id
+   * @param updateEmployeeDto
+   * @returns
    */
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
     const { password, ...employee } = updateEmployeeDto;
@@ -97,9 +97,9 @@ export class EmployeeService {
 
   /**
    * Remove the employee from the database
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async remove(id: number) {
     if (!this.findOne(id))

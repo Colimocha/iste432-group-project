@@ -17,7 +17,7 @@ import { JwtGuard } from './../auth/guard/jwt.guard';
 
 /**
  * A controller that handle the requests for employee from the frontend
- * 
+ *
  * @class EmployeeController
  */
 @Controller('employee')
@@ -25,8 +25,8 @@ import { JwtGuard } from './../auth/guard/jwt.guard';
 export class EmployeeController {
   /**
    * A constructor for the employee controller
-   * 
-   * @param employeeService 
+   *
+   * @param employeeService
    * @constructor
    */
   constructor(private readonly employeeService: EmployeeService) {}

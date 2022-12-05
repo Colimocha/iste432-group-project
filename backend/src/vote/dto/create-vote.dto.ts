@@ -2,7 +2,7 @@ import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 /**
  * A class that is used to create a vote
- * 
+ *
  * @class CreateVoteDto
  */
 export class CreateVoteDto {

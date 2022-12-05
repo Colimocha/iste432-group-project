@@ -4,24 +4,24 @@ import { CreateOfficeDto, UpdateOfficeDto } from './dto';
 
 /**
  * a class that contains the business logic for handling the office data and pass it to the controller
- * 
+ *
  * @class OfficeService
  */
 @Injectable()
 export class OfficeService {
   /**
    * a constructor for office service
-   * 
-   * @param prisma 
+   *
+   * @param prisma
    * @constructor
    */
   constructor(private prisma: PrismaService) {}
 
   /**
    * Create an office with the CreateOfficeDto object
-   * 
-   * @param createOfficeDto 
-   * @returns 
+   *
+   * @param createOfficeDto
+   * @returns
    */
   async create(createOfficeDto: CreateOfficeDto) {
     await this.ballotExists(createOfficeDto.ballotId);
@@ -48,8 +48,8 @@ export class OfficeService {
 
   /**
    * Return all offices from database
-   * 
-   * @returns 
+   *
+   * @returns
    */
   async findAll() {
     return await this.prisma.office
@@ -68,9 +68,9 @@ export class OfficeService {
 
   /**
    * return the specific office with the id
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async findOne(id: number) {
     return await this.prisma.office.findUnique({
@@ -96,11 +96,11 @@ export class OfficeService {
   }
 
   /**
-   * update the office with the id and the updateoOfficeDto object 
-   * 
-   * @param id 
-   * @param updateOfficeDto 
-   * @returns 
+   * update the office with the id and the updateoOfficeDto object
+   *
+   * @param id
+   * @param updateOfficeDto
+   * @returns
    */
   async update(id: number, updateOfficeDto: UpdateOfficeDto) {
     await this.prisma.office.findUnique({ where: { id } });
@@ -120,9 +120,9 @@ export class OfficeService {
 
   /**
    * remove the office from the database
-   * 
-   * @param id 
-   * @returns 
+   *
+   * @param id
+   * @returns
    */
   async remove(id: number) {
     if (!this.findOne(id)) throw new BadRequestException('Office not found');
@@ -131,8 +131,8 @@ export class OfficeService {
 
   /**
    * Check if a ballot exists or not
-   * 
-   * @param id 
+   *
+   * @param id
    */
   private async ballotExists(id: number) {
     const ballot = await this.prisma.ballot.findUnique({ where: { id } });

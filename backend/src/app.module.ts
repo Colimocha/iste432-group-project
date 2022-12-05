@@ -15,7 +15,7 @@ import { AppService } from './app.service';
 import { AnalysisModule } from './analysis/analysis.module';
 
 /**
- * A module that contains all sub modules 
+ * A module that contains all sub modules
  */
 @Module({
   imports: [

@@ -7,8 +7,8 @@ export class AppController {
 
   /**
    * A "test" function, to check if the server is up and running or not
-   * 
-   * @returns 
+   *
+   * @returns
    */
   @Get()
   getHello(): string {

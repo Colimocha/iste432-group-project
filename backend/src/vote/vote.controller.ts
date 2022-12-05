@@ -16,7 +16,7 @@ import { CreateVoteDto, UpdateVoteDto } from './dto';
 
 /**
  * A controller that handles the request for the vote from the frontend
- * 
+ *
  * @class VoteController
  */
 @Controller('vote')
@@ -24,8 +24,8 @@ import { CreateVoteDto, UpdateVoteDto } from './dto';
 export class VoteController {
   /**
    * a constructor for the vote controller
-   * 
-   * @param voteService 
+   *
+   * @param voteService
    * @constructor
    */
   constructor(private readonly voteService: VoteService) {}

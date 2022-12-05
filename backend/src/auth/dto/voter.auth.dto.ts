@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 /**
  * A class with list of properties for voter login
- * 
+ *
  * @class VoterAuthDto
  */
 export class VoterAuthDto {

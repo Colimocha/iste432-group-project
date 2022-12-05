@@ -16,7 +16,7 @@ import { JwtGuard } from 'src/auth/guard/jwt.guard';
 
 /**
  * A controller that handles the requests for the voter from the frontend
- * 
+ *
  * @class VotersController
  */
 @Controller('voter')
@@ -24,8 +24,8 @@ import { JwtGuard } from 'src/auth/guard/jwt.guard';
 export class VotersController {
   /**
    * a constructor for the voter controller
-   * 
-   * @param votersService 
+   *
+   * @param votersService
    * @constructor
    */
   constructor(private readonly votersService: VotersService) {}

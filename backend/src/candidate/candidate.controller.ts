@@ -16,7 +16,7 @@ import { CreateCandidateDto, UpdateCandidateDto } from './dto';
 
 /**
  * A controller that handle the requests for candidate from the frontend
- * 
+ *
  * @class CandidateController
  */
 @Controller('candidate')
@@ -24,8 +24,8 @@ import { CreateCandidateDto, UpdateCandidateDto } from './dto';
 export class CandidateController {
   /**
    * A constructor for the candidate controller
-   * 
-   * @param candidateService 
+   *
+   * @param candidateService
    * @constructor
    */
   constructor(private readonly candidateService: CandidateService) {}

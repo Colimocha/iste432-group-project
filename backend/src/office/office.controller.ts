@@ -17,7 +17,7 @@ import { UpdateOfficeDto } from './dto/update-office.dto';
 
 /**
  * A controller that handle the requests from the frontend for the offices
- * 
+ *
  * @class OfficeController
  */
 @Controller('office')
@@ -25,8 +25,8 @@ import { UpdateOfficeDto } from './dto/update-office.dto';
 export class OfficeController {
   /**
    * a constructor for the office controller
-   * 
-   * @param officeService 
+   *
+   * @param officeService
    * @constructor
    */
   constructor(private readonly officeService: OfficeService) {}
