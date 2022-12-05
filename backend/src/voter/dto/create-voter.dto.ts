@@ -7,6 +7,11 @@ import {
   IsString,
 } from 'class-validator';
 
+/**
+ * A class that create a voter
+ *
+ * @class CreateVoterDto
+ */
 export class CreateVoterDto {
   @IsOptional()
   @IsString()

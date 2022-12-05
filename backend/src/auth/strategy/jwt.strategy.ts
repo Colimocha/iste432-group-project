@@ -5,6 +5,11 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PrismaService } from '../../prisma/prisma.service';
 
+/**
+ * THe configuration and setup for the JWT Strategy
+ *
+ * @class JwtStrategy
+ */
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(config: ConfigService, private prisma: PrismaService) {
@@ -15,10 +20,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   /**
-   * Author: Xiangyu Shi
-   * Description: This method is used to verify the JWT token.
+   * Used to verify the JWT token
+   *
    * @param payload The payload of the JWT token.
-   * @returns The voter object.
+   * @returns The data that contains the id of the user
    */
   async validate(payload: { sub: number; role: Role }) {
     const { sub, role } = payload;

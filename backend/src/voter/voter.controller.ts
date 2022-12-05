@@ -14,9 +14,20 @@ import { VotersService } from './voter.service';
 import { CreateVoterDto, UpdateVoterDto } from './dto';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
 
+/**
+ * A controller that handles the requests for the voter from the frontend
+ *
+ * @class VotersController
+ */
 @Controller('voter')
 @UseGuards(JwtGuard)
 export class VotersController {
+  /**
+   * a constructor for the voter controller
+   *
+   * @param votersService
+   * @constructor
+   */
   constructor(private readonly votersService: VotersService) {}
 
   @Post()

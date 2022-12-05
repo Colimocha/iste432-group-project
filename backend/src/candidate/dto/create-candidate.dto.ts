@@ -1,5 +1,10 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
+/**
+ * A class that is used to create a candidate
+ *
+ * @class CreateCandidateDto
+ */
 export class CreateCandidateDto {
   @IsNotEmpty()
   @IsString()

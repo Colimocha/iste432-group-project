@@ -12,7 +12,11 @@ import { CandidateModule } from './candidate/candidate.module';
 import { VoteModule } from './vote/vote.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AnalysisModule } from './analysis/analysis.module';
 
+/**
+ * A module that contains all sub modules
+ */
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env.development' }),
@@ -26,6 +30,7 @@ import { AppService } from './app.service';
     OfficeModule,
     CandidateModule,
     VoteModule,
+    AnalysisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -39,4 +39,10 @@ lerna-debug.log*
 
 .env
 
+# vercel
 .vercel
+
+# lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

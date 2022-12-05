@@ -5,6 +5,11 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  /**
+   * A "test" function, to check if the server is up and running or not
+   *
+   * @returns
+   */
   @Get()
   getHello(): string {
     return this.appService.getHello();

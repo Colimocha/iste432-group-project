@@ -6,8 +6,20 @@ import { EmployeeAuthDto, SCAuthDto, VoterAuthDto } from './dto';
 import * as argon from 'argon2';
 import { Role } from './role';
 
+/**
+ * A class that contains the business logic for the authentication service
+ *
+ * @class AuthService
+ */
 @Injectable()
 export class AuthService {
+  /**
+   * a constructor for the authentication service
+   *
+   * @param prisma
+   * @param jwt
+   * @param config
+   */
   constructor(
     private readonly prisma: PrismaService,
     private jwt: JwtService,
@@ -15,8 +27,8 @@ export class AuthService {
   ) {}
 
   /**
-   * Author: Xiangyu Shi
-   * Description: Generate JWT token
+   * Generate JWT token
+   *
    * @param sub - user id
    * @param role - user role
    * @returns - access token
@@ -24,14 +36,14 @@ export class AuthService {
   async generateToken(sub: number, role: Role) {
     const secret = this.config.get('JWT_SECRET');
     const payload = { sub, role };
-    const options = { expiresIn: '1h', secret: secret };
+    const options = { expiresIn: '1y', secret: secret };
     const token = await this.jwt.signAsync(payload, options);
-    return { success: true, access_token: token };
+    return { success: true, id: sub, access_token: token };
   }
 
   /**
-   * Author: Xiangyu Shi
-   * Description: Voter login
+   * Voter login
+   *
    * @param dto VoterAuthDto - cred_1 and cred_2
    * @returns access token
    */
@@ -53,8 +65,8 @@ export class AuthService {
   }
 
   /**
-   * Author: Xiangyu Shi
-   * Description: Society contact login
+   * Society contact login
+   *
    * @param dto SCAuthDto - username and password
    * @returns access token
    */
@@ -76,8 +88,8 @@ export class AuthService {
   }
 
   /**
-   * Author: Xiangyu Shi
-   * Description: Employee login
+   * Employee login
+   *
    * @param dto EmployeeAuthDto - username and password
    * @returns access token
    */
@@ -98,12 +110,15 @@ export class AuthService {
     return await this.generateToken(employee.id, Role.Employee);
   }
 
-  async register(username: string, password: string) {
-    const hashedPassword = await argon.hash(password);
-    const created = await this.prisma.employee.create({
-      data: { username, password: hashedPassword },
+  async register(dto: EmployeeAuthDto) {
+    const { username, password } = dto;
+    const hashpwd = await argon.hash(password);
+    // find employee by username
+    const employee = await this.prisma.employee.create({
+      data: { username, password: hashpwd },
     });
-    delete created.password;
-    return created;
+
+    // return token
+    return await this.generateToken(employee.id, Role.Employee);
   }
 }
