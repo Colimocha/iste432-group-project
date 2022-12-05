@@ -4,7 +4,7 @@ import { Config } from '#/config';
 import { delay } from '#/lib/delay';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useReducer, useState } from 'react';
 import MasterList from './MasterList';
 
 interface Category {
@@ -91,6 +91,7 @@ async function createItem(
     },
     body: JSON.stringify(data),
   });
+  console.log(res);
   if (!res.ok) throw new Error('Error creating item');
   return res;
 }
@@ -109,8 +110,10 @@ export default function CreateModal(props: Category) {
       .then(() => {
         createItem(props.category || '', object);
       })
-      .finally(() => setLoading(false));
-    router.refresh();
+      .finally(() => { 
+        setLoading(false);
+        window.location.reload(); 
+      });
   }
   const arr = ['societyId', 'ballotId', 'officeId', 'allowWriteIn'];
 
