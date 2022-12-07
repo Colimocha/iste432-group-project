@@ -6,6 +6,7 @@ import { deleteOffice } from '#/lib/api/office';
 import { deleteSociety } from '#/lib/api/society';
 import { deleteSocietyContact } from '#/lib/api/societyContact';
 import { deleteVoter } from '#/lib/api/voter';
+import { delay } from '#/lib/delay';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -99,6 +100,7 @@ export default function RemoveModal({
         default:
           break;
       }
+      delay(250).then(() => window.location.reload());
     }, 2000);
   };
 
