@@ -105,10 +105,11 @@ export default function CreateModal(props: Category) {
     setLoading(true);
     delay()
       .then(() => {
-        window.location.reload();
-        createItem(props.category || '', object)
-          .then(() => window.location.reload())
-          .catch();
+        createItem(props.category || '', object).then(() => {
+          delay(250).then(() => {
+            window.location.reload();
+          });
+        });
       })
       .finally(() => {
         setLoading(false);
