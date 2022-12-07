@@ -81,8 +81,6 @@ async function createItem(
   if (data.allowWriteIn)
     data.allowWriteIn = Boolean(data.allowWriteIn === 'on' ? true : false);
 
-  console.log(data);
-
   const res = await fetch(`${Config.API_URL}/${category}`, {
     method: 'POST',
     headers: {
@@ -91,7 +89,6 @@ async function createItem(
     },
     body: JSON.stringify(data),
   });
-  console.log(res);
   if (!res.ok) throw new Error('Error creating item');
   return res;
 }
@@ -108,11 +105,13 @@ export default function CreateModal(props: Category) {
     setLoading(true);
     delay()
       .then(() => {
-        createItem(props.category || '', object);
+        window.location.reload();
+        createItem(props.category || '', object)
+          .then(() => window.location.reload())
+          .catch();
       })
       .finally(() => {
         setLoading(false);
-        window.location.reload();
       });
   }
   const arr = ['societyId', 'ballotId', 'officeId', 'allowWriteIn'];
